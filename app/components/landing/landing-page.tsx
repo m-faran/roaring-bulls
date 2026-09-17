@@ -69,7 +69,7 @@ export function LandingPage() {
   const currentDemoAsset = demoAssets[demoCardIndex % demoAssets.length];
 
   return (
-    <div className="w-full bg-[#05080E] text-[#F0F6FC] selection:bg-[#00FF88] selection:text-[#05080E]">
+    <div className="w-full bg-transparent text-[#F0F6FC] selection:bg-[#00FF88] selection:text-[#05080E]">
       {/* HERO SECTION */}
       <section className="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28">
         {/* Ambient Glows */}
@@ -155,7 +155,7 @@ export function LandingPage() {
       </section>
 
       {/* INTERACTIVE TEASER PREVIEW SECTION */}
-      <section className="py-16 border-y border-cyan-500/20 bg-[#080D18]/80">
+      <section className="py-16 border-y border-cyan-500/20 bg-[#0A111F]/35 backdrop-blur-[2px]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left: Teaser description */}
@@ -357,7 +357,7 @@ export function LandingPage() {
       </section>
 
       {/* 3 RISK-TIERED ASSET MODES SHOWCASE */}
-      <section className="py-20 border-t border-cyan-500/20 bg-[#080D18]/80">
+      <section className="py-20 border-t border-cyan-500/20 bg-[#0A111F]/35 backdrop-blur-[2px]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="text-xs font-mono uppercase tracking-widest text-[#00FF88] font-bold">
@@ -614,7 +614,7 @@ export function LandingPage() {
       </section>
 
       {/* MANIFESTO / PHILOSOPHY QUOTE */}
-      <section className="py-20 border-t border-cyan-500/20 bg-gradient-to-b from-[#080D18] to-[#05080E]">
+      <section className="py-20 border-t border-cyan-500/20 bg-gradient-to-b from-[#0A111F]/30 to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
           <div className="inline-block text-4xl sm:text-5xl text-[#00FF88] font-serif">
             “
@@ -633,7 +633,7 @@ export function LandingPage() {
       </section>
 
       {/* FINAL CLIMAX CALL TO ACTION */}
-      <section className="py-20 border-t border-cyan-500/20 bg-[#05080E]">
+      <section className="py-20 border-t border-cyan-500/20 bg-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8">
           <div className="space-y-3">
             <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">

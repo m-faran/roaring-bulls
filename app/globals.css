@@ -191,6 +191,51 @@
   pointer-events: none;
 }
 
+/* Drifting aurora blobs behind the cyber grid. Transform-only for GPU
+   compositing; long durations keep them a slow ambience, not a distraction. */
+.bg-blob {
+  will-change: transform;
+  animation: blob-drift 26s ease-in-out infinite alternate;
+}
+
+.bg-blob-lime {
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.16) 0%, transparent 65%);
+  animation-duration: 32s;
+}
+
+.bg-blob-cyan {
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.14) 0%, transparent 65%);
+  animation-duration: 27s;
+  animation-delay: -9s;
+}
+
+.bg-blob-rose {
+  background: radial-gradient(circle, rgba(255, 27, 107, 0.12) 0%, transparent 65%);
+  animation-duration: 36s;
+  animation-delay: -18s;
+}
+
+.bg-blob-violet {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.11) 0%, transparent 65%);
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+
+@keyframes blob-drift {
+  from {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 3%, 0) scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-blob {
+    animation: none;
+  }
+}
+
 /* Subtle laser horizon grid */
 .cyber-grid-perspective {
   background-image: 
