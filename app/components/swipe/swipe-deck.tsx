@@ -5,6 +5,7 @@ import { StockToken, RiskTier } from "@/app/lib/data/stocks-catalog";
 import { StockCard } from "./stock-card";
 import { useBasket } from "@/app/lib/store/basket-context";
 import { toast } from "sonner";
+import { Settings2, Check, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface SwipeDeckProps {
   stocks: StockToken[];
@@ -125,9 +126,9 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
   const rotation = dragOffset.x / 14;
 
   return (
-    <div className="flex flex-col items-center w-full max-w-xl mx-auto px-4 pb-28 pt-2">
-      {/* Risk Tier Selector Tabs */}
-      <div className="w-full flex items-center justify-center p-1 mb-4 rounded-2xl bg-slate-950/60 border border-white/5 backdrop-blur-md">
+    <div className="flex flex-col items-center w-full max-w-xl mx-auto px-4 pb-28 pt-1">
+      {/* Risk Tier Selector Tabs — Cyber Arcade Segmented Style */}
+      <div className="w-full flex items-center justify-center p-1.5 mb-4 rounded-2xl bg-[#0A111F] border border-cyan-500/20 backdrop-blur-md shadow-inner">
         {(
           [
             { id: "conservative", label: "Conservative", sub: "Blue Chips" },
@@ -142,40 +143,53 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
               onClick={() => setRiskTier(t.id)}
               className={`flex-1 flex flex-col items-center py-2 px-3 rounded-xl cursor-pointer transition-all duration-200 ${
                 isActive
-                  ? "bg-slate-800 text-white shadow-md border border-white/10"
+                  ? "bg-[#101A2E] text-white shadow-[0_0_15px_rgba(0,240,255,0.25)] border border-cyan-500/40 font-display"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              <span className="text-xs font-semibold">{t.label}</span>
-              <span className="text-[10px] text-slate-400 font-normal">{t.sub}</span>
+              <span className="text-xs font-display font-bold tracking-tight">
+                {t.label}
+              </span>
+              <span
+                className={`text-[10px] font-mono transition-colors ${
+                  isActive ? "text-[#00F0FF]" : "text-slate-500"
+                }`}
+              >
+                {t.sub}
+              </span>
             </button>
           );
         })}
       </div>
 
       {/* Budget Progress Meter */}
-      <div className="w-full max-w-[460px] flex items-center justify-between px-3.5 py-2 mb-4 rounded-xl bg-slate-900/70 border border-white/5 text-xs">
-        <div className="flex items-center gap-2">
-          <span className="text-slate-400">Allocated:</span>
-          <span className="font-semibold text-white tabular-nums">
+      <div className="w-full max-w-[460px] flex items-center justify-between px-4 py-2.5 mb-4 rounded-2xl bg-[#0A111F] border border-cyan-500/20 text-xs shadow-inner">
+        <div className="flex items-center gap-2 font-mono">
+          <span className="text-slate-400 text-[11px]">Allocated:</span>
+          <span className="font-bold text-white tabular-nums">
             {budgetUtilizationPct}%
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-slate-400">Remaining:</span>
-          <span className="font-semibold text-emerald-400 tabular-nums">
+        {/* Mini progress track */}
+        <div className="flex-1 mx-3 h-1.5 rounded-full bg-[#05080E] overflow-hidden border border-cyan-500/10">
+          <div
+            className="h-full bg-gradient-to-r from-[#00FF88] to-[#00F0FF] shadow-[0_0_10px_#00FF88] transition-all duration-300"
+            style={{ width: `${budgetUtilizationPct}%` }}
+          />
+        </div>
+
+        <div className="flex items-center gap-2 font-mono">
+          <span className="text-slate-400 text-[11px]">Remaining:</span>
+          <span className="font-bold text-[#00FF88] tabular-nums">
             {remainingBudget} {currency}
           </span>
           <button
             onClick={() => setIsSessionSetupOpen(true)}
-            className="cursor-pointer text-slate-400 hover:text-white p-1 rounded hover:bg-white/10 transition"
+            className="cursor-pointer text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition"
             title="Configure session budget & allocation"
           >
-            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="3" />
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-            </svg>
+            <Settings2 className="w-3.5 h-3.5 text-cyan-400" />
           </button>
         </div>
       </div>
@@ -184,7 +198,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
       <div className="relative w-full max-w-[460px] h-[570px] flex items-center justify-center">
         {currentStock ? (
           <>
-            {/* Card Underneath (Preview - exactly same dimension) */}
+            {/* Card Underneath (Preview) */}
             {nextStock && (
               <div className="absolute top-0 w-full max-w-[460px] h-[560px] scale-[0.96] translate-y-3 opacity-40 pointer-events-none transition-all duration-300">
                 <StockCard stock={nextStock} />
@@ -231,29 +245,30 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             </div>
           </>
         ) : (
-          /* Empty Deck State */
-          <div className="w-full max-w-[460px] h-[560px] rounded-3xl border border-white/10 bg-slate-900/60 p-8 flex flex-col items-center justify-center text-center space-y-4 backdrop-blur-xl">
-            <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-              <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+          /* Empty Deck State — Cyber Pod */
+          <div className="w-full max-w-[460px] h-[560px] rounded-3xl border border-cyan-500/30 bg-[#0A111F]/90 p-8 flex flex-col items-center justify-center text-center space-y-5 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+            <div className="relative w-16 h-16 rounded-2xl bg-[#00FF88]/15 border border-[#00FF88]/40 flex items-center justify-center text-[#00FF88] shadow-[0_0_20px_rgba(0,255,136,0.3)]">
+              <Check className="w-8 h-8" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#00FF88] animate-ping" />
             </div>
-            <div>
-              <h3 className="text-lg font-bold text-white">Deck Completed!</h3>
-              <p className="text-xs text-slate-400 mt-1 max-w-xs">
+            <div className="space-y-2">
+              <h3 className="text-xl font-display font-black text-white tracking-tight">
+                Deck Completed!
+              </h3>
+              <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
                 You have reviewed all assets in the {riskTier} tier. Review your assembled basket or reset the deck to review again.
               </p>
             </div>
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-3 pt-3 w-full max-w-xs justify-center">
               <button
                 onClick={() => setCurrentIndex(0)}
-                className="cursor-pointer px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-white border border-white/10 transition"
+                className="cursor-pointer px-4 py-2.5 text-xs font-display font-bold rounded-xl bg-[#101A2E] hover:bg-[#16223B] text-white border border-cyan-500/30 transition shadow-sm"
               >
                 Reset Deck
               </button>
               <button
                 onClick={() => setIsBasketOpen(true)}
-                className="cursor-pointer px-4 py-2 text-xs font-semibold rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 transition"
+                className="cursor-pointer px-5 py-2.5 text-xs font-display font-black rounded-xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] shadow-[0_0_20px_rgba(0,255,136,0.4)] transition hover:scale-105"
               >
                 Review Basket
               </button>
@@ -267,15 +282,13 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             {/* Left Skip Trigger */}
             <button
               onClick={() => handleSwipe("left")}
-              className="cursor-pointer absolute -left-16 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-1 group"
+              className="cursor-pointer absolute -left-16 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-1.5 group"
               title="Skip (Left Arrow)"
             >
-              <div className="w-12 h-12 rounded-full border border-rose-500/30 bg-rose-950/40 group-hover:bg-rose-950/80 group-hover:scale-110 flex items-center justify-center text-rose-400 transition-all shadow-lg shadow-rose-950/50">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
+              <div className="w-13 h-13 rounded-full border border-[#FF1B6B]/40 bg-[#0A111F] group-hover:bg-[#FF1B6B]/20 group-hover:scale-110 group-hover:border-[#FF1B6B] flex items-center justify-center text-[#FF1B6B] transition-all duration-200 shadow-[0_0_20px_rgba(255,27,107,0.25)]">
+                <ChevronLeft className="w-5 h-5" />
               </div>
-              <span className="text-[10px] text-rose-400/80 font-medium tracking-wide">
+              <span className="text-[10px] text-[#FF1B6B] font-display font-bold tracking-wider uppercase">
                 Skip
               </span>
             </button>
@@ -283,15 +296,13 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             {/* Right Add Trigger */}
             <button
               onClick={() => handleSwipe("right")}
-              className="cursor-pointer absolute -right-16 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-1 group"
+              className="cursor-pointer absolute -right-16 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-1.5 group"
               title="Add (Right Arrow)"
             >
-              <div className="w-12 h-12 rounded-full border border-emerald-500/40 bg-emerald-500 group-hover:bg-emerald-400 group-hover:scale-110 flex items-center justify-center text-slate-950 transition-all shadow-lg shadow-emerald-500/30">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
+              <div className="w-13 h-13 rounded-full border border-[#00FF88]/50 bg-[#00FF88] group-hover:bg-[#00FF88]/90 group-hover:scale-110 flex items-center justify-center text-[#05080E] transition-all duration-200 shadow-[0_0_25px_rgba(0,255,136,0.5)]">
+                <ChevronRight className="w-5 h-5" />
               </div>
-              <span className="text-[10px] text-emerald-400 font-medium tracking-wide">
+              <span className="text-[10px] text-[#00FF88] font-display font-bold tracking-wider uppercase">
                 Check
               </span>
             </button>

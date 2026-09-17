@@ -2,75 +2,65 @@
 
 export function GridBackground() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
-      {/* Ambient glow */}
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+      {/* Ambient Cyber Nebulae */}
       <div
-        className="absolute inset-0 transition-opacity duration-500"
+        className="absolute inset-0 transition-opacity duration-700"
         style={{
           background: [
-            "radial-gradient(ellipse 30% 28% at 30% 50%, rgba(153,69,255,0.08) 0%, transparent 70%)",
-            "radial-gradient(ellipse 30% 28% at 70% 50%, rgba(20,241,149,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 40% at 50% -10%, rgba(0, 255, 136, 0.09) 0%, transparent 70%)",
+            "radial-gradient(ellipse 50% 35% at 85% 25%, rgba(0, 240, 255, 0.07) 0%, transparent 60%)",
+            "radial-gradient(ellipse 45% 40% at 15% 75%, rgba(255, 27, 107, 0.05) 0%, transparent 60%)",
+            "radial-gradient(ellipse 60% 30% at 50% 100%, rgba(0, 240, 255, 0.06) 0%, transparent 70%)",
           ].join(", "),
         }}
       />
 
-      {/* Large grid — purple (left) */}
-      <div
-        className="absolute inset-0 opacity-80 dark:opacity-60"
+      {/* Cyber Horizon Floor Grid (Tilted 3D perspective) */}
+      <div 
+        className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[200vw] h-[65vh] opacity-35"
         style={{
+          transform: "perspective(450px) rotateX(68deg)",
+          transformOrigin: "bottom center",
           backgroundImage: `
-            linear-gradient(to right, rgba(153,69,255,0.18) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(153,69,255,0.18) 1px, transparent 1px)
+            linear-gradient(to right, rgba(0, 240, 255, 0.22) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 255, 136, 0.22) 1px, transparent 1px)
           `,
-          backgroundSize: "80px 80px",
-          mask: "radial-gradient(ellipse 30% 35% at 30% 50%, black, transparent)",
-          WebkitMask:
-            "radial-gradient(ellipse 30% 35% at 30% 50%, black, transparent)",
+          backgroundSize: "60px 60px",
+          maskImage: "linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0.4) 60%, transparent 95%)",
+          WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0.4) 60%, transparent 95%)",
         }}
       />
 
-      {/* Large grid — green (right) */}
-      <div
-        className="absolute inset-0 opacity-80 dark:opacity-60"
+      {/* Subtle Ceiling Cyber Grid */}
+      <div 
+        className="absolute -top-24 left-1/2 -translate-x-1/2 w-[200vw] h-[45vh] opacity-20"
         style={{
+          transform: "perspective(450px) rotateX(-68deg)",
+          transformOrigin: "top center",
           backgroundImage: `
-            linear-gradient(to right, rgba(20,241,149,0.18) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(20,241,149,0.18) 1px, transparent 1px)
+            linear-gradient(to right, rgba(0, 240, 255, 0.15) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 240, 255, 0.15) 1px, transparent 1px)
           `,
-          backgroundSize: "80px 80px",
-          mask: "radial-gradient(ellipse 30% 35% at 70% 50%, black, transparent)",
-          WebkitMask:
-            "radial-gradient(ellipse 30% 35% at 70% 50%, black, transparent)",
+          backgroundSize: "60px 60px",
+          maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.8) 10%, transparent 90%)",
+          WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.8) 10%, transparent 90%)",
         }}
       />
 
-      {/* Small grid — purple (left) */}
-      <div
-        className="absolute inset-0 opacity-80 dark:opacity-60"
+      {/* Retro Horizontal Scanline Overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(153,69,255,0.10) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(153,69,255,0.10) 1px, transparent 1px)
-          `,
-          backgroundSize: "16px 16px",
-          mask: "radial-gradient(ellipse 30% 35% at 30% 50%, black, transparent)",
-          WebkitMask:
-            "radial-gradient(ellipse 30% 35% at 30% 50%, black, transparent)",
+          backgroundImage: "repeating-linear-gradient(0deg, #000, #000 2px, transparent 2px, transparent 4px)",
         }}
       />
 
-      {/* Small grid — green (right) */}
-      <div
-        className="absolute inset-0 opacity-80 dark:opacity-60"
+      {/* Cyber Vignette edges */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(20,241,149,0.10) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(20,241,149,0.10) 1px, transparent 1px)
-          `,
-          backgroundSize: "16px 16px",
-          mask: "radial-gradient(ellipse 30% 35% at 70% 50%, black, transparent)",
-          WebkitMask:
-            "radial-gradient(ellipse 30% 35% at 70% 50%, black, transparent)",
+          background: "radial-gradient(circle at center, transparent 40%, rgba(5, 8, 14, 0.8) 100%)",
         }}
       />
     </div>

@@ -115,7 +115,7 @@ export function WalletButton() {
 
   if (!isHydrated || !isWalletReady) {
     return (
-      <span className="rounded-lg bg-primary px-4 py-2 text-xs font-medium text-primary-foreground opacity-60">
+      <span className="rounded-xl bg-[#0A111F] border border-cyan-500/20 px-3.5 py-1.5 text-xs font-mono text-cyan-400 opacity-60">
         Restoring wallet...
       </span>
     );
@@ -129,7 +129,7 @@ export function WalletButton() {
           onClick={() => (isOpen ? close() : open())}
           aria-expanded={isOpen}
           aria-controls={isOpen ? "wallet-options" : undefined}
-          className="cursor-pointer rounded-lg bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-xs transition hover:bg-primary/90"
+          className="cursor-pointer rounded-xl bg-[#00FF88] px-3.5 py-1.5 text-xs font-display font-black text-[#05080E] shadow-[0_0_15px_rgba(0,255,136,0.35)] transition-all hover:bg-[#00FF88]/90 hover:scale-105"
         >
           Connect Wallet
         </button>
@@ -137,13 +137,13 @@ export function WalletButton() {
         {isOpen && (
           <div
             id="wallet-options"
-            className="absolute right-0 top-full z-50 mt-2 w-64 rounded-xl border border-border-low bg-card p-3 shadow-lg"
+            className="absolute right-0 top-full z-50 mt-2 w-64 rounded-2xl border border-cyan-500/30 bg-[#0A111F] p-3.5 shadow-[0_10px_40px_rgba(0,0,0,0.85)] animate-in fade-in zoom-in-95 duration-150"
           >
-            <p className="mb-2 text-xs font-medium text-muted">
+            <p className="mb-2 text-xs font-display font-bold text-slate-300">
               Choose a wallet
             </p>
             {wallets.length === 0 ? (
-              <p className="text-xs text-muted">
+              <p className="text-xs text-slate-400 font-mono">
                 No wallets detected. Install a Solana wallet extension.
               </p>
             ) : (
@@ -160,14 +160,14 @@ export function WalletButton() {
                       }
                     }}
                     disabled={isConnecting}
-                    className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition hover:bg-cream disabled:opacity-50 disabled:pointer-events-none"
+                    className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-left text-xs font-display font-bold text-white transition hover:bg-[#101A2E] hover:text-[#00FF88] disabled:opacity-50 disabled:pointer-events-none"
                   >
                     {wallet.icon && (
                       // eslint-disable-next-line @next/next/no-img-element -- wallet-standard icons are data URIs
                       <img
                         src={wallet.icon}
                         alt=""
-                        className="h-5 w-5 rounded"
+                        className="h-5 w-5 rounded-md"
                       />
                     )}
                     <span>{wallet.name}</span>
@@ -176,13 +176,13 @@ export function WalletButton() {
               </div>
             )}
             {isConnecting && (
-              <p className="mt-2 text-xs text-muted" role="status">
+              <p className="mt-2 text-xs text-cyan-400 font-mono" role="status">
                 Connecting...
               </p>
             )}
             {connectMenuError != null && (
               <p
-                className="mt-2 break-words text-xs text-destructive [overflow-wrap:anywhere]"
+                className="mt-2 break-words text-xs text-[#FF1B6B] font-mono [overflow-wrap:anywhere]"
                 role="alert"
               >
                 {connectMenuError instanceof Error
@@ -204,20 +204,20 @@ export function WalletButton() {
         aria-expanded={isOpen}
         aria-controls={isOpen ? "wallet-options" : undefined}
         aria-label={`Wallet ${walletAddress}`}
-        className="flex cursor-pointer items-center gap-2 rounded-lg border border-border-low bg-card px-3 py-2 text-xs font-medium transition hover:bg-cream"
+        className="flex cursor-pointer items-center gap-2 rounded-xl border border-cyan-500/25 bg-[#0A111F] px-3 py-1.5 text-xs font-mono font-medium text-slate-200 transition-all hover:border-[#00FF88]/40 hover:bg-[#101A2E] shadow-inner"
       >
-        <span className="h-2 w-2 rounded-full bg-green-500" />
-        <span className="font-mono">{ellipsify(walletAddress!, 4)}</span>
+        <span className="h-2 w-2 rounded-full bg-[#00FF88] shadow-[0_0_8px_#00FF88]" />
+        <span className="font-mono text-xs">{ellipsify(walletAddress!, 4)}</span>
       </button>
 
       {isOpen && (
         <div
           id="wallet-options"
-          className="absolute right-0 top-full z-50 mt-2 w-72 rounded-xl border border-border-low bg-card p-4 shadow-lg"
+          className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-cyan-500/30 bg-[#0A111F] p-4 shadow-[0_10px_40px_rgba(0,0,0,0.85)] animate-in fade-in zoom-in-95 duration-150 space-y-3"
         >
-          <div className="mb-3">
-            <p className="text-xs text-muted">Balance</p>
-            <p className="text-lg font-bold tabular-nums">
+          <div>
+            <p className="text-[11px] text-slate-400 font-mono">Balance</p>
+            <p className="text-base font-display font-black text-white tabular-nums">
               {balance.lamports != null
                 ? formatDecimalFixedPoint(
                     solFormatter,
@@ -227,25 +227,27 @@ export function WalletButton() {
                   ? "Loading..."
                   : "Unavailable"}{" "}
               {balance.lamports != null && (
-                <span className="text-sm font-normal text-muted">SOL</span>
+                <span className="text-xs font-mono text-[#00FF88]">SOL</span>
               )}
             </p>
             {balance.error != null && (
-              <p className="mt-1 text-xs text-destructive" role="alert">
+              <p className="mt-1 text-xs text-[#FF1B6B] font-mono" role="alert">
                 Unable to load the wallet balance.
               </p>
             )}
           </div>
 
-          <div className="mb-3 rounded-lg border border-border-low bg-cream/50 px-3 py-2">
-            <p className="break-all font-mono text-xs">{walletAddress}</p>
+          <div className="rounded-xl border border-cyan-500/15 bg-[#05080E] px-3 py-2 shadow-inner">
+            <p className="break-all font-mono text-[11px] text-slate-300">
+              {walletAddress}
+            </p>
           </div>
 
           <div className="flex gap-2">
             <button
               onClick={handleCopy}
               aria-label={copied ? "Address copied" : "Copy address"}
-              className="flex-1 cursor-pointer rounded-lg border border-border-low bg-card px-3 py-2 text-xs font-medium transition hover:bg-cream"
+              className="flex-1 cursor-pointer rounded-xl border border-cyan-500/20 bg-[#05080E] hover:bg-[#101A2E] px-3 py-2 text-xs font-mono font-medium text-slate-300 transition"
             >
               {copied ? "Copied!" : "Copy address"}
             </button>
@@ -253,7 +255,7 @@ export function WalletButton() {
               href={getExplorerUrl(`/address/${walletAddress}`)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 rounded-lg border border-border-low bg-card px-3 py-2 text-center text-xs font-medium transition hover:bg-cream"
+              className="flex-1 rounded-xl border border-cyan-500/20 bg-[#05080E] hover:bg-[#101A2E] px-3 py-2 text-center text-xs font-mono font-medium text-cyan-400 hover:text-cyan-300 transition"
             >
               Explorer
             </a>
@@ -269,13 +271,13 @@ export function WalletButton() {
               }
             }}
             disabled={isDisconnecting}
-            className="mt-2 w-full cursor-pointer rounded-lg border border-border-low bg-card px-3 py-2 text-xs font-medium text-destructive transition hover:bg-destructive/10 disabled:pointer-events-none disabled:opacity-50"
+            className="w-full cursor-pointer rounded-xl border border-[#FF1B6B]/30 bg-[#FF1B6B]/10 px-3 py-2 text-xs font-display font-bold text-[#FF1B6B] transition hover:bg-[#FF1B6B]/20 disabled:pointer-events-none disabled:opacity-50"
           >
             {isDisconnecting ? "Disconnecting..." : "Disconnect"}
           </button>
           {accountMenuError != null && (
             <p
-              className="mt-2 break-words text-xs text-destructive [overflow-wrap:anywhere]"
+              className="mt-2 break-words text-xs text-[#FF1B6B] font-mono [overflow-wrap:anywhere]"
               role="alert"
             >
               {accountMenuError instanceof Error

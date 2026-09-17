@@ -1,56 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --primary: #171717;
-  --primary-foreground: #fafafa;
-  --muted: #737373;
-  --muted-foreground: #737373;
-  --card: #ffffff;
-  --card-foreground: #0a0a0a;
-  --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --border: #e5e5e5;
-  --border-low: #f5f5f5;
-  --input: #e5e5e5;
-  --accent: #f5f5f5;
-  --accent-foreground: #171717;
-  --cream: #f5f5f5;
-  --destructive: #dc2626;
-  --destructive-foreground: #dc2626;
-  --ring: #a3a3a3;
-  --radius: 0.625rem;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --background: #05080e;
+  --foreground: #f0f6fc;
+  --primary: #00ff88;
+  --primary-foreground: #05080e;
+  --muted: #8b9bb4;
+  --muted-foreground: #6b7c96;
+  --card: #0a111f;
+  --card-foreground: #f0f6fc;
+  --popover: #0d1527;
+  --popover-foreground: #f0f6fc;
+  --border: rgba(0, 240, 255, 0.14);
+  --border-low: rgba(255, 255, 255, 0.05);
+  --input: rgba(0, 240, 255, 0.12);
+  --accent: #101a2e;
+  --accent-foreground: #00ff88;
+  --cream: #101a2e;
+  --destructive: #ff1b6b;
+  --destructive-foreground: #ffffff;
+  --ring: #00ff88;
+  --radius: 0.875rem;
+  --secondary: #101a2e;
+  --secondary-foreground: #00f0ff;
+
+  /* Cyber Arcade Palette Tokens */
+  --neon-lime: #00ff88;
+  --neon-cyan: #00f0ff;
+  --neon-rose: #ff1b6b;
+  --neon-amber: #ffb800;
+  --neon-violet: #a855f7;
+  --cyber-void: #05080e;
+  --cyber-card: #0a111f;
+  --cyber-raised: #101a2e;
+  --cyber-border: rgba(0, 240, 255, 0.16);
+
+  --font-display: 'Unbounded', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --primary: #fafafa;
-  --primary-foreground: #171717;
-  --muted: #a3a3a3;
-  --muted-foreground: #737373;
-  --card: #171717;
-  --card-foreground: #fafafa;
-  --popover: #171717;
-  --popover-foreground: #fafafa;
-  --border: #262626;
-  --border-low: rgba(38, 38, 38, 0.5);
-  --input: #262626;
-  --accent: #262626;
-  --accent-foreground: #fafafa;
-  --cream: #262626;
-  --destructive: #f87171;
-  --destructive-foreground: #f87171;
-  --ring: #525252;
-  --secondary: #262626;
-  --secondary-foreground: #fafafa;
+  --background: #05080e;
+  --foreground: #f0f6fc;
+  --primary: #00ff88;
+  --primary-foreground: #05080e;
+  --muted: #8b9bb4;
+  --muted-foreground: #6b7c96;
+  --card: #0a111f;
+  --card-foreground: #f0f6fc;
+  --popover: #0d1527;
+  --popover-foreground: #f0f6fc;
+  --border: rgba(0, 240, 255, 0.14);
+  --border-low: rgba(255, 255, 255, 0.06);
+  --input: rgba(0, 240, 255, 0.12);
+  --accent: #101a2e;
+  --accent-foreground: #00ff88;
+  --cream: #101a2e;
+  --destructive: #ff1b6b;
+  --destructive-foreground: #ffffff;
+  --ring: #00ff88;
+  --secondary: #101a2e;
+  --secondary-foreground: #00f0ff;
 }
 
 @theme inline {
@@ -75,8 +89,18 @@
   --color-ring: var(--ring);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-neon-lime: var(--neon-lime);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-rose: var(--neon-rose);
+  --color-neon-amber: var(--neon-amber);
+  --color-neon-violet: var(--neon-violet);
+  --color-cyber-void: var(--cyber-void);
+  --color-cyber-card: var(--cyber-card);
+  --color-cyber-raised: var(--cyber-raised);
+  --color-cyber-border: var(--cyber-border);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
@@ -88,12 +112,94 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
   }
 }
 
+/* Cyber Glow Utilities */
+.glow-lime {
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(0, 240, 255, 0.1);
+}
+
+.glow-rose {
+  box-shadow: 0 0 20px rgba(255, 27, 107, 0.3), inset 0 0 10px rgba(255, 27, 107, 0.1);
+}
+
+.glow-amber {
+  box-shadow: 0 0 20px rgba(255, 184, 0, 0.3), inset 0 0 10px rgba(255, 184, 0, 0.1);
+}
+
+.text-glow-lime {
+  text-shadow: 0 0 14px rgba(0, 255, 136, 0.6);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 14px rgba(0, 240, 255, 0.6);
+}
+
+.text-glow-rose {
+  text-shadow: 0 0 14px rgba(255, 27, 107, 0.6);
+}
+
+/* Holographic / Cyber Surface styling */
+.cyber-panel {
+  background: linear-gradient(180deg, rgba(16, 26, 46, 0.85) 0%, rgba(10, 17, 31, 0.95) 100%);
+  border: 1px solid rgba(0, 240, 255, 0.16);
+  backdrop-filter: blur(16px);
+  position: relative;
+}
+
+.cyber-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), rgba(0, 255, 136, 0.4), transparent);
+  pointer-events: none;
+}
+
+/* Scanlines overlay */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Subtle laser horizon grid */
+.cyber-grid-perspective {
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--neon-lime);
   outline-offset: 2px;
 }

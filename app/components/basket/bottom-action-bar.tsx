@@ -2,13 +2,15 @@
 
 import React from "react";
 import { useBasket } from "@/app/lib/store/basket-context";
+import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 
 interface BottomActionBarProps {
   onSkip?: () => void;
 }
 
 export function BottomActionBar({ onSkip }: BottomActionBarProps) {
-  const { basket, totalAllocated, currency, setIsBasketOpen, triggerSwipe } = useBasket();
+  const { basket, totalAllocated, currency, setIsBasketOpen, triggerSwipe } =
+    useBasket();
 
   const handleSkip = () => {
     if (onSkip) onSkip();
@@ -20,19 +22,17 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-[#070A12]/95 backdrop-blur-2xl py-3 px-4 sm:px-6 shadow-2xl">
+    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-cyan-500/20 bg-[#05080E]/95 backdrop-blur-2xl py-3 px-4 sm:px-6 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
       <div className="max-w-6xl w-full mx-auto">
         {/* Mobile View: Single Row (< lg) */}
-        <div className="flex lg:hidden items-center justify-between gap-3">
+        <div className="flex lg:hidden items-center justify-between gap-2.5">
           {/* Skip Button */}
           <button
             type="button"
             onClick={handleSkip}
-            className="cursor-pointer flex items-center gap-1.5 px-4 py-2.5 rounded-2xl border border-white/10 bg-slate-900/80 text-xs font-semibold text-slate-300 hover:text-rose-400 hover:border-rose-500/30 hover:bg-rose-950/20 transition-all duration-200"
+            className="cursor-pointer flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl border border-[#FF1B6B]/40 bg-[#FF1B6B]/10 text-xs font-display font-bold text-[#FF1B6B] hover:bg-[#FF1B6B]/20 transition-all duration-200 shadow-[0_0_12px_rgba(255,27,107,0.2)]"
           >
-            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            <ChevronLeft className="w-3.5 h-3.5" />
             <span>Skip</span>
           </button>
 
@@ -40,19 +40,15 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
           <button
             type="button"
             onClick={() => setIsBasketOpen(true)}
-            className="cursor-pointer flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl border border-white/10 bg-slate-900/90 hover:bg-slate-800 text-xs font-semibold text-white transition-all duration-200 shadow-inner"
+            className="cursor-pointer flex-1 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-2xl border border-cyan-500/20 bg-[#0A111F] hover:bg-[#101A2E] text-xs font-display font-semibold text-white transition-all duration-200 shadow-inner"
           >
-            <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg>
+            <ShoppingCart className="w-4 h-4 text-[#00FF88]" />
             <span>Review basket</span>
-            <span className="flex items-center justify-center px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-mono font-bold">
+            <span className="flex items-center justify-center px-2 py-0.5 rounded-full bg-[#00FF88]/20 text-[#00FF88] text-[11px] font-mono font-bold shadow-[0_0_8px_rgba(0,255,136,0.3)]">
               {basket.length}
             </span>
             {basket.length > 0 && (
-              <span className="text-slate-400 text-[11px] hidden sm:inline tabular-nums">
+              <span className="text-cyan-400 text-[11px] hidden sm:inline tabular-nums font-mono">
                 ({totalAllocated} {currency})
               </span>
             )}
@@ -63,12 +59,10 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
             type="button"
             onClick={() => setIsBasketOpen(true)}
             disabled={basket.length === 0}
-            className="cursor-pointer flex items-center gap-1.5 px-5 py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 disabled:pointer-events-none text-slate-950 text-xs font-bold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-200"
+            className="cursor-pointer flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-2xl bg-[#00FF88] hover:bg-[#00FF88]/90 disabled:opacity-30 disabled:pointer-events-none text-[#05080E] text-xs font-display font-black shadow-[0_0_20px_rgba(0,255,136,0.35)] transition-all duration-200"
           >
             <span>Check routes</span>
-            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
+            <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
@@ -79,29 +73,25 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
             <button
               type="button"
               onClick={handleSkip}
-              className="cursor-pointer flex items-center gap-2 px-6 py-2.5 rounded-2xl border border-rose-500/20 bg-rose-950/30 hover:bg-rose-950/60 hover:border-rose-500/40 text-rose-300 text-xs font-bold transition shadow-sm hover:scale-105"
+              className="cursor-pointer flex items-center gap-2 px-6 py-2.5 rounded-2xl border border-[#FF1B6B]/40 bg-[#FF1B6B]/10 hover:bg-[#FF1B6B]/25 text-[#FF1B6B] text-xs font-display font-bold transition-all shadow-[0_0_15px_rgba(255,27,107,0.2)] hover:scale-105"
               title="Skip asset (or press Left Arrow)"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
+              <ChevronLeft className="w-4 h-4" />
               <span>Skip Asset (Left)</span>
             </button>
 
-            <span className="text-[11px] text-slate-500 font-medium">
+            <span className="text-[11px] text-slate-500 font-mono tracking-tight">
               or swipe card with touch / mouse
             </span>
 
             <button
               type="button"
               onClick={handleAdd}
-              className="cursor-pointer flex items-center gap-2 px-6 py-2.5 rounded-2xl border border-emerald-500/30 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black shadow-lg shadow-emerald-500/20 transition hover:scale-105"
+              className="cursor-pointer flex items-center gap-2 px-6 py-2.5 rounded-2xl border border-[#00FF88]/50 bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] text-xs font-display font-black shadow-[0_0_20px_rgba(0,255,136,0.4)] transition-all hover:scale-105"
               title="Add to basket (or press Right Arrow)"
             >
               <span>Add to Basket (Right)</span>
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
 
@@ -110,19 +100,15 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
             <button
               type="button"
               onClick={() => setIsBasketOpen(true)}
-              className="cursor-pointer flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl border border-white/10 bg-slate-900/90 hover:bg-slate-800 text-xs font-semibold text-white transition shadow-inner"
+              className="cursor-pointer flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl border border-cyan-500/20 bg-[#0A111F] hover:bg-[#101A2E] text-xs font-display font-semibold text-white transition shadow-inner"
             >
-              <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="9" cy="21" r="1" />
-                <circle cx="20" cy="21" r="1" />
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-              </svg>
+              <ShoppingCart className="w-4 h-4 text-[#00FF88]" />
               <span>Review Basket</span>
-              <span className="flex items-center justify-center px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-mono font-bold">
+              <span className="flex items-center justify-center px-2 py-0.5 rounded-full bg-[#00FF88]/20 text-[#00FF88] text-[11px] font-mono font-bold shadow-[0_0_8px_rgba(0,255,136,0.25)]">
                 {basket.length}
               </span>
               {basket.length > 0 && (
-                <span className="text-emerald-400 text-[11px] font-mono tabular-nums">
+                <span className="text-[#00FF88] text-[11px] font-mono tabular-nums font-semibold">
                   ({totalAllocated} {currency})
                 </span>
               )}
@@ -132,12 +118,10 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
               type="button"
               onClick={() => setIsBasketOpen(true)}
               disabled={basket.length === 0}
-              className="cursor-pointer flex items-center gap-1.5 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-cyan-400 hover:opacity-90 disabled:opacity-30 disabled:pointer-events-none text-slate-950 text-xs font-black shadow-lg shadow-emerald-500/20 transition"
+              className="cursor-pointer flex items-center gap-1.5 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-[#00FF88] to-[#00F0FF] hover:opacity-90 disabled:opacity-30 disabled:pointer-events-none text-[#05080E] text-xs font-display font-black shadow-[0_0_20px_rgba(0,255,136,0.4)] transition hover:scale-105"
             >
               <span>Check routes</span>
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

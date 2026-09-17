@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { StockToken } from "@/app/lib/data/stocks-catalog";
 import { StockChart } from "./stock-chart";
 import { useBasket } from "@/app/lib/store/basket-context";
+import { Cpu, Rocket, Coins, Sparkles, Flame, TrendingUp, Link2 } from "lucide-react";
 
 interface StockCardProps {
   stock: StockToken;
@@ -11,7 +12,11 @@ interface StockCardProps {
   dragOffset?: { x: number; y: number };
 }
 
-export function StockCard({ stock, isFront = false, dragOffset = { x: 0, y: 0 } }: StockCardProps) {
+export function StockCard({
+  stock,
+  isFront = false,
+  dragOffset = { x: 0, y: 0 },
+}: StockCardProps) {
   const { allocationPerSwipe, currency } = useBasket();
   const [imageError, setImageError] = useState(false);
 
@@ -21,58 +26,45 @@ export function StockCard({ stock, isFront = false, dragOffset = { x: 0, y: 0 } 
 
   const isPositive = stock.change3m >= 0;
 
-  // Sector icon SVG mapping as robust fallback
+  // Sector icon Lucide mapping
   const renderSectorIcon = () => {
     switch (stock.sector) {
       case "Tech & AI":
-        return (
-          <svg className="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
-            <circle cx="12" cy="12" r="4" />
-          </svg>
-        );
+        return <Cpu className="w-5 h-5 text-[#00FF88]" />;
       case "Defense & Aerospace":
-        return (
-          <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-          </svg>
-        );
+        return <Rocket className="w-5 h-5 text-[#00F0FF]" />;
       case "Fintech & Crypto":
-        return (
-          <svg className="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="2" y="5" width="20" height="14" rx="2" />
-            <line x1="2" y1="10" x2="22" y2="10" />
-          </svg>
-        );
+        return <Coins className="w-5 h-5 text-[#A855F7]" />;
       case "Pre-IPO Unicorn":
-        return (
-          <svg className="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </svg>
-        );
+        return <Sparkles className="w-5 h-5 text-[#FFB800]" />;
       case "Bonding Curve Meme":
-        return (
-          <svg className="w-5 h-5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-          </svg>
-        );
+        return <Flame className="w-5 h-5 text-[#FF1B6B]" />;
       default:
-        return (
-          <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="12" y1="1" x2="12" y2="23" />
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-          </svg>
-        );
+        return <TrendingUp className="w-5 h-5 text-[#00F0FF]" />;
     }
   };
 
   return (
-    <div className="relative w-full max-w-[460px] h-[560px] flex flex-col justify-between rounded-3xl border border-slate-800/80 bg-[#0D1322] p-5 shadow-2xl transition-shadow hover:border-slate-700 select-none overflow-hidden">
+    <div className="relative w-full max-w-[460px] h-[560px] flex flex-col justify-between rounded-3xl border border-cyan-500/25 bg-[#0A111F] p-5 shadow-[0_12px_40px_rgba(0,0,0,0.6)] transition-all duration-300 hover:border-[#00FF88]/40 hover:shadow-[0_0_30px_rgba(0,255,136,0.15)] select-none overflow-hidden group">
+      {/* Decorative HUD Corner Accents */}
+      <span className="absolute top-2.5 left-2.5 text-[9px] font-mono text-cyan-500/30 pointer-events-none select-none">
+        ┌
+      </span>
+      <span className="absolute top-2.5 right-2.5 text-[9px] font-mono text-cyan-500/30 pointer-events-none select-none">
+        ┐
+      </span>
+      <span className="absolute bottom-2.5 left-2.5 text-[9px] font-mono text-cyan-500/30 pointer-events-none select-none">
+        └
+      </span>
+      <span className="absolute bottom-2.5 right-2.5 text-[9px] font-mono text-cyan-500/30 pointer-events-none select-none">
+        ┘
+      </span>
+
       {/* Swipe Feedback Stamp (Right = Add) */}
       {isFront && isSwipingRight && (
         <div
           style={{ opacity: swipeOpacity }}
-          className="absolute top-6 right-6 z-30 pointer-events-none rounded-xl border-2 border-emerald-400 bg-emerald-950/90 px-4 py-1.5 text-xs font-black tracking-widest text-emerald-300 uppercase shadow-lg shadow-emerald-500/20 rotate-12"
+          className="absolute top-6 right-6 z-30 pointer-events-none rounded-2xl border-2 border-[#00FF88] bg-[#05080E]/95 px-5 py-2 text-xs font-display font-black tracking-widest text-[#00FF88] uppercase shadow-[0_0_30px_rgba(0,255,136,0.6)] rotate-12"
         >
           ADD TO BASKET
         </div>
@@ -82,19 +74,19 @@ export function StockCard({ stock, isFront = false, dragOffset = { x: 0, y: 0 } 
       {isFront && isSwipingLeft && (
         <div
           style={{ opacity: swipeOpacity }}
-          className="absolute top-6 left-6 z-30 pointer-events-none rounded-xl border-2 border-rose-500 bg-rose-950/90 px-4 py-1.5 text-xs font-black tracking-widest text-rose-300 uppercase shadow-lg shadow-rose-500/20 -rotate-12"
+          className="absolute top-6 left-6 z-30 pointer-events-none rounded-2xl border-2 border-[#FF1B6B] bg-[#05080E]/95 px-5 py-2 text-xs font-display font-black tracking-widest text-[#FF1B6B] uppercase shadow-[0_0_30px_rgba(255,27,107,0.6)] -rotate-12"
         >
           SKIP
         </div>
       )}
 
-      {/* Top Half: Header & Meta (Fixed height structure) */}
+      {/* Top Half: Header & Meta */}
       <div className="shrink-0 space-y-2.5">
-        {/* Card Header (Fixed height) */}
+        {/* Card Header */}
         <div className="h-12 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             {/* Logo Badge with real image and graceful fallback */}
-            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-slate-900/80 p-1.5 shadow-inner overflow-hidden">
+            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-cyan-500/20 bg-[#05080E] p-1.5 shadow-[inset_0_0_10px_rgba(0,240,255,0.1)] overflow-hidden">
               {stock.logoURI && !imageError ? (
                 <img
                   src={stock.logoURI}
@@ -110,55 +102,62 @@ export function StockCard({ stock, isFront = false, dragOffset = { x: 0, y: 0 } 
 
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-base tracking-tight text-white truncate max-w-[170px] sm:max-w-[200px]">
+                <h3 className="font-display font-bold text-base tracking-tight text-white truncate max-w-[170px] sm:max-w-[200px]">
                   {stock.name}
                 </h3>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300 shrink-0">
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/25 shrink-0">
                   {stock.ticker}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 truncate max-w-[220px]">{stock.subtitle}</p>
+              <p className="text-xs text-slate-400 truncate max-w-[220px]">
+                {stock.subtitle}
+              </p>
             </div>
           </div>
 
           {/* Allocation Pill ($ or SOL per swipe) */}
-          <div className="shrink-0 flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-900/90 px-3 py-1.5 text-xs font-semibold text-white shadow-xs">
-            <span className="tabular-nums font-mono text-emerald-400">
-              {currency === "SOL" ? `${allocationPerSwipe} SOL` : `$${allocationPerSwipe}`}
+          <div className="shrink-0 flex items-center gap-1.5 rounded-full border border-[#00FF88]/30 bg-[#05080E] px-3.5 py-1.5 text-xs font-mono font-bold text-white shadow-[0_0_12px_rgba(0,255,136,0.15)]">
+            <span className="tabular-nums text-[#00FF88]">
+              {currency === "SOL"
+                ? `${allocationPerSwipe} SOL`
+                : `$${allocationPerSwipe}`}
             </span>
-            <svg className="w-3 h-3 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-            </svg>
+            <Link2 className="w-3.5 h-3.5 text-slate-400" />
           </div>
         </div>
 
-        {/* Return & Meta Row (Fixed height h-6) */}
+        {/* Return & Meta Row */}
         <div className="h-6 flex items-center gap-2 overflow-hidden text-xs">
           <div
-            className={`flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md ${
+            className={`flex items-center gap-1 font-mono font-bold px-2 py-0.5 rounded-md text-[11px] ${
               isPositive
-                ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20"
-                : "bg-rose-500/15 text-rose-400 border border-rose-500/20"
+                ? "bg-[#00FF88]/15 text-[#00FF88] border border-[#00FF88]/30 shadow-[0_0_8px_rgba(0,255,136,0.15)]"
+                : "bg-[#FF1B6B]/15 text-[#FF1B6B] border border-[#FF1B6B]/30 shadow-[0_0_8px_rgba(255,27,107,0.15)]"
             }`}
           >
-            <span>{isPositive ? "+" : ""}{stock.change3m}%</span>
+            <span>
+              {isPositive ? "+" : ""}
+              {stock.change3m}%
+            </span>
             <span className="text-slate-400 font-normal">• 3M</span>
           </div>
 
           {stock.marketCap && (
-            <span className="text-[11px] text-slate-400 truncate">
-              Cap: <span className="text-slate-300 font-medium">{stock.marketCap}</span>
+            <span className="text-[11px] text-slate-400 truncate font-mono">
+              Cap:{" "}
+              <span className="text-slate-300 font-medium font-mono">
+                {stock.marketCap}
+              </span>
             </span>
           )}
 
           {stock.isPreIPO && (
-            <span className="text-[10px] font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded shrink-0">
+            <span className="text-[10px] font-display font-semibold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded shadow-[0_0_8px_rgba(245,158,11,0.2)] shrink-0">
               Pre-IPO
             </span>
           )}
           {stock.isStonkFun && (
-            <span className="text-[10px] font-semibold text-rose-300 bg-rose-500/10 border border-rose-500/20 px-1.5 py-0.5 rounded shrink-0">
+            <span className="text-[10px] font-display font-semibold text-[#FF1B6B] bg-[#FF1B6B]/15 border border-[#FF1B6B]/30 px-2 py-0.5 rounded shadow-[0_0_8px_rgba(255,27,107,0.2)] shrink-0">
               StonkFun
             </span>
           )}
@@ -174,15 +173,15 @@ export function StockCard({ stock, isFront = false, dragOffset = { x: 0, y: 0 } 
         />
       </div>
 
-      {/* Bottom: Exposure Breakdown Callout (Fixed height container) */}
-      <div className="shrink-0 rounded-2xl border border-slate-800 bg-[#070A12] p-3 space-y-2">
+      {/* Bottom: Exposure Breakdown Callout */}
+      <div className="shrink-0 rounded-2xl border border-cyan-500/20 bg-[#05080E] p-3.5 space-y-2 shadow-inner">
         <p className="h-[34px] text-xs leading-snug text-slate-300 line-clamp-2">
           {stock.description}
         </p>
 
         {/* Multi-Segment Allocation Bar */}
         <div>
-          <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+          <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-[#101A2E] shadow-inner">
             {stock.allocationSegments.map((seg, idx) => (
               <div
                 key={idx}
@@ -190,22 +189,24 @@ export function StockCard({ stock, isFront = false, dragOffset = { x: 0, y: 0 } 
                   width: `${seg.weight}%`,
                   backgroundColor: seg.color,
                 }}
-                className="h-full transition-all duration-300"
+                className="h-full transition-all duration-300 shadow-[0_0_6px_currentColor]"
                 title={`${seg.label}: ${seg.weight}%`}
               />
             ))}
           </div>
 
-          {/* Single-row Allocation Legend with clean ellipsis */}
-          <div className="h-4 flex items-center gap-x-3 mt-1.5 text-[10px] text-slate-400 overflow-hidden">
+          {/* Single-row Allocation Legend */}
+          <div className="h-4 flex items-center gap-x-3 mt-1.5 text-[10px] text-slate-400 overflow-hidden font-mono">
             {stock.allocationSegments.slice(0, 3).map((seg, idx) => (
-              <div key={idx} className="flex items-center gap-1 shrink-0">
+              <div key={idx} className="flex items-center gap-1.5 shrink-0">
                 <span
-                  className="w-1.5 h-1.5 rounded-full"
+                  className="w-1.5 h-1.5 rounded-full shadow-[0_0_4px_currentColor]"
                   style={{ backgroundColor: seg.color }}
                 />
-                <span className="truncate max-w-[95px]">{seg.label}</span>
-                <span className="text-slate-500 font-mono">{seg.weight}%</span>
+                <span className="truncate max-w-[95px] text-slate-300">
+                  {seg.label}
+                </span>
+                <span className="text-cyan-400/80 font-semibold">{seg.weight}%</span>
               </div>
             ))}
             {stock.allocationSegments.length > 3 && (

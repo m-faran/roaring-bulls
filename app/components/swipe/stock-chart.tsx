@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { ChartPoint } from "@/app/lib/data/stocks-catalog";
+import { Info } from "lucide-react";
 
 interface StockChartProps {
   chartData: {
@@ -56,7 +57,7 @@ export function StockChart({
   // Generate smooth cubic Bezier curve
   const width = 500;
   const height = 180;
-  const paddingRight = 65; // room for price labels
+  const paddingRight = 65;
   const chartW = width - paddingRight;
 
   const { pathD, areaD, benchPathD, coords } = useMemo(() => {
@@ -87,7 +88,6 @@ export function StockChart({
       return { pathD: "", areaD: "", benchPathD: "", coords: cList };
     }
 
-    // Cubic bezier curve for main asset line
     let p = `M ${cList[0].x.toFixed(1)},${cList[0].y.toFixed(1)}`;
     for (let i = 0; i < cList.length - 1; i++) {
       const p0 = cList[i === 0 ? 0 : i - 1];
@@ -105,7 +105,6 @@ export function StockChart({
 
     const a = `${p} L ${cList[cList.length - 1].x.toFixed(1)},${height} L 0,${height} Z`;
 
-    // Benchmark dashed curve
     let bp = `M ${cList[0].x.toFixed(1)},${cList[0].by.toFixed(1)}`;
     for (let i = 0; i < cList.length - 1; i++) {
       const cp1x = (cList[i].x + (cList[i + 1].x - cList[i].x) / 2).toFixed(1);
@@ -115,32 +114,50 @@ export function StockChart({
     return { pathD: p, areaD: a, benchPathD: bp, coords: cList };
   }, [points, minPrice, maxPrice, minBench, maxBench, chartW]);
 
-  const activePoint = hoveredIndex !== null && coords[hoveredIndex] ? coords[hoveredIndex] : coords[coords.length - 1];
+  const activePoint =
+    hoveredIndex !== null && coords[hoveredIndex]
+      ? coords[hoveredIndex]
+      : coords[coords.length - 1];
 
-  const strokeColor = isPositive ? "#10B981" : "#F43F5E";
-  const gradientId = `chart-grad-${isPositive ? "emerald" : "rose"}-${timeframe}`;
+  const strokeColor = isPositive ? "#00FF88" : "#FF1B6B";
+  const gradientId = `chart-grad-${isPositive ? "lime" : "rose"}-${timeframe}`;
+  const filterId = `chart-glow-${isPositive ? "lime" : "rose"}`;
 
   return (
     <div className="w-full select-none">
       {/* Chart Header Meta */}
       <div className="flex items-center justify-between px-1 mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold tabular-nums text-foreground">
+          <span className="text-xs font-mono font-bold tabular-nums text-white">
             ${activePoint?.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
           </span>
-          <span className="text-[10px] text-muted flex items-center gap-1">
-            <span className="inline-block w-2.5 h-0.5 border-t border-dashed border-slate-400"></span>
+          <span className="text-[10px] text-slate-400 flex items-center gap-1 font-mono">
+            <span className="inline-block w-2.5 h-0.5 border-t border-dashed border-cyan-400/60"></span>
             vs {benchmarkTicker}
           </span>
         </div>
 
-        <div className="text-[10px] text-muted tabular-nums">
-          {timeframe === "1W" ? "Last 7 Days" : timeframe === "1M" ? "Last 30 Days" : timeframe === "3M" ? "Jun 2026 – Sep 2026" : "Historical"}
+        <div className="text-[10px] text-slate-400 font-mono tabular-nums">
+          {timeframe === "1W"
+            ? "Last 7 Days"
+            : timeframe === "1M"
+            ? "Last 30 Days"
+            : timeframe === "3M"
+            ? "Jun 2026 – Sep 2026"
+            : "Historical"}
         </div>
       </div>
 
-      {/* SVG Canvas */}
-      <div className="relative w-full h-[180px] overflow-hidden rounded-xl bg-slate-950/40 border border-white/5 p-2">
+      {/* SVG Canvas Container */}
+      <div className="relative w-full h-[180px] overflow-hidden rounded-2xl bg-[#05080E]/90 border border-cyan-500/20 p-2 shadow-inner group">
+        {/* Subtle decorative HUD crosshair in corner */}
+        <span className="absolute top-1.5 left-1.5 text-[8px] font-mono text-cyan-500/40 pointer-events-none">
+          +
+        </span>
+        <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-cyan-500/40 pointer-events-none">
+          +
+        </span>
+
         <svg
           viewBox={`0 0 ${width} ${height}`}
           className="w-full h-full overflow-visible"
@@ -148,16 +165,47 @@ export function StockChart({
         >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={strokeColor} stopOpacity="0.28" />
-              <stop offset="85%" stopColor={strokeColor} stopOpacity="0.02" />
+              <stop offset="0%" stopColor={strokeColor} stopOpacity="0.35" />
+              <stop offset="85%" stopColor={strokeColor} stopOpacity="0.03" />
               <stop offset="100%" stopColor={strokeColor} stopOpacity="0.0" />
             </linearGradient>
+
+            <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow
+                dx="0"
+                dy="0"
+                stdDeviation="3"
+                floodColor={strokeColor}
+                floodOpacity="0.7"
+              />
+            </filter>
           </defs>
 
           {/* Horizontal Grid lines */}
-          <line x1="0" y1="30" x2={chartW} y2="30" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-          <line x1="0" y1="85" x2={chartW} y2="85" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-          <line x1="0" y1="140" x2={chartW} y2="140" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
+          <line
+            x1="0"
+            y1="30"
+            x2={chartW}
+            y2="30"
+            stroke="rgba(0, 240, 255, 0.08)"
+            strokeDasharray="3 3"
+          />
+          <line
+            x1="0"
+            y1="85"
+            x2={chartW}
+            y2="85"
+            stroke="rgba(0, 240, 255, 0.08)"
+            strokeDasharray="3 3"
+          />
+          <line
+            x1="0"
+            y1="140"
+            x2={chartW}
+            y2="140"
+            stroke="rgba(0, 240, 255, 0.08)"
+            strokeDasharray="3 3"
+          />
 
           {/* Gradient Fill Under Main Line */}
           {areaD && <path d={areaD} fill={`url(#${gradientId})`} />}
@@ -174,26 +222,45 @@ export function StockChart({
             />
           )}
 
-          {/* Main Price Line */}
+          {/* Main Price Line with Glowing Neon DropShadow */}
           {pathD && (
             <path
               d={pathD}
               fill="none"
               stroke={strokeColor}
-              strokeWidth="2.2"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
+              filter={`url(#${filterId})`}
             />
           )}
 
           {/* Price Axis Labels on the Right */}
-          <text x={chartW + 8} y="33" fill="#64748B" fontSize="9" className="font-mono tabular-nums">
+          <text
+            x={chartW + 8}
+            y="33"
+            fill="#8B9BB4"
+            fontSize="9"
+            className="font-mono tabular-nums font-medium"
+          >
             ${Math.round(maxPrice * 0.95)}
           </text>
-          <text x={chartW + 8} y="88" fill="#64748B" fontSize="9" className="font-mono tabular-nums">
+          <text
+            x={chartW + 8}
+            y="88"
+            fill="#8B9BB4"
+            fontSize="9"
+            className="font-mono tabular-nums font-medium"
+          >
             ${Math.round((maxPrice + minPrice) / 2)}
           </text>
-          <text x={chartW + 8} y="143" fill="#64748B" fontSize="9" className="font-mono tabular-nums">
+          <text
+            x={chartW + 8}
+            y="143"
+            fill="#8B9BB4"
+            fontSize="9"
+            className="font-mono tabular-nums font-medium"
+          >
             ${Math.round(minPrice * 1.05)}
           </text>
 
@@ -205,16 +272,17 @@ export function StockChart({
                 y1="0"
                 x2={Math.round(activePoint.x * 10) / 10}
                 y2={height}
-                stroke="rgba(255,255,255,0.15)"
+                stroke="rgba(0, 240, 255, 0.3)"
                 strokeDasharray="2 2"
               />
               <circle
                 cx={Math.round(activePoint.x * 10) / 10}
                 cy={Math.round(activePoint.y * 10) / 10}
-                r="4.5"
+                r="5"
                 fill={strokeColor}
-                stroke="#0F172A"
-                strokeWidth="2"
+                stroke="#05080E"
+                strokeWidth="2.5"
+                className="animate-pulse"
               />
             </g>
           )}
@@ -237,16 +305,16 @@ export function StockChart({
 
       {/* Timeframe Control Tabs */}
       <div className="flex items-center justify-between mt-3 px-1">
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900/80 border border-white/5">
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#0A111F] border border-cyan-500/20 shadow-inner">
           {(["1W", "1M", "3M", "1Y", "All"] as Timeframe[]).map((tf) => {
             const isActive = timeframe === tf;
             return (
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
-                className={`cursor-pointer px-3 py-1 text-[11px] font-semibold rounded-lg transition-all duration-200 ${
+                className={`cursor-pointer px-3 py-1 text-[11px] font-display font-semibold rounded-lg transition-all duration-200 ${
                   isActive
-                    ? "bg-emerald-500 text-slate-950 shadow-sm shadow-emerald-500/20"
+                    ? "bg-[#00FF88] text-[#05080E] font-black shadow-[0_0_10px_rgba(0,255,136,0.4)]"
                     : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
@@ -257,12 +325,8 @@ export function StockChart({
         </div>
 
         {/* Info / Benchmark Indicator */}
-        <div className="flex items-center gap-1 text-[11px] text-muted px-2 py-1 rounded-lg bg-slate-900/60 border border-white/5">
-          <svg className="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 16v-4" />
-            <path d="M12 8h.01" />
-          </svg>
+        <div className="flex items-center gap-1.5 text-[11px] text-slate-400 px-2.5 py-1 rounded-xl bg-[#0A111F] border border-cyan-500/20 font-mono">
+          <Info className="w-3.5 h-3.5 text-cyan-400" />
           <span className="hidden sm:inline">Benchmark: {benchmarkTicker}</span>
         </div>
       </div>

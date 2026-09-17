@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useBasket } from "@/app/lib/store/basket-context";
+import { Sliders, X } from "lucide-react";
 
 export function SessionSetupModal() {
   const {
@@ -53,19 +54,20 @@ export function SessionSetupModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#0B0F19] p-6 shadow-2xl space-y-6">
+      <div className="w-full max-w-md rounded-3xl border border-cyan-500/30 bg-[#0A111F] p-6 sm:p-7 shadow-[0_0_50px_rgba(0,0,0,0.8)] space-y-6">
         {/* Modal Header */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-slate-800 border border-white/10 text-emerald-400">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-              </svg>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-[#05080E] border border-cyan-500/20 text-[#00FF88] shadow-inner">
+              <Sliders className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-white">Session Setup</h3>
-              <p className="text-xs text-slate-400">Configure your investment budget & swipe sizes</p>
+              <h3 className="font-display font-bold text-base text-white">
+                Session Setup
+              </h3>
+              <p className="text-xs text-slate-400">
+                Configure your investment budget & swipe sizes
+              </p>
             </div>
           </div>
 
@@ -73,33 +75,32 @@ export function SessionSetupModal() {
             onClick={() => setIsSessionSetupOpen(false)}
             className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Currency Selector */}
         <div className="space-y-2">
-          <label className="text-xs font-semibold text-slate-300">Quote Currency</label>
-          <div className="grid grid-cols-2 gap-2">
+          <label className="text-xs font-semibold text-slate-300 font-display">
+            Quote Currency
+          </label>
+          <div className="grid grid-cols-2 gap-2.5">
             <button
               onClick={() => handleCurrencyChange("SOL")}
-              className={`cursor-pointer p-2.5 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition ${
+              className={`cursor-pointer p-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
                 currency === "SOL"
-                  ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-400 shadow-sm"
-                  : "border-white/5 bg-slate-900/60 text-slate-400 hover:text-white"
+                  ? "border-[#00FF88] bg-[#00FF88]/15 text-[#00FF88] shadow-[0_0_12px_rgba(0,255,136,0.2)]"
+                  : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
               }`}
             >
               <span>SOL (Native Gas & StonkFun)</span>
             </button>
             <button
               onClick={() => handleCurrencyChange("USDC")}
-              className={`cursor-pointer p-2.5 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition ${
+              className={`cursor-pointer p-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
                 currency === "USDC"
-                  ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-400 shadow-sm"
-                  : "border-white/5 bg-slate-900/60 text-slate-400 hover:text-white"
+                  ? "border-[#00FF88] bg-[#00FF88]/15 text-[#00FF88] shadow-[0_0_12px_rgba(0,255,136,0.2)]"
+                  : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
               }`}
             >
               <span>USDC (Fixed Dollar)</span>
@@ -110,8 +111,12 @@ export function SessionSetupModal() {
         {/* Total Session Budget */}
         <div className="space-y-2">
           <div className="flex justify-between items-center text-xs">
-            <label className="font-semibold text-slate-300">Total Session Budget</label>
-            <span className="text-slate-400 font-mono">Current: {sessionBudget} {currency}</span>
+            <label className="font-semibold text-slate-300 font-display">
+              Total Session Budget
+            </label>
+            <span className="text-slate-400 font-mono text-[11px]">
+              Current: {sessionBudget} {currency}
+            </span>
           </div>
 
           <div className="flex gap-2">
@@ -119,10 +124,10 @@ export function SessionSetupModal() {
               <button
                 key={val}
                 onClick={() => setBudgetInput(val.toString())}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-semibold border transition cursor-pointer ${
+                className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer ${
                   budgetInput === val.toString()
-                    ? "border-emerald-500 bg-emerald-500/20 text-emerald-300"
-                    : "border-white/5 bg-slate-900 text-slate-400 hover:text-white"
+                    ? "border-[#00FF88] bg-[#00FF88]/20 text-[#00FF88] shadow-[0_0_10px_rgba(0,255,136,0.25)]"
+                    : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
                 }`}
               >
                 {val} {currency}
@@ -135,7 +140,7 @@ export function SessionSetupModal() {
             step="any"
             value={budgetInput}
             onChange={(e) => setBudgetInput(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-sm text-white focus:border-emerald-500 outline-none"
+            className="w-full px-3.5 py-2.5 rounded-xl bg-[#05080E] border border-cyan-500/20 text-sm font-mono text-white focus:border-[#00FF88] outline-none shadow-inner transition-colors"
             placeholder="Custom budget..."
           />
         </div>
@@ -143,8 +148,12 @@ export function SessionSetupModal() {
         {/* Allocation per Swipe */}
         <div className="space-y-2">
           <div className="flex justify-between items-center text-xs">
-            <label className="font-semibold text-slate-300">Allocation per Swipe</label>
-            <span className="text-slate-400 font-mono">Current: {allocationPerSwipe} {currency}</span>
+            <label className="font-semibold text-slate-300 font-display">
+              Allocation per Swipe
+            </label>
+            <span className="text-slate-400 font-mono text-[11px]">
+              Current: {allocationPerSwipe} {currency}
+            </span>
           </div>
 
           <div className="flex gap-2">
@@ -152,10 +161,10 @@ export function SessionSetupModal() {
               <button
                 key={val}
                 onClick={() => setAllocInput(val.toString())}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-semibold border transition cursor-pointer ${
+                className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer ${
                   allocInput === val.toString()
-                    ? "border-emerald-500 bg-emerald-500/20 text-emerald-300"
-                    : "border-white/5 bg-slate-900 text-slate-400 hover:text-white"
+                    ? "border-[#00FF88] bg-[#00FF88]/20 text-[#00FF88] shadow-[0_0_10px_rgba(0,255,136,0.25)]"
+                    : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
                 }`}
               >
                 {val} {currency}
@@ -168,7 +177,7 @@ export function SessionSetupModal() {
             step="any"
             value={allocInput}
             onChange={(e) => setAllocInput(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-sm text-white focus:border-emerald-500 outline-none"
+            className="w-full px-3.5 py-2.5 rounded-xl bg-[#05080E] border border-cyan-500/20 text-sm font-mono text-white focus:border-[#00FF88] outline-none shadow-inner transition-colors"
             placeholder="Custom allocation..."
           />
         </div>
@@ -177,13 +186,13 @@ export function SessionSetupModal() {
         <div className="pt-2 flex gap-3">
           <button
             onClick={() => setIsSessionSetupOpen(false)}
-            className="flex-1 cursor-pointer py-2.5 rounded-xl border border-white/10 text-xs font-semibold text-slate-300 hover:bg-white/5 transition"
+            className="flex-1 cursor-pointer py-2.5 rounded-xl border border-cyan-500/20 text-xs font-display font-semibold text-slate-300 hover:bg-white/5 transition"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 cursor-pointer py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold shadow-lg shadow-emerald-500/20 transition"
+            className="flex-1 cursor-pointer py-2.5 rounded-xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] text-xs font-display font-black shadow-[0_0_20px_rgba(0,255,136,0.4)] transition hover:scale-105"
           >
             Save Preferences
           </button>

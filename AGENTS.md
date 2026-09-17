@@ -14,3 +14,4 @@ Skills are specialized workflows and cheatsheets that the agent can invoke on-de
 
 - [Solana Development](.agent/skills/solana-dev/SKILL.md)
 - [UI/UX Pro Max](.agent/skills/ui-ux-pro-max/SKILL.md)
+- [Copy Writing](.agent/skills/copywriting/SKILL.md)

@@ -39,7 +39,8 @@
     "react-dom": "19.2.3",
     "sonner": "^2.0.7",
     "swr": "^2.2.0",
-    "ws": "^8.18.3"
+    "ws": "^8.18.3",
+    "lucide-react": "^1.47.0"
   },
   "devDependencies": {
     "@solana/surfpool": "^1.5.0",
