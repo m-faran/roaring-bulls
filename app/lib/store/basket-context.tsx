@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useRef, useCallback } from "react";
 import { StockToken, RiskTier } from "../data/stocks-catalog";
 import { SOL_USD_PRICE } from "../execution/mock-quotes";
 
@@ -32,6 +32,14 @@ interface BasketContextType {
   setIsSessionSetupOpen: (open: boolean) => void;
   isPortfolioOpen: boolean;
   setIsPortfolioOpen: (open: boolean) => void;
+  hasCompletedOnboarding: boolean;
+  setHasCompletedOnboarding: (completed: boolean) => void;
+  isStrategyWizardOpen: boolean;
+  setIsStrategyWizardOpen: (open: boolean) => void;
+  activeTab: "landing" | "app";
+  setActiveTab: (tab: "landing" | "app") => void;
+  triggerSwipe: (direction: "left" | "right") => void;
+  registerSwipeHandler: (handler: (direction: "left" | "right") => void) => () => void;
   formatCurrency: (amount: number) => string;
 }
 
@@ -46,10 +54,33 @@ export function BasketProvider({ children }: { children: React.ReactNode }) {
   const [allocationPerSwipe, setAllocationPerSwipe] = useState<number>(0.05);
   const [basket, setBasket] = useState<BasketItem[]>([]);
 
-  // Modals & Drawer states
+  // Modals & Navigation states
   const [isBasketOpen, setIsBasketOpen] = useState(false);
   const [isSessionSetupOpen, setIsSessionSetupOpen] = useState(false);
   const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
+  const [isStrategyWizardOpen, setIsStrategyWizardOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"landing" | "app">("landing");
+
+  const swipeHandlerRef = useRef<((direction: "left" | "right") => void) | null>(null);
+
+  const registerSwipeHandler = useCallback(
+    (handler: (direction: "left" | "right") => void) => {
+      swipeHandlerRef.current = handler;
+      return () => {
+        if (swipeHandlerRef.current === handler) {
+          swipeHandlerRef.current = null;
+        }
+      };
+    },
+    []
+  );
+
+  const triggerSwipe = useCallback((direction: "left" | "right") => {
+    if (swipeHandlerRef.current) {
+      swipeHandlerRef.current(direction);
+    }
+  }, []);
 
   const totalAllocated = basket.reduce((sum, item) => sum + item.allocation, 0);
   const remainingBudget = Math.max(0, sessionBudget - totalAllocated);
@@ -130,6 +161,14 @@ export function BasketProvider({ children }: { children: React.ReactNode }) {
         setIsSessionSetupOpen,
         isPortfolioOpen,
         setIsPortfolioOpen,
+        hasCompletedOnboarding,
+        setHasCompletedOnboarding,
+        isStrategyWizardOpen,
+        setIsStrategyWizardOpen,
+        activeTab,
+        setActiveTab,
+        triggerSwipe,
+        registerSwipeHandler,
         formatCurrency,
       }}
     >

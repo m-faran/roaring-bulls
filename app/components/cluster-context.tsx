@@ -24,20 +24,7 @@ const CLUSTER_EVENT = "cluster-change";
 let memoryCluster: ClusterMoniker = "devnet";
 
 function readStoredCluster(): ClusterMoniker {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === null) {
-      return memoryCluster;
-    }
-    if (CLUSTERS.includes(stored as ClusterMoniker)) {
-      memoryCluster = stored as ClusterMoniker;
-    } else {
-      memoryCluster = "devnet";
-    }
-  } catch {
-    // localStorage unavailable (e.g. Safari private mode)
-  }
-  return memoryCluster;
+  return "devnet";
 }
 
 function getServerCluster(): ClusterMoniker {

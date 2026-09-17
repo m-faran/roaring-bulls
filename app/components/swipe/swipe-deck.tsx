@@ -22,6 +22,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
     budgetUtilizationPct,
     setIsSessionSetupOpen,
     setIsBasketOpen,
+    registerSwipeHandler,
   } = useBasket();
 
   // Filter stocks by current risk tier
@@ -74,6 +75,11 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
     },
     [currentStock, isAnimatingOut, addToBasket, allocationPerSwipe, currency]
   );
+
+  // Register swipe handler with context so bottom bar or external controls trigger swipes
+  useEffect(() => {
+    return registerSwipeHandler(handleSwipe);
+  }, [registerSwipeHandler, handleSwipe]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -148,22 +154,22 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
       </div>
 
       {/* Budget Progress Meter */}
-      <div className="w-full max-w-[440px] flex items-center justify-between px-3 py-2 mb-4 rounded-xl bg-slate-900/60 border border-white/5 text-xs">
+      <div className="w-full max-w-[460px] flex items-center justify-between px-3.5 py-2 mb-4 rounded-xl bg-slate-900/70 border border-white/5 text-xs">
         <div className="flex items-center gap-2">
-          <span className="text-muted">Budget Allocated:</span>
-          <span className="font-semibold text-foreground tabular-nums">
+          <span className="text-slate-400">Allocated:</span>
+          <span className="font-semibold text-white tabular-nums">
             {budgetUtilizationPct}%
           </span>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-muted">Remaining:</span>
+          <span className="text-slate-400">Remaining:</span>
           <span className="font-semibold text-emerald-400 tabular-nums">
             {remainingBudget} {currency}
           </span>
           <button
             onClick={() => setIsSessionSetupOpen(true)}
-            className="cursor-pointer text-slate-400 hover:text-white p-1 rounded hover:bg-white/10"
+            className="cursor-pointer text-slate-400 hover:text-white p-1 rounded hover:bg-white/10 transition"
             title="Configure session budget & allocation"
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -175,12 +181,12 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
       </div>
 
       {/* Swipe Deck Container */}
-      <div className="relative w-full max-w-[440px] h-[580px] flex items-center justify-center">
+      <div className="relative w-full max-w-[460px] h-[570px] flex items-center justify-center">
         {currentStock ? (
           <>
-            {/* Card Underneath (Preview) */}
+            {/* Card Underneath (Preview - exactly same dimension) */}
             {nextStock && (
-              <div className="absolute top-2 w-full max-w-[440px] scale-[0.95] translate-y-3 opacity-50 pointer-events-none transition-all duration-300">
+              <div className="absolute top-0 w-full max-w-[460px] h-[560px] scale-[0.96] translate-y-3 opacity-40 pointer-events-none transition-all duration-300">
                 <StockCard stock={nextStock} />
               </div>
             )}
@@ -215,7 +221,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
                   ? "none"
                   : "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
               }}
-              className="absolute top-0 w-full max-w-[440px] cursor-grab active:cursor-grabbing z-20"
+              className="absolute top-0 w-full max-w-[460px] h-[560px] cursor-grab active:cursor-grabbing z-20"
             >
               <StockCard
                 stock={currentStock}
@@ -226,7 +232,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
           </>
         ) : (
           /* Empty Deck State */
-          <div className="w-full max-w-[440px] h-[520px] rounded-3xl border border-white/10 bg-slate-900/60 p-8 flex flex-col items-center justify-center text-center space-y-4 backdrop-blur-xl">
+          <div className="w-full max-w-[460px] h-[560px] rounded-3xl border border-white/10 bg-slate-900/60 p-8 flex flex-col items-center justify-center text-center space-y-4 backdrop-blur-xl">
             <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
               <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="20 6 9 17 4 12" />

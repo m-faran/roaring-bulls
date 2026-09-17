@@ -42,6 +42,7 @@ export interface StockToken {
   isStonkFun?: boolean;
   isToken2022?: boolean;
   hasTransferHook?: boolean; // Used by compliance filter
+  logoURI?: string;
 }
 
 export interface ChartPoint {
@@ -128,6 +129,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     chartData: buildChartData(242.84, 14.85),
     isToken2022: true,
     hasTransferHook: false,
+    logoURI: "https://unavatar.io/tesla.com",
   },
   {
     id: "nvdax",
@@ -153,6 +155,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     chartData: buildChartData(138.25, 28.4),
     isToken2022: true,
     hasTransferHook: false,
+    logoURI: "https://unavatar.io/nvidia.com",
   },
   {
     id: "aaplx",
@@ -178,6 +181,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     chartData: buildChartData(232.15, 8.65),
     isToken2022: true,
     hasTransferHook: false,
+    logoURI: "https://unavatar.io/apple.com",
   },
   {
     id: "spyx",
@@ -206,6 +210,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     chartData: buildChartData(588.4, 6.82),
     isToken2022: true,
     hasTransferHook: false,
+    logoURI: "https://unavatar.io/ssga.com",
   },
   {
     id: "coinx",
@@ -231,6 +236,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     chartData: buildChartData(218.6, 19.3),
     isToken2022: true,
     hasTransferHook: false,
+    logoURI: "https://unavatar.io/coinbase.com",
   },
 
   // ==========================================
@@ -259,6 +265,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(112.5, 22.4),
     isPreIPO: true,
+    logoURI: "https://unavatar.io/spacex.com",
   },
   {
     id: "openai",
@@ -283,6 +290,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(157.0, 35.8),
     isPreIPO: true,
+    logoURI: "https://unavatar.io/openai.com",
   },
   {
     id: "anthropic",
@@ -307,6 +315,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(78.4, 29.1),
     isPreIPO: true,
+    logoURI: "https://unavatar.io/anthropic.com",
   },
   {
     id: "kalshi",
@@ -331,6 +340,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(34.2, 48.2),
     isPreIPO: true,
+    logoURI: "https://unavatar.io/kalshi.com",
   },
   {
     id: "stripe",
@@ -355,6 +365,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(94.6, 16.5),
     isPreIPO: true,
+    logoURI: "https://unavatar.io/stripe.com",
   },
 
   // ==========================================
@@ -383,6 +394,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(0.048, 142.5),
     isStonkFun: true,
+    logoURI: "https://unavatar.io/stonk.fun",
   },
   {
     id: "tsladoge",
@@ -407,6 +419,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(0.0089, 215.0),
     isStonkFun: true,
+    logoURI: "https://unavatar.io/dogecoin.com",
   },
   {
     id: "nvdaape",
@@ -430,6 +443,7 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(0.0145, 98.4),
     isStonkFun: true,
+    logoURI: "https://unavatar.io/nvidia.com",
   },
   {
     id: "elonx",
@@ -454,5 +468,6 @@ export const STOCKS_CATALOG: StockToken[] = [
     ],
     chartData: buildChartData(0.032, 168.0),
     isStonkFun: true,
+    logoURI: "https://unavatar.io/x.com",
   },
 ];
