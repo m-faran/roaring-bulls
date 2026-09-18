@@ -4,6 +4,17 @@ import React, { useState } from "react";
 import { useBasket } from "@/app/lib/store/basket-context";
 import { Check, ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 
+const TICKER_ITEMS = [
+  "TSLAx +14.85%",
+  "NVDAx +28.40%",
+  "SPACEX +22.40%",
+  "OPENAI +35.80%",
+  "NVDAAPE +98.40%",
+  "AAPLx +6.12%",
+  "SPYx +9.77%",
+  "STONK +41.03%",
+];
+
 export function LandingPage() {
   const { setActiveTab, setIsStrategyWizardOpen } = useBasket();
 
@@ -19,7 +30,7 @@ export function LandingPage() {
       tier: "Balanced • Pre-IPO",
       price: "$112.50",
       change: "+22.4%",
-      color: "from-cyan-500 to-blue-600",
+      accent: "bg-[#9945FF]",
       logo: "https://unavatar.io/spacex.com",
     },
     {
@@ -28,7 +39,7 @@ export function LandingPage() {
       tier: "Conservative • Blue Chip",
       price: "$242.84",
       change: "+14.8%",
-      color: "from-emerald-500 to-teal-600",
+      accent: "bg-[#14F195]",
       logo: "https://unavatar.io/tesla.com",
     },
     {
@@ -37,7 +48,7 @@ export function LandingPage() {
       tier: "Balanced • Pre-IPO",
       price: "$157.00",
       change: "+35.8%",
-      color: "from-purple-500 to-indigo-600",
+      accent: "bg-[#9945FF]",
       logo: "https://unavatar.io/openai.com",
     },
     {
@@ -46,7 +57,7 @@ export function LandingPage() {
       tier: "Degen • Meme Paired",
       price: "$0.0145",
       change: "+98.4%",
-      color: "from-rose-500 to-amber-600",
+      accent: "bg-[#FF5C8A]",
       logo: "https://unavatar.io/nvidia.com",
     },
   ];
@@ -69,227 +80,278 @@ export function LandingPage() {
   const currentDemoAsset = demoAssets[demoCardIndex % demoAssets.length];
 
   return (
-    <div className="w-full bg-transparent text-[#F0F6FC] selection:bg-[#00FF88] selection:text-[#05080E]">
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28">
-        {/* Ambient Glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#00FF88]/10 blur-[140px] rounded-full pointer-events-none" />
-        <div className="absolute top-1/3 right-1/4 w-[450px] h-[300px] bg-[#00F0FF]/10 blur-[150px] rounded-full pointer-events-none" />
+    <div className="paper-texture w-full text-[#111111] selection:bg-[#FFD23F] selection:text-[#111111]">
+      {/* ============ TICKER MARQUEE ============ */}
+      <div className="overflow-hidden border-b-[3px] border-[#111111] bg-[#111111] py-2">
+        <div className="ticker-track font-mono text-xs font-bold uppercase tracking-wider text-[#F5F1E8]">
+          {[0, 1].map((copy) => (
+            <span key={copy} className="flex shrink-0" aria-hidden={copy === 1}>
+              {TICKER_ITEMS.map((item) => (
+                <span key={`${copy}-${item}`} className="mx-6 flex items-center gap-2">
+                  <span className="inline-block h-2 w-2 bg-[#14F195]" />
+                  {item}
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-8">
-          {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-[#0A111F]/90 text-[#00FF88] text-xs font-mono font-bold backdrop-blur-md shadow-[0_0_15px_rgba(0,255,136,0.2)]">
-            <span className="w-2 h-2 rounded-full bg-[#00FF88] shadow-[0_0_8px_#00FF88] animate-pulse" />
-            <span>SOLANA TOKENIZED EQUITIES • SWIPE-BASED DCA RITUAL</span>
+      {/* ============ HERO: asymmetric desk ============ */}
+      <section className="relative overflow-hidden">
+        {/* halftone patch, top right */}
+        <div className="halftone pointer-events-none absolute -right-10 -top-10 h-72 w-72 rotate-12 opacity-20" />
+        {/* green blob sticker, left */}
+        <div className="pointer-events-none absolute -left-24 top-40 h-64 w-64 rotate-6 rounded-full bg-[#14F195] opacity-20" />
+
+        <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:px-6 sm:pt-20">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+            {/* Headline block */}
+            <div className="space-y-8 lg:col-span-8">
+              <span className="ink-border-thin ink-shadow-sm inline-block -rotate-2 bg-[#FFD23F] px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-widest">
+                Solana tokenized equities • swipe-based DCA ritual
+              </span>
+
+              <h1 className="text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl">
+                INVEST IN
+                <br />
+                GLOBAL EQUITIES.
+                <br />
+                <span className="ink-border ink-shadow inline-block rotate-1 bg-[#14F195] px-3 pb-1">
+                  ONE SWIPE
+                </span>{" "}
+                AT A TIME.
+              </h1>
+
+              <p className="max-w-xl text-base leading-relaxed sm:text-lg">
+                In many developing markets, access to global stocks is fragmented,
+                expensive, or entirely unavailable. Traditional tools make investing
+                rigid and boring. <strong>Swpper</strong> offers a fixed-budget,
+                swipe-based DCA ritual across tokenized equities on Solana.
+              </p>
+
+              <div className="flex flex-col items-start gap-4 sm:flex-row">
+                <button
+                  onClick={handleLaunchApp}
+                  className="ink-border ink-shadow ink-press inline-flex w-full cursor-pointer items-center justify-center gap-2.5 bg-[#14F195] px-8 py-4 text-sm font-bold uppercase tracking-wide sm:w-auto"
+                >
+                  <span>Launch Swpper App</span>
+                  <ArrowRight className="h-4 w-4" strokeWidth={3} />
+                </button>
+
+                <a
+                  href="#how-it-works"
+                  className="ink-border-thin ink-press inline-flex w-full cursor-pointer items-center justify-center gap-2 bg-white px-6 py-4 text-sm font-bold sm:w-auto"
+                >
+                  <span>How the Ritual Works</span>
+                  <ChevronDown className="h-4 w-4" strokeWidth={3} />
+                </a>
+              </div>
+            </div>
+
+            {/* Stamp sticker column */}
+            <div className="flex items-start justify-center lg:col-span-4 lg:justify-end">
+              <div className="ink-border ink-shadow-lg rotate-6 bg-white p-6 text-center">
+                <div className="halftone mx-auto mb-4 h-16 w-16 rounded-full bg-[#9945FF] opacity-90" />
+                <p className="font-mono text-[10px] font-bold uppercase tracking-widest">
+                  Solana • Devnet
+                </p>
+                <p className="mt-1 text-3xl font-bold tracking-tight">DEMO MODE</p>
+                <p className="mt-2 border-t-2 border-dashed border-[#111111] pt-2 font-mono text-[10px] uppercase">
+                  Zero custody • Jupiter routes
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Main Headline */}
-          <div className="max-w-4xl mx-auto space-y-4">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white leading-[1.06]">
-              Invest in Global Equities.{" "}
-              <span className="bg-gradient-to-r from-[#00FF88] via-[#00F0FF] to-white bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(0,255,136,0.3)]">
-                One Swipe at a Time.
-              </span>
-            </h1>
-            <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
-              In many developing markets, access to global stocks is fragmented, expensive, or entirely unavailable. Traditional tools make investing rigid and boring.{" "}
-              <strong className="text-white font-semibold">Swpper</strong> offers a fixed-budget, swipe-based DCA ritual across tokenized equities on Solana.
-            </p>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <button
-              onClick={handleLaunchApp}
-              className="cursor-pointer w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] font-display font-black text-sm shadow-[0_0_30px_rgba(0,255,136,0.45)] transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2.5"
-            >
-              <span>Launch Swpper App</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <a
-              href="#how-it-works"
-              className="cursor-pointer w-full sm:w-auto px-6 py-4 rounded-2xl border border-cyan-500/20 bg-[#0A111F] hover:bg-[#101A2E] text-slate-300 hover:text-white font-display font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:border-cyan-500/40"
-            >
-              <span>How the Ritual Works</span>
-              <ChevronDown className="w-4 h-4 text-cyan-400" />
-            </a>
-          </div>
-
-          {/* Live Micro-Features Bar */}
-          <div className="pt-8 grid grid-cols-2 md:grid-cols-4 gap-3.5 max-w-4xl mx-auto text-left">
-            <div className="p-4 rounded-2xl border border-cyan-500/15 bg-[#0A111F]/80 backdrop-blur-md shadow-inner hover:border-cyan-500/30 transition-colors">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-mono font-bold">
-                Non-Custodial
-              </span>
-              <p className="text-xs font-display font-bold text-white mt-1">
-                Email Login via Privy
-              </p>
-            </div>
-            <div className="p-4 rounded-2xl border border-cyan-500/15 bg-[#0A111F]/80 backdrop-blur-md shadow-inner hover:border-cyan-500/30 transition-colors">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-mono font-bold">
-                Execution
-              </span>
-              <p className="text-xs font-display font-bold text-[#00FF88] mt-1">
-                Atomic Jupiter Swaps
-              </p>
-            </div>
-            <div className="p-4 rounded-2xl border border-cyan-500/15 bg-[#0A111F]/80 backdrop-blur-md shadow-inner hover:border-cyan-500/30 transition-colors">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-mono font-bold">
-                Asset Universe
-              </span>
-              <p className="text-xs font-display font-bold text-white mt-1">
-                3 Curated Risk Tiers
-              </p>
-            </div>
-            <div className="p-4 rounded-2xl border border-cyan-500/15 bg-[#0A111F]/80 backdrop-blur-md shadow-inner hover:border-cyan-500/30 transition-colors">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-mono font-bold">
-                Guardrails
-              </span>
-              <p className="text-xs font-display font-bold text-[#00F0FF] mt-1">
-                Auto Compliance Filter
-              </p>
-            </div>
+          {/* Feature stickers */}
+          <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
+            {[
+              {
+                label: "Non-Custodial",
+                value: "Email Login via Privy",
+                bg: "bg-white",
+                tilt: "-rotate-1",
+              },
+              {
+                label: "Execution",
+                value: "Atomic Jupiter Swaps",
+                bg: "bg-[#14F195]",
+                tilt: "rotate-1",
+              },
+              {
+                label: "Asset Universe",
+                value: "3 Curated Risk Tiers",
+                bg: "bg-white",
+                tilt: "-rotate-1",
+              },
+              {
+                label: "Guardrails",
+                value: "Auto Compliance Filter",
+                bg: "bg-[#FFD23F]",
+                tilt: "rotate-1",
+              },
+            ].map((f) => (
+              <div
+                key={f.label}
+                className={`ink-border ink-shadow-sm ${f.bg} ${f.tilt} p-4 transition-transform duration-200 hover:rotate-0`}
+              >
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest opacity-70">
+                  {f.label}
+                </span>
+                <p className="mt-1 text-sm font-bold">{f.value}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* INTERACTIVE TEASER PREVIEW SECTION */}
-      <section className="py-16 border-y border-cyan-500/20 bg-[#0A111F]/35 backdrop-blur-[2px]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left: Teaser description */}
-            <div className="lg:col-span-6 space-y-5">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#00FF88] font-bold">
+      {/* ============ INTERACTIVE DEMO: paper ticket ============ */}
+      <section className="border-y-[3px] border-[#111111] bg-[#EDE7D8]">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
+            {/* Left: copy */}
+            <div className="space-y-5 lg:col-span-6">
+              <span className="ink-border-thin ink-shadow-sm inline-block rotate-1 bg-[#FF5C8A] px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-white">
                 Interactive Experience
               </span>
-              <h2 className="text-3xl sm:text-4xl font-display font-black text-white tracking-tight leading-tight">
+              <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
                 No complex order books. Just set a budget and swipe.
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                Define the boundaries of your investment session: your budget (e.g. 1 SOL or $50), your amount per swipe (e.g. 0.1 SOL or $5), and your risk tier. Then start swiping.
+              <p className="max-w-lg leading-relaxed">
+                Define the boundaries of your investment session: your budget (e.g. 1
+                SOL or $50), your amount per swipe (e.g. 0.1 SOL or $5), and your risk
+                tier. Then start swiping.
               </p>
-              <div className="space-y-3 pt-1 text-xs text-slate-300">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-5 w-5 rounded-full bg-[#00FF88]/20 text-[#00FF88] font-bold items-center justify-center text-[11px] shadow-[0_0_8px_rgba(0,255,136,0.3)]">
-                    <Check className="w-3 h-3 stroke-[3]" />
-                  </span>
-                  <span>
-                    <strong className="text-white font-semibold">Swipe Right:</strong> Allocates a fixed amount and locks into basket
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="flex h-5 w-5 rounded-full bg-[#FF1B6B]/20 text-[#FF1B6B] font-bold items-center justify-center text-[11px] shadow-[0_0_8px_rgba(255,27,107,0.3)]">
-                    <Check className="w-3 h-3 stroke-[3]" />
-                  </span>
-                  <span>
-                    <strong className="text-white font-semibold">Swipe Left:</strong> Skips to the next token in the curated deck
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="flex h-5 w-5 rounded-full bg-[#00F0FF]/20 text-[#00F0FF] font-bold items-center justify-center text-[11px] shadow-[0_0_8px_rgba(0,240,255,0.3)]">
-                    <Check className="w-3 h-3 stroke-[3]" />
-                  </span>
-                  <span>
-                    <strong className="text-white font-semibold">Budget Lock:</strong> You can never exceed your pre-set session boundary
-                  </span>
-                </div>
+
+              <div className="space-y-3 pt-1">
+                {[
+                  {
+                    bg: "bg-[#14F195]",
+                    label: "Swipe Right:",
+                    text: "Allocates a fixed amount and locks into basket",
+                  },
+                  {
+                    bg: "bg-[#FF5C8A]",
+                    label: "Swipe Left:",
+                    text: "Skips to the next token in the curated deck",
+                  },
+                  {
+                    bg: "bg-[#9945FF]",
+                    label: "Budget Lock:",
+                    text: "You can never exceed your pre-set session boundary",
+                  },
+                ].map((row) => (
+                  <div key={row.label} className="flex items-center gap-3 text-sm">
+                    <span
+                      className={`ink-border-thin flex h-6 w-6 shrink-0 items-center justify-center ${row.bg}`}
+                    >
+                      <Check className="h-3.5 w-3.5 text-white" strokeWidth={4} />
+                    </span>
+                    <span>
+                      <strong>{row.label}</strong> {row.text}
+                    </span>
+                  </div>
+                ))}
               </div>
 
               <div className="pt-2">
                 <button
                   onClick={handleLaunchApp}
-                  className="cursor-pointer inline-flex items-center gap-2 text-xs font-display font-bold text-[#00FF88] hover:text-[#00FF88]/80 transition group"
+                  className="inline-flex cursor-pointer items-center gap-2 text-sm font-bold underline decoration-[#14F195] decoration-4 underline-offset-4 hover:decoration-[#111111]"
                 >
                   <span>Open Full Investing Terminal</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-4 w-4" strokeWidth={3} />
                 </button>
               </div>
             </div>
 
-            {/* Right: Live Interactive Card Widget */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center">
-              <div className="w-full max-w-sm rounded-3xl border border-cyan-500/30 bg-[#0A111F] p-6 shadow-[0_0_40px_rgba(0,0,0,0.8)] space-y-4 relative overflow-hidden">
-                {/* Corner HUD markers */}
-                <span className="absolute top-2.5 left-2.5 text-[8px] font-mono text-cyan-500/30">
-                  ┌
-                </span>
-                <span className="absolute top-2.5 right-2.5 text-[8px] font-mono text-cyan-500/30">
-                  ┐
-                </span>
-
-                {/* Live Demo Header */}
-                <div className="flex items-center justify-between text-xs pb-2 border-b border-cyan-500/15">
-                  <div className="flex items-center gap-2 font-mono">
-                    <span className="w-2 h-2 rounded-full bg-[#00FF88] shadow-[0_0_8px_#00FF88] animate-pulse" />
-                    <span className="text-slate-400">Session Budget:</span>
-                  </div>
-                  <span className="font-mono font-bold text-[#00FF88] tabular-nums">
-                    {demoBudget.toFixed(2)} SOL Remaining
+            {/* Right: paper ticket demo */}
+            <div className="flex flex-col items-center justify-center lg:col-span-6">
+              <div className="ink-border ink-shadow-lg w-full max-w-sm bg-white">
+                {/* Ticket stub header */}
+                <div className="flex items-center justify-between border-b-[3px] border-[#111111] bg-[#111111] px-4 py-2">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#F5F1E8]">
+                    Swpper • Demo Ticket
+                  </span>
+                  <span className="flex gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FF5C8A]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FFD23F]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#14F195]" />
                   </span>
                 </div>
 
-                {/* Card Body */}
-                <div className="p-4 rounded-2xl border border-cyan-500/20 bg-[#05080E] space-y-3 shadow-inner">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <div className="h-9 w-9 rounded-xl bg-[#101A2E] p-1 flex items-center justify-center border border-cyan-500/20 overflow-hidden">
-                        <img
-                          src={currentDemoAsset.logo}
-                          alt={currentDemoAsset.name}
-                          className="h-full w-full object-contain rounded"
-                        />
+                <div className="space-y-4 p-5">
+                  {/* Budget row */}
+                  <div className="flex items-center justify-between border-b-2 border-dashed border-[#111111] pb-3 font-mono text-xs">
+                    <span className="uppercase tracking-wider">Session Budget:</span>
+                    <span className="font-bold tabular-nums">
+                      {demoBudget.toFixed(2)} SOL LEFT
+                    </span>
+                  </div>
+
+                  {/* Card body */}
+                  <div className="ink-border-thin ink-shadow-sm bg-[#F5F1E8] p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div
+                          className={`ink-border-thin ${currentDemoAsset.accent} flex h-10 w-10 items-center justify-center overflow-hidden p-1`}
+                        >
+                          <img
+                            src={currentDemoAsset.logo}
+                            alt={currentDemoAsset.name}
+                            className="h-full w-full rounded-sm object-contain"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold">{currentDemoAsset.name}</h4>
+                          <p className="font-mono text-[10px] font-bold uppercase opacity-60">
+                            {currentDemoAsset.ticker}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-display font-bold text-sm text-white">
-                          {currentDemoAsset.name}
-                        </h4>
-                        <p className="text-[10px] text-cyan-400 font-mono">
-                          {currentDemoAsset.ticker}
-                        </p>
-                      </div>
+                      <span className="ink-border-thin bg-[#14F195] px-2 py-0.5 font-mono text-xs font-bold">
+                        0.1 SOL
+                      </span>
                     </div>
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] text-xs font-mono font-bold shadow-[0_0_8px_rgba(0,255,136,0.2)]">
-                      0.1 SOL
-                    </span>
+
+                    <div className="mt-3 flex items-center justify-between border-t-2 border-dashed border-[#111111] pt-2 font-mono text-xs">
+                      <span className="uppercase opacity-70">
+                        {currentDemoAsset.tier}
+                      </span>
+                      <span className="font-bold">{currentDemoAsset.change} (3M)</span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs pt-1 font-mono">
-                    <span className="text-slate-400">{currentDemoAsset.tier}</span>
-                    <span className="font-bold text-[#00FF88]">
-                      {currentDemoAsset.change} (3M)
-                    </span>
+                  {/* Interactive taps */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleDemoSwipe("left")}
+                      className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center justify-center gap-1.5 bg-[#FF5C8A] py-2.5 text-xs font-bold uppercase tracking-wide text-white"
+                    >
+                      <ArrowLeft className="h-3.5 w-3.5" strokeWidth={3} />
+                      <span>Skip</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDemoSwipe("right")}
+                      className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center justify-center gap-1.5 bg-[#14F195] py-2.5 text-xs font-bold uppercase tracking-wide"
+                    >
+                      <span>Add (0.1 SOL)</span>
+                      <ArrowRight className="h-3.5 w-3.5" strokeWidth={3} />
+                    </button>
                   </div>
-                </div>
 
-                {/* Interactive Taps */}
-                <div className="grid grid-cols-2 gap-3 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => handleDemoSwipe("left")}
-                    className="cursor-pointer py-2.5 rounded-xl border border-[#FF1B6B]/40 bg-[#FF1B6B]/10 hover:bg-[#FF1B6B]/20 text-[#FF1B6B] text-xs font-display font-bold transition flex items-center justify-center gap-1.5 shadow-[0_0_12px_rgba(255,27,107,0.2)]"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                    <span>Skip</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleDemoSwipe("right")}
-                    className="cursor-pointer py-2.5 rounded-xl border border-[#00FF88]/50 bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] text-xs font-display font-black transition flex items-center justify-center gap-1.5 shadow-[0_0_20px_rgba(0,255,136,0.4)] hover:scale-105"
-                  >
-                    <span>Add (0.1 SOL)</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                {/* Demo Basket status */}
-                <div className="text-center text-[11px] text-slate-400 font-mono">
-                  <span>Basket: </span>
-                  <strong className="text-white font-mono">
-                    {demoBasket.length > 0
-                      ? demoBasket.join(", ")
-                      : "Empty (Tap Add)"}
-                  </strong>
+                  {/* Demo Basket status */}
+                  <div className="text-center font-mono text-[11px] uppercase tracking-wide">
+                    <span className="opacity-70">Basket: </span>
+                    <strong>
+                      {demoBasket.length > 0
+                        ? demoBasket.join(", ")
+                        : "Empty (Tap Add)"}
+                    </strong>
+                  </div>
                 </div>
               </div>
             </div>
@@ -297,369 +359,323 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* THE 3-STEP RITUAL SECTION */}
-      <section
-        id="how-it-works"
-        className="py-20 max-w-6xl mx-auto px-4 sm:px-6 space-y-12"
-      >
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#00FF88] font-bold">
-            The Flow
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-display font-black text-white tracking-tight">
-            How the Swpper Ritual Works
-          </h2>
-          <p className="text-sm text-slate-400">
-            A frictionless investing ritual engineered from the ground up for modern retail.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Step 1 */}
-          <div className="rounded-3xl border border-cyan-500/20 bg-[#0A111F] p-6 space-y-4 hover:border-[#00FF88]/50 hover:shadow-[0_0_25px_rgba(0,255,136,0.15)] transition-all duration-300 relative group">
-            <div className="h-12 w-12 rounded-2xl bg-[#00FF88]/15 border border-[#00FF88]/30 flex items-center justify-center text-[#00FF88] font-display font-black text-base shadow-[0_0_12px_rgba(0,255,136,0.25)]">
-              01
-            </div>
-            <h3 className="text-lg font-display font-bold text-white">
-              Set Your Boundaries
-            </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Start by choosing your quote currency (SOL or USDC), total session budget, allocation per swipe, and risk tier (Conservative, Balanced, or Degen). Your parameters define the guardrails and automatically curate the deck.
+      {/* ============ THE 3-STEP RITUAL ============ */}
+      <section id="how-it-works" className="relative">
+        <div className="halftone pointer-events-none absolute left-1/4 top-0 h-40 w-40 -rotate-6 opacity-15" />
+        <div className="mx-auto max-w-6xl space-y-12 px-4 py-20 sm:px-6">
+          <div className="max-w-2xl space-y-3">
+            <span className="ink-border-thin ink-shadow-sm inline-block -rotate-1 bg-white px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest">
+              The Flow
+            </span>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              How the Swpper Ritual Works
+            </h2>
+            <p>
+              A frictionless investing ritual engineered from the ground up for modern
+              retail.
             </p>
           </div>
 
-          {/* Step 2 */}
-          <div className="rounded-3xl border border-cyan-500/20 bg-[#0A111F] p-6 space-y-4 hover:border-[#00F0FF]/50 hover:shadow-[0_0_25px_rgba(0,240,255,0.15)] transition-all duration-300 relative group">
-            <div className="h-12 w-12 rounded-2xl bg-[#00F0FF]/15 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] font-display font-black text-base shadow-[0_0_12px_rgba(0,240,255,0.25)]">
-              02
-            </div>
-            <h3 className="text-lg font-display font-bold text-white">
-              The Swipe Discovery
-            </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Swipe right to allocate your fixed slice to an asset. Swipe left to skip it. Every decision stays safely within your budget while remaining capital updates live. Zero math anxiety, zero spreadsheet friction.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="rounded-3xl border border-cyan-500/20 bg-[#0A111F] p-6 space-y-4 hover:border-[#A855F7]/50 hover:shadow-[0_0_25px_rgba(168,85,247,0.15)] transition-all duration-300 relative group">
-            <div className="h-12 w-12 rounded-2xl bg-[#A855F7]/15 border border-[#A855F7]/30 flex items-center justify-center text-[#A855F7] font-display font-black text-base shadow-[0_0_12px_rgba(168,85,247,0.25)]">
-              03
-            </div>
-            <h3 className="text-lg font-display font-bold text-white">
-              1-Click Atomic Execution
-            </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Select your execution method: **Buy Now** (instant basket execution), **Recurring SIP** (Jupiter DCA program), or **Limit Order** (dip trigger). All required swaps are packaged into a single atomic transaction routed through Jupiter.
-            </p>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {[
+              {
+                num: "01",
+                bg: "bg-[#FFD23F]",
+                tilt: "md:-rotate-1",
+                title: "Set Your Boundaries",
+                body: (
+                  <>
+                    Start by choosing your quote currency (SOL or USDC), total session
+                    budget, allocation per swipe, and risk tier (Conservative, Balanced,
+                    or Degen). Your parameters define the guardrails and automatically
+                    curate the deck.
+                  </>
+                ),
+              },
+              {
+                num: "02",
+                bg: "bg-[#14F195]",
+                tilt: "md:rotate-1",
+                title: "The Swipe Discovery",
+                body: (
+                  <>
+                    Swipe right to allocate your fixed slice to an asset. Swipe left to
+                    skip it. Every decision stays safely within your budget while
+                    remaining capital updates live. Zero math anxiety, zero spreadsheet
+                    friction.
+                  </>
+                ),
+              },
+              {
+                num: "03",
+                bg: "bg-[#9945FF]",
+                tilt: "md:-rotate-1",
+                title: "1-Click Atomic Execution",
+                body: (
+                  <>
+                    Select your execution method: <strong>Buy Now</strong> (instant
+                    basket execution), <strong>Recurring SIP</strong> (Jupiter DCA
+                    program), or <strong>Limit Order</strong> (dip trigger). All
+                    required swaps are packaged into a single atomic transaction routed
+                    through Jupiter.
+                  </>
+                ),
+              },
+            ].map((step) => (
+              <div
+                key={step.num}
+                className={`ink-border ink-shadow ${step.tilt} space-y-4 bg-white p-6 transition-transform duration-200 hover:rotate-0`}
+              >
+                <div
+                  className={`ink-border-thin flex h-12 w-12 items-center justify-center ${step.bg} text-lg font-bold`}
+                >
+                  {step.num}
+                </div>
+                <h3 className="text-lg font-bold">{step.title}</h3>
+                <p className="text-sm leading-relaxed opacity-80">{step.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 3 RISK-TIERED ASSET MODES SHOWCASE */}
-      <section className="py-20 border-t border-cyan-500/20 bg-[#0A111F]/35 backdrop-blur-[2px]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#00FF88] font-bold">
+      {/* ============ 3 RISK-TIERED ASSET MODES ============ */}
+      <section className="border-y-[3px] border-[#111111] bg-[#EDE7D8]">
+        <div className="mx-auto max-w-6xl space-y-12 px-4 py-20 sm:px-6">
+          <div className="max-w-2xl space-y-3">
+            <span className="ink-border-thin ink-shadow-sm inline-block rotate-1 bg-[#14F195] px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest">
               Curated Universes
             </span>
-            <h2 className="text-3xl sm:text-4xl font-display font-black text-white tracking-tight">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Three Risk-Tiered Asset Modes
             </h2>
-            <p className="text-sm text-slate-400">
-              Seamlessly switch between public blue chips, pre-IPO unicorns, and equity-paired memecoins.
+            <p>
+              Seamlessly switch between public blue chips, pre-IPO unicorns, and
+              equity-paired memecoins.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Conservative Card */}
-            <div className="rounded-3xl border border-cyan-500/20 bg-[#0A111F] p-6 space-y-4 flex flex-col justify-between shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:border-[#00FF88]/40 transition-colors">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-1 rounded-full bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] text-[11px] font-display font-bold">
-                    Conservative Tier
-                  </span>
-                  <span className="text-xs font-mono text-cyan-400/70">
-                    Backed xStocks
-                  </span>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {[
+              {
+                badge: "Conservative Tier",
+                badgeBg: "bg-[#14F195]",
+                source: "Backed xStocks",
+                title: "Public Blue Chips & ETFs",
+                body: "1:1 tokenized tracker certificates for public equities held in Swiss custody with 24/7 DeFi composability.",
+                tickers: ["TSLAx", "NVDAx", "AAPLx", "SPYx", "COINx"],
+                foot: "Low volatility • Audited custodial backing",
+                tilt: "md:-rotate-2",
+              },
+              {
+                badge: "Balanced Tier",
+                badgeBg: "bg-[#9945FF]",
+                source: "PreStocks & Tessera",
+                title: "Pre-IPO Unicorns",
+                body: "Private equity exposure via Cayman SPVs backed by on-chain Chainlink Proof-of-Reserve.",
+                tickers: ["SpaceX", "OpenAI", "Anthropic", "Kalshi", "Stripe"],
+                foot: "Moderate volatility • Chainlink PoR verified",
+                tilt: "md:rotate-1",
+              },
+              {
+                badge: "Degen Tier",
+                badgeBg: "bg-[#FF5C8A]",
+                source: "StonkFun LaunchLab",
+                title: "Equity-Paired Memecoins",
+                body: "Raydium bonding curves pairing meme liquidity directly against stocks, with 60% fee buyback & burn flywheels.",
+                tickers: ["STONK", "TSLADOGE", "NVDAAPE", "ELONX"],
+                foot: "High volatility • Automated fee buybacks",
+                tilt: "md:rotate-2",
+              },
+            ].map((tier) => (
+              <div
+                key={tier.badge}
+                className={`ink-border ink-shadow ${tier.tilt} flex flex-col justify-between bg-white p-6 transition-transform duration-200 hover:rotate-0`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className={`ink-border-thin ${tier.badgeBg} px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white`}
+                    >
+                      {tier.badge}
+                    </span>
+                    <span className="font-mono text-[10px] font-bold uppercase opacity-60">
+                      {tier.source}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold">{tier.title}</h3>
+                  <p className="text-sm leading-relaxed opacity-80">{tier.body}</p>
+                  <div className="flex flex-wrap gap-2 pt-2 font-mono text-[11px] font-bold">
+                    {tier.tickers.map((t) => (
+                      <span
+                        key={t}
+                        className="ink-border-thin bg-[#F5F1E8] px-2 py-0.5"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-lg font-display font-bold text-white">
-                  Public Blue Chips & ETFs
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  1:1 tokenized tracker certificates for public equities held in Swiss custody with 24/7 DeFi composability.
-                </p>
-                <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-mono">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    TSLAx
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    NVDAx
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    AAPLx
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    SPYx
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    COINx
-                  </span>
-                </div>
-              </div>
-              <div className="pt-4 border-t border-cyan-500/15 text-[11px] text-slate-500 font-mono">
-                Low volatility • Audited custodial backing
-              </div>
-            </div>
-
-            {/* Balanced Card */}
-            <div className="rounded-3xl border border-cyan-500/20 bg-[#0A111F] p-6 space-y-4 flex flex-col justify-between shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:border-[#00F0FF]/40 transition-colors">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-1 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/30 text-[#00F0FF] text-[11px] font-display font-bold">
-                    Balanced Tier
-                  </span>
-                  <span className="text-xs font-mono text-cyan-400/70">
-                    PreStocks & Tessera
-                  </span>
-                </div>
-                <h3 className="text-lg font-display font-bold text-white">
-                  Pre-IPO Unicorns
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Private equity exposure via Cayman SPVs backed by on-chain Chainlink Proof-of-Reserve.
-                </p>
-                <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-mono">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    SpaceX
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    OpenAI
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    Anthropic
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    Kalshi
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    Stripe
-                  </span>
+                <div className="mt-4 border-t-2 border-dashed border-[#111111] pt-3 font-mono text-[11px] uppercase opacity-70">
+                  {tier.foot}
                 </div>
               </div>
-              <div className="pt-4 border-t border-cyan-500/15 text-[11px] text-slate-500 font-mono">
-                Moderate volatility • Chainlink PoR verified
-              </div>
-            </div>
-
-            {/* Degen Card */}
-            <div className="rounded-3xl border border-cyan-500/20 bg-[#0A111F] p-6 space-y-4 flex flex-col justify-between shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:border-[#FF1B6B]/40 transition-colors">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-1 rounded-full bg-[#FF1B6B]/15 border border-[#FF1B6B]/30 text-[#FF1B6B] text-[11px] font-display font-bold">
-                    Degen Tier
-                  </span>
-                  <span className="text-xs font-mono text-cyan-400/70">
-                    StonkFun LaunchLab
-                  </span>
-                </div>
-                <h3 className="text-lg font-display font-bold text-white">
-                  Equity-Paired Memecoins
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Raydium bonding curves pairing meme liquidity directly against stocks, with 60% fee buyback & burn flywheels.
-                </p>
-                <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-mono">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    STONK
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    TSLADOGE
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    NVDAAPE
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#05080E] border border-cyan-500/20 text-slate-300">
-                    ELONX
-                  </span>
-                </div>
-              </div>
-              <div className="pt-4 border-t border-cyan-500/15 text-[11px] text-slate-500 font-mono">
-                High volatility • Automated fee buybacks
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* WHAT WE BUILT: 8 ARCHITECTURE PILLARS */}
-      <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#00FF88] font-bold">
-            Architecture
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-display font-black text-white tracking-tight">
-            What We Built
-          </h2>
-          <p className="text-sm text-slate-400">
-            A comprehensive, non-custodial Web3 equity wrapper designed for universal wallet compatibility.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* 1 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(0,255,136,0.2)]">
-              01
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              Zero-Friction Onboarding
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Email login via Privy embedded wallets ensures users never see a seed phrase or wallet popup.
-            </p>
-          </div>
-
-          {/* 2 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-[#00F0FF]/15 border border-[#00F0FF]/30 text-[#00F0FF] flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(0,240,255,0.2)]">
-              02
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              Swipe-Based Discovery
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Real-time tokenized stock decks powered by metadata from tokens.xyz, PreStocks, Tessera, and StonkFun.
-            </p>
-          </div>
-
-          {/* 3 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-[#A855F7]/15 border border-[#A855F7]/30 text-[#A855F7] flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(168,85,247,0.2)]">
-              03
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              Risk-Tiered Asset Modes
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Seamlessly switch between Conservative (blue chips), Balanced (pre-IPO), and Degen (equity memes).
-            </p>
-          </div>
-
-          {/* 4 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-[#FFB800]/15 border border-[#FFB800]/30 text-[#FFB800] flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(255,184,0,0.2)]">
-              04
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              User-Bounded DCA Plans
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Configurable per-swipe investment amounts with real-time live session budget tracking.
-            </p>
-          </div>
-
-          {/* 5 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(99,102,241,0.2)]">
-              05
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              Native Solana Composability
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Buy-now swaps, recurring DCA schedules, and limit orders built on Jupiter’s Swap, Recurring, and Trigger APIs.
-            </p>
-          </div>
-
-          {/* 6 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(0,255,136,0.2)]">
-              06
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              1-Confirmation Atomic Execution
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Immediate baskets bundle every swap into a single Solana signature—either all succeed, or all revert.
-            </p>
-          </div>
-
-          {/* 7 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-400 flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(20,184,166,0.2)]">
-              07
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              Automated Compliance Filtering
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Backend sanitization layer that strips institutional KYC-restricted transfer hooks to guarantee non-reverting trades.
-            </p>
-          </div>
-
-          {/* 8 */}
-          <div className="p-5 rounded-3xl border border-cyan-500/20 bg-[#0A111F] space-y-2.5 shadow-inner">
-            <div className="w-8 h-8 rounded-xl bg-[#FF1B6B]/15 border border-[#FF1B6B]/30 text-[#FF1B6B] flex items-center justify-center font-display font-bold text-xs shadow-[0_0_8px_rgba(255,27,107,0.2)]">
-              08
-            </div>
-            <h4 className="font-display font-bold text-sm text-white">
-              Sustainable Wrapper Economics
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Transparent non-custodial order flow monetization aligned natively with the Jupiter Referral Program.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* MANIFESTO / PHILOSOPHY QUOTE */}
-      <section className="py-20 border-t border-cyan-500/20 bg-gradient-to-b from-[#0A111F]/30 to-transparent">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
-          <div className="inline-block text-4xl sm:text-5xl text-[#00FF88] font-serif">
-            “
-          </div>
-          <h3 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight leading-snug">
-            Investing should be accessible.<br />
-            Portfolio building should feel simple.<br />
-            <span className="bg-gradient-to-r from-[#00FF88] via-[#00F0FF] to-white bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(0,255,136,0.3)]">
-              DCA should be fun.
+      {/* ============ 8 ARCHITECTURE PILLARS ============ */}
+      <section className="relative">
+        <div className="mx-auto max-w-6xl space-y-12 px-4 py-20 sm:px-6">
+          <div className="max-w-2xl space-y-3">
+            <span className="ink-border-thin ink-shadow-sm inline-block -rotate-1 bg-[#FFD23F] px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest">
+              Architecture
             </span>
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto pt-2 leading-relaxed font-mono">
-            We built Swpper to bridge developing markets and global equities without the friction of legacy brokerages, wire fees, or intimidating trading terminals.
-          </p>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              What We Built
+            </h2>
+            <p>
+              A comprehensive, non-custodial Web3 equity wrapper designed for universal
+              wallet compatibility.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                num: "01",
+                dot: "bg-[#14F195]",
+                title: "Zero-Friction Onboarding",
+                body: "Email login via Privy embedded wallets ensures users never see a seed phrase or wallet popup.",
+              },
+              {
+                num: "02",
+                dot: "bg-[#9945FF]",
+                title: "Swipe-Based Discovery",
+                body: "Real-time tokenized stock decks powered by metadata from tokens.xyz, PreStocks, Tessera, and StonkFun.",
+              },
+              {
+                num: "03",
+                dot: "bg-[#FFD23F]",
+                title: "Risk-Tiered Asset Modes",
+                body: "Seamlessly switch between Conservative (blue chips), Balanced (pre-IPO), and Degen (equity memes).",
+              },
+              {
+                num: "04",
+                dot: "bg-[#FF5C8A]",
+                title: "User-Bounded DCA Plans",
+                body: "Configurable per-swipe investment amounts with real-time live session budget tracking.",
+              },
+              {
+                num: "05",
+                dot: "bg-[#9945FF]",
+                title: "Native Solana Composability",
+                body: "Buy-now swaps, recurring DCA schedules, and limit orders built on Jupiter’s Swap, Recurring, and Trigger APIs.",
+              },
+              {
+                num: "06",
+                dot: "bg-[#14F195]",
+                title: "1-Confirmation Atomic Execution",
+                body: "Immediate baskets bundle every swap into a single Solana signature—either all succeed, or all revert.",
+              },
+              {
+                num: "07",
+                dot: "bg-[#FFD23F]",
+                title: "Automated Compliance Filtering",
+                body: "Backend sanitization layer that strips institutional KYC-restricted transfer hooks to guarantee non-reverting trades.",
+              },
+              {
+                num: "08",
+                dot: "bg-[#FF5C8A]",
+                title: "Sustainable Wrapper Economics",
+                body: "Transparent non-custodial order flow monetization aligned natively with the Jupiter Referral Program.",
+              },
+            ].map((pillar) => (
+              <div
+                key={pillar.num}
+                className="ink-border-thin ink-shadow-sm space-y-2.5 bg-white p-5 transition-transform duration-200 hover:-translate-y-1"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold">{pillar.num}</span>
+                  <span
+                    className={`ink-border-thin h-4 w-4 ${pillar.dot}`}
+                    aria-hidden="true"
+                  />
+                </div>
+                <h4 className="text-sm font-bold leading-snug">{pillar.title}</h4>
+                <p className="text-xs leading-relaxed opacity-70">{pillar.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* FINAL CLIMAX CALL TO ACTION */}
-      <section className="py-20 border-t border-cyan-500/20 bg-transparent">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8">
+      {/* ============ MANIFESTO: taped poster ============ */}
+      <section className="border-t-[3px] border-[#111111] bg-[#EDE7D8]">
+        <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6">
+          <div className="ink-border ink-shadow-lg relative mx-auto max-w-2xl bg-white px-6 py-12">
+            {/* tape strips */}
+            <span
+              aria-hidden="true"
+              className="absolute -top-3 left-10 h-7 w-24 -rotate-6 bg-[#FFD23F] opacity-80"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute -top-3 right-10 h-7 w-24 rotate-6 bg-[#14F195] opacity-80"
+            />
+            <div className="space-y-6">
+              <div className="font-mono text-4xl font-bold text-[#14F195]">“</div>
+              <h3 className="text-2xl font-bold leading-snug tracking-tight sm:text-4xl">
+                Investing should be accessible.
+                <br />
+                Portfolio building should feel simple.
+                <br />
+                <span className="inline-block -rotate-1 bg-[#FFD23F] px-2">
+                  DCA should be fun.
+                </span>
+              </h3>
+              <p className="mx-auto max-w-xl pt-2 font-mono text-xs leading-relaxed opacity-70 sm:text-sm">
+                We built Swpper to bridge developing markets and global equities without
+                the friction of legacy brokerages, wire fees, or intimidating trading
+                terminals.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ FINAL CTA ============ */}
+      <section className="bg-[#9945FF]">
+        <div className="mx-auto max-w-4xl space-y-8 px-4 py-20 text-center text-white sm:px-6">
           <div className="space-y-3">
-            <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
               Ready to assemble your equity basket?
             </h2>
-            <p className="text-sm text-slate-400 max-w-lg mx-auto">
-              Launch Swpper on Solana Devnet. Configure your strategy in 30 seconds and start swiping.
+            <p className="mx-auto max-w-lg text-sm opacity-90 sm:text-base">
+              Launch Swpper on Solana Devnet. Configure your strategy in 30 seconds and
+              start swiping.
             </p>
           </div>
 
           <div>
             <button
               onClick={handleLaunchApp}
-              className="cursor-pointer px-10 py-4 rounded-2xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] font-display font-black text-base shadow-[0_0_35px_rgba(0,255,136,0.5)] transition-all duration-200 hover:scale-105 inline-flex items-center gap-2.5"
+              className="ink-border ink-shadow-lg ink-press inline-flex cursor-pointer items-center gap-2.5 bg-[#14F195] px-10 py-4 text-base font-bold uppercase tracking-wide text-[#111111]"
             >
               <span>Launch Swpper App & Start Swiping</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="h-5 w-5" strokeWidth={3} />
             </button>
           </div>
 
-          <div className="pt-12 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-cyan-500/15 font-mono">
+          <div className="flex flex-col items-center justify-between gap-4 border-t-2 border-dashed border-white/40 pt-10 font-mono text-xs sm:flex-row">
             <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-white">Swpper</span>
-              <span>• Swipe DCA for Tokenized Equities</span>
+              <span className="font-bold">Swpper</span>
+              <span className="opacity-70">
+                • Swipe DCA for Tokenized Equities
+              </span>
             </div>
-            <div className="flex items-center gap-4 text-[11px]">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] uppercase tracking-wide opacity-80">
               <span>Solana Devnet Locked</span>
               <span>Jupiter DEX Route Simulation</span>
               <span>Zero Custody</span>

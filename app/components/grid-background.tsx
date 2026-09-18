@@ -1,8 +1,27 @@
 "use client";
 
-/* Ambient layered background. Motion is transform-only and disabled via
-   prefers-reduced-motion (see .bg-blob rules in globals.css). */
+import { usePathname } from "next/navigation";
+import { useBasket } from "../lib/store/basket-context";
+
+/* Route-aware ambient background:
+   - Landing view (paper design): fixed paper layer so no gap ever shows
+     dark space.
+   - Swipe Deck view: layered cyber aurora. Motion is transform-only and
+     disabled via prefers-reduced-motion (.bg-blob). */
 export function GridBackground() {
+  const pathname = usePathname();
+  const { activeTab } = useBasket();
+  const paper = pathname === "/" && activeTab === "landing";
+
+  if (paper) {
+    return (
+      <div
+        className="paper-texture pointer-events-none fixed inset-0 z-0 overflow-hidden"
+        aria-hidden="true"
+      />
+    );
+  }
+
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
       {/* Ambient Cyber Nebulae */}
