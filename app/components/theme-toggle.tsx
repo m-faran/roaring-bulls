@@ -19,7 +19,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="ink-border-thin ink-press inline-flex size-9 cursor-pointer items-center justify-center bg-white text-[#111111]"
+      className="ink-border-thin ink-press inline-flex size-9 cursor-pointer items-center justify-center bg-paper-white text-ink"
       aria-label="Toggle theme"
     >
       {mounted ? (

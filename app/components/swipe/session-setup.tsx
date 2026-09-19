@@ -53,16 +53,16 @@ export function SessionSetupModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#111111]/60 p-4 animate-in fade-in duration-200">
-      <div className="ink-border ink-shadow-lg w-full max-w-md bg-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in duration-200">
+      <div className="ink-border ink-shadow-lg w-full max-w-md bg-paper-white">
         {/* Stub header */}
-        <div className="flex items-center justify-between border-b-[3px] border-[#111111] bg-[#111111] px-4 py-2">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#F5F1E8]">
+        <div className="flex items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-2">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
             Swpper • Session Setup
           </span>
           <button
             onClick={() => setIsSessionSetupOpen(false)}
-            className="cursor-pointer text-[#F5F1E8] transition-opacity hover:opacity-70"
+            className="cursor-pointer text-paper transition-opacity hover:opacity-70"
             aria-label="Close session setup"
           >
             <X className="h-4 w-4" strokeWidth={3} />
@@ -72,14 +72,14 @@ export function SessionSetupModal() {
         <div className="ink-frame space-y-5 p-5">
           {/* Modal Header */}
           <div className="flex items-center gap-3">
-            <span className="ink-border-thin flex h-10 w-10 items-center justify-center bg-[#FFD23F] text-[#111111]">
+            <span className="ink-border-thin flex h-10 w-10 items-center justify-center bg-sol-yellow text-ink">
               <Sliders className="h-5 w-5" />
             </span>
             <div>
-              <h3 className="text-base font-bold text-[#111111]">
+              <h3 className="text-base font-bold text-ink">
                 Session Setup
               </h3>
-              <p className="font-mono text-[10px] uppercase tracking-wide text-[#111111]/60">
+              <p className="font-mono text-[10px] uppercase tracking-wide text-ink/60">
                 Configure your investment budget & swipe sizes
               </p>
             </div>
@@ -87,7 +87,7 @@ export function SessionSetupModal() {
 
           {/* Currency Selector */}
           <div className="space-y-2">
-            <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+            <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink">
               Quote Currency
             </label>
             <div className="grid grid-cols-2 gap-2.5">
@@ -95,8 +95,8 @@ export function SessionSetupModal() {
                 onClick={() => handleCurrencyChange("SOL")}
                 className={`ink-border-thin cursor-pointer p-3 text-xs font-bold transition-transform hover:-translate-y-0.5 ${
                   currency === "SOL"
-                    ? "bg-[#EAFBF2] text-[#111111]"
-                    : "bg-white text-[#111111]/60"
+                    ? "bg-paper-mint text-ink"
+                    : "bg-paper-white text-ink/60"
                 }`}
               >
                 SOL (Native Gas)
@@ -105,8 +105,8 @@ export function SessionSetupModal() {
                 onClick={() => handleCurrencyChange("USDC")}
                 className={`ink-border-thin cursor-pointer p-3 text-xs font-bold transition-transform hover:-translate-y-0.5 ${
                   currency === "USDC"
-                    ? "bg-[#EAFBF2] text-[#111111]"
-                    : "bg-white text-[#111111]/60"
+                    ? "bg-paper-mint text-ink"
+                    : "bg-paper-white text-ink/60"
                 }`}
               >
                 USDC (Fixed Dollar)
@@ -117,10 +117,10 @@ export function SessionSetupModal() {
           {/* Total Session Budget */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+              <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink">
                 Total Session Budget
               </label>
-              <span className="font-mono text-[10px] tabular-nums text-[#111111]/60">
+              <span className="font-mono text-[10px] tabular-nums text-ink/60">
                 Current: {sessionBudget} {currency}
               </span>
             </div>
@@ -132,8 +132,8 @@ export function SessionSetupModal() {
                   onClick={() => setBudgetInput(val.toString())}
                   className={`ink-border-thin flex-1 cursor-pointer py-2 font-mono text-xs font-bold transition-transform hover:-translate-y-0.5 ${
                     budgetInput === val.toString()
-                      ? "bg-[#14F195] text-[#111111]"
-                      : "bg-white text-[#111111]/60"
+                      ? "bg-sol-green text-ink"
+                      : "bg-paper-white text-ink/60"
                   }`}
                 >
                   {val} {currency}
@@ -141,8 +141,8 @@ export function SessionSetupModal() {
               ))}
             </div>
 
-            <div className="ink-border-thin flex items-center bg-[#F5F1E8]">
-              <span className="border-r-[1.5px] border-[#111111]/20 px-3 font-mono text-xs font-bold text-[#111111]/50">
+            <div className="ink-border-thin flex items-center bg-paper">
+              <span className="border-r-[1.5px] border-ink/20 px-3 font-mono text-xs font-bold text-ink/50">
                 {currency}
               </span>
               <input
@@ -150,7 +150,7 @@ export function SessionSetupModal() {
                 step="any"
                 value={budgetInput}
                 onChange={(e) => setBudgetInput(e.target.value)}
-                className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-[#111111] outline-none tabular-nums"
+                className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-ink outline-none tabular-nums"
                 placeholder="Custom budget..."
               />
             </div>
@@ -159,10 +159,10 @@ export function SessionSetupModal() {
           {/* Allocation per Swipe */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+              <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink">
                 Allocation per Swipe
               </label>
-              <span className="font-mono text-[10px] tabular-nums text-[#111111]/60">
+              <span className="font-mono text-[10px] tabular-nums text-ink/60">
                 Current: {allocationPerSwipe} {currency}
               </span>
             </div>
@@ -174,8 +174,8 @@ export function SessionSetupModal() {
                   onClick={() => setAllocInput(val.toString())}
                   className={`ink-border-thin flex-1 cursor-pointer py-2 font-mono text-xs font-bold transition-transform hover:-translate-y-0.5 ${
                     allocInput === val.toString()
-                      ? "bg-[#14F195] text-[#111111]"
-                      : "bg-white text-[#111111]/60"
+                      ? "bg-sol-green text-ink"
+                      : "bg-paper-white text-ink/60"
                   }`}
                 >
                   {val} {currency}
@@ -183,8 +183,8 @@ export function SessionSetupModal() {
               ))}
             </div>
 
-            <div className="ink-border-thin flex items-center bg-[#F5F1E8]">
-              <span className="border-r-[1.5px] border-[#111111]/20 px-3 font-mono text-xs font-bold text-[#111111]/50">
+            <div className="ink-border-thin flex items-center bg-paper">
+              <span className="border-r-[1.5px] border-ink/20 px-3 font-mono text-xs font-bold text-ink/50">
                 {currency}
               </span>
               <input
@@ -192,23 +192,23 @@ export function SessionSetupModal() {
                 step="any"
                 value={allocInput}
                 onChange={(e) => setAllocInput(e.target.value)}
-                className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-[#111111] outline-none tabular-nums"
+                className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-ink outline-none tabular-nums"
                 placeholder="Custom allocation..."
               />
             </div>
           </div>
 
           {/* Footer Actions */}
-          <div className="flex gap-3 border-t-2 border-dashed border-[#111111]/50 pt-4">
+          <div className="flex gap-3 border-t-2 border-dashed border-ink/50 pt-4">
             <button
               onClick={() => setIsSessionSetupOpen(false)}
-              className="ink-border-thin ink-shadow-sm ink-press flex-1 cursor-pointer py-2.5 text-xs font-bold text-[#111111]"
+              className="ink-border-thin ink-shadow-sm ink-press flex-1 cursor-pointer py-2.5 text-xs font-bold text-ink"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="ink-border ink-shadow-sm ink-press flex-1 cursor-pointer bg-[#14F195] py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
+              className="ink-border ink-shadow-sm ink-press flex-1 cursor-pointer bg-sol-green py-2.5 text-xs font-bold uppercase tracking-wide text-ink"
             >
               Save Preferences
             </button>

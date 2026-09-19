@@ -4,30 +4,60 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #05080e;
-  --foreground: #f0f6fc;
-  --primary: #00ff88;
-  --primary-foreground: #05080e;
-  --muted: #8b9bb4;
-  --muted-foreground: #6b7c96;
-  --card: #0a111f;
-  --card-foreground: #f0f6fc;
-  --popover: #0d1527;
-  --popover-foreground: #f0f6fc;
-  --border: rgba(0, 240, 255, 0.14);
-  --border-low: rgba(255, 255, 255, 0.05);
-  --input: rgba(0, 240, 255, 0.12);
-  --accent: #101a2e;
-  --accent-foreground: #00ff88;
-  --cream: #101a2e;
-  --destructive: #ff1b6b;
+  /* === ONCHAIN PAPER (light mode is the default surface) === */
+  --background: #f5f1e8;
+  --foreground: #111111;
+  --primary: #14f195;
+  --primary-foreground: #111111;
+  --muted: #ede7d8;
+  --muted-foreground: rgba(17, 17, 17, 0.6);
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
+  --border: rgba(17, 17, 17, 0.15);
+  --border-low: rgba(17, 17, 17, 0.08);
+  --input: #ffffff;
+  --accent: #ede7d8;
+  --accent-foreground: #111111;
+  --cream: #f5f1e8;
+  --destructive: #ff5c8a;
   --destructive-foreground: #ffffff;
-  --ring: #00ff88;
+  --ring: #14f195;
   --radius: 0.875rem;
-  --secondary: #101a2e;
-  --secondary-foreground: #00f0ff;
+  --secondary: #ede7d8;
+  --secondary-foreground: #111111;
 
-  /* Cyber Arcade Palette Tokens */
+  /* Paper palette */
+  --paper: #f5f1e8;
+  --paper-deep: #ede7d8;
+  --paper-white: #ffffff;
+  --paper-mint: #eafbf2;
+  --paper-rose: #ffedf3;
+  --paper-violet: #f3ebff;
+  --ink: #111111;
+  --ink-soft: rgba(17, 17, 17, 0.6);
+  --ink-faint: rgba(17, 17, 17, 0.4);
+  --ink-line: rgba(17, 17, 17, 0.15);
+
+  /* Solana accents */
+  --sol-green: #14f195;
+  --sol-violet: #9945ff;
+  --sol-yellow: #ffd23f;
+  --sol-pink: #ff5c8a;
+
+  /* Status colors (semantic) */
+  --status-green: #10b981;
+  --status-amber: #f59e0b;
+  --status-blue: #3b82f6;
+  --status-cyan: #06b6d4;
+  --status-violet: #8b5cf6;
+  --status-red: #e11d48;
+
+  /* Hard shadow ink */
+  --shadow-ink: #111111;
+
+  /* Legacy cyber tokens (kept for the retained cyber utilities) */
   --neon-lime: #00ff88;
   --neon-cyan: #00f0ff;
   --neon-rose: #ff1b6b;
@@ -43,28 +73,49 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
+/* === INK (dark mode): same components, night ledger === */
 .dark {
-  --background: #05080e;
-  --foreground: #f0f6fc;
-  --primary: #00ff88;
-  --primary-foreground: #05080e;
-  --muted: #8b9bb4;
-  --muted-foreground: #6b7c96;
-  --card: #0a111f;
-  --card-foreground: #f0f6fc;
-  --popover: #0d1527;
-  --popover-foreground: #f0f6fc;
-  --border: rgba(0, 240, 255, 0.14);
-  --border-low: rgba(255, 255, 255, 0.06);
-  --input: rgba(0, 240, 255, 0.12);
-  --accent: #101a2e;
-  --accent-foreground: #00ff88;
-  --cream: #101a2e;
-  --destructive: #ff1b6b;
-  --destructive-foreground: #ffffff;
-  --ring: #00ff88;
-  --secondary: #101a2e;
-  --secondary-foreground: #00f0ff;
+  --background: #121212;
+  --foreground: #f5f1e8;
+  --primary: #14f195;
+  --primary-foreground: #0a0a0a;
+  --muted: #1e1e1e;
+  --muted-foreground: rgba(245, 241, 232, 0.6);
+  --card: #1a1a1a;
+  --card-foreground: #f5f1e8;
+  --popover: #1a1a1a;
+  --popover-foreground: #f5f1e8;
+  --border: rgba(245, 241, 232, 0.15);
+  --border-low: rgba(245, 241, 232, 0.08);
+  --input: #1a1a1a;
+  --accent: #1e1e1e;
+  --accent-foreground: #f5f1e8;
+  --cream: #1a1a1a;
+  --destructive: #ff5c8a;
+  --destructive-foreground: #0a0a0a;
+  --ring: #14f195;
+  --secondary: #1e1e1e;
+  --secondary-foreground: #f5f1e8;
+
+  --paper: #121212;
+  --paper-deep: #1e1e1e;
+  --paper-white: #1a1a1a;
+  --paper-mint: #0d2417;
+  --paper-rose: #2e1219;
+  --paper-violet: #1c1230;
+  --ink: #f5f1e8;
+  --ink-soft: rgba(245, 241, 232, 0.6);
+  --ink-faint: rgba(245, 241, 232, 0.4);
+  --ink-line: rgba(245, 241, 232, 0.15);
+
+  --status-green: #34d399;
+  --status-amber: #fbbf24;
+  --status-blue: #60a5fa;
+  --status-cyan: #22d3ee;
+  --status-violet: #a78bfa;
+  --status-red: #fb7185;
+
+  --shadow-ink: #000000;
 }
 
 @theme inline {
@@ -89,6 +140,27 @@
   --color-ring: var(--ring);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-paper-white: var(--paper-white);
+  --color-paper-mint: var(--paper-mint);
+  --color-paper-rose: var(--paper-rose);
+  --color-paper-violet: var(--paper-violet);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-ink-line: var(--ink-line);
+  --color-sol-green: var(--sol-green);
+  --color-sol-violet: var(--sol-violet);
+  --color-sol-yellow: var(--sol-yellow);
+  --color-sol-pink: var(--sol-pink);
+  --color-status-green: var(--status-green);
+  --color-status-amber: var(--status-amber);
+  --color-status-blue: var(--status-blue);
+  --color-status-cyan: var(--status-cyan);
+  --color-status-violet: var(--status-violet);
+  --color-status-red: var(--status-red);
+  --color-shadow-ink: var(--shadow-ink);
   --color-neon-lime: var(--neon-lime);
   --color-neon-cyan: var(--neon-cyan);
   --color-neon-rose: var(--neon-rose);
@@ -245,33 +317,33 @@
 }
 
 :focus-visible {
-  outline: 2px solid var(--neon-lime);
+  outline: 2px solid var(--sol-green);
   outline-offset: 2px;
 }
 
 /* =============================================
-   ONCHAIN PAPER — neubrutalist landing utilities
-   Paper surface, ink borders, hard offset shadows.
-   No gradients, no glow, no backdrop blur.
+   ONCHAIN PAPER — neubrutalist utilities.
+   All colors flow from the token layer above, so
+   .dark swaps every surface/border/text to ink.
    ============================================= */
 .ink-border {
-  border: 3px solid #111111;
+  border: 3px solid var(--ink);
 }
 
 .ink-border-thin {
-  border: 2px solid #111111;
+  border: 2px solid var(--ink);
 }
 
 .ink-shadow {
-  box-shadow: 5px 5px 0 0 #111111;
+  box-shadow: 5px 5px 0 0 var(--shadow-ink);
 }
 
 .ink-shadow-sm {
-  box-shadow: 3px 3px 0 0 #111111;
+  box-shadow: 3px 3px 0 0 var(--shadow-ink);
 }
 
 .ink-shadow-lg {
-  box-shadow: 8px 8px 0 0 #111111;
+  box-shadow: 8px 8px 0 0 var(--shadow-ink);
 }
 
 /* Press-into-the-page interaction for ink-shadow elements */
@@ -281,17 +353,17 @@
 
 .ink-press:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 0 #111111;
+  box-shadow: 6px 6px 0 0 var(--shadow-ink);
 }
 
 .ink-press:active {
   transform: translate(3px, 3px);
-  box-shadow: 2px 2px 0 0 #111111;
+  box-shadow: 2px 2px 0 0 var(--shadow-ink);
 }
 
 /* Warm paper tooth via SVG fractal noise */
 .paper-texture {
-  background-color: #f5f1e8;
+  background-color: var(--paper);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
@@ -306,13 +378,13 @@
   content: '';
   position: absolute;
   inset: 4px;
-  border: 1px solid rgba(17, 17, 17, 0.14);
+  border: 1px solid var(--ink-line);
   pointer-events: none;
 }
 
 /* Comic halftone dots for sticker/section accents */
 .halftone {
-  background-image: radial-gradient(#111111 1px, transparent 1px);
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
   background-size: 9px 9px;
 }
 
@@ -340,4 +412,89 @@
   .ink-press {
     transition: none;
   }
+}
+
+/* Paper form inputs: opaque token surface so dark mode needs no
+   per-file bg swaps on text fields. Pair with .ink-border-thin. */
+.paper-input {
+  background: var(--paper-white);
+  color: var(--ink);
+}
+
+.paper-input::placeholder {
+  color: var(--ink-faint);
+}
+
+.paper-input:focus {
+  outline: none;
+}
+
+.paper-input:disabled {
+  opacity: 0.6;
+}
+
+/* Dark-mode accent text: Solana green/yellow fills carry text that must
+   stay dark for contrast when the fill itself stays bright. */
+.dark .bg-sol-green,
+.dark .bg-sol-yellow {
+  color: #0a0a0a;
+}
+
+/* =============================================
+   SONNER TOASTS — paper receipts
+   Sonner composes its inline styles from these CSS
+   variables, so this is the supported theming path.
+   ============================================= */
+[data-sonner-toast] {
+  --normal-bg: var(--paper-white) !important;
+  --normal-text: var(--ink) !important;
+  --normal-border: var(--ink) !important;
+
+  --success-bg: var(--paper-mint) !important;
+  --success-text: var(--ink) !important;
+  --success-border: var(--ink) !important;
+
+  --error-bg: var(--paper-rose) !important;
+  --error-text: var(--ink) !important;
+  --error-border: var(--ink) !important;
+
+  --warning-bg: #fff8e1 !important;
+  --warning-text: var(--ink) !important;
+  --warning-border: var(--ink) !important;
+
+  --info-bg: var(--paper-white) !important;
+  --info-text: var(--ink) !important;
+  --info-border: var(--ink) !important;
+
+  border-radius: 0 !important;
+  border-width: 2px !important;
+  border-color: var(--ink) !important;
+  box-shadow: 4px 4px 0 0 var(--shadow-ink) !important;
+  font-family: var(--font-sans) !important;
+  letter-spacing: -0.01em;
+}
+
+.dark [data-sonner-toast] {
+  --warning-bg: #2e2410 !important;
+}
+
+[data-sonner-toast] [data-title] {
+  font-weight: 700;
+}
+
+[data-sonner-toast] [data-description] {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+[data-sonner-toast] [data-button] {
+  background: var(--sol-green) !important;
+  color: #0a0a0a !important;
+  border: 2px solid var(--ink) !important;
+  border-radius: 0 !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
 }

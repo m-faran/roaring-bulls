@@ -21,14 +21,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="antialiased font-sans bg-[#05080E] text-[#F0F6FC] selection:bg-[#00FF88] selection:text-[#05080E]">
+      <body className="antialiased font-sans bg-paper text-ink selection:bg-sol-green selection:text-ink">
         <Providers>
-          <div className="relative min-h-screen bg-[#05080E] text-[#F0F6FC] overflow-x-hidden">
+          <div className="paper-texture relative min-h-screen overflow-x-hidden">
             <GridBackground />
             <div className="relative z-10 flex flex-col min-h-screen">
               <AppHeader />

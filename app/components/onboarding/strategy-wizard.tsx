@@ -75,34 +75,34 @@ export function StrategyWizard({
     <div
       className={`w-full flex items-center justify-center p-4 ${
         isModal
-          ? "fixed inset-0 z-50 bg-[#111111]/60 animate-in fade-in"
+          ? "fixed inset-0 z-50 bg-black/60 animate-in fade-in"
           : "min-h-[85vh] py-8"
       }`}
     >
-      <div className="ink-border ink-shadow-lg w-full max-w-xl bg-white text-left">
+      <div className="ink-border ink-shadow-lg w-full max-w-xl bg-paper-white text-left">
         {/* Stub header */}
-        <div className="flex items-center justify-between border-b-[3px] border-[#111111] bg-[#111111] px-4 py-2">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#F5F1E8]">
+        <div className="flex items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-2">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
             Swpper • Strategy Form
           </span>
           <span className="flex gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#FF5C8A]" />
-            <span className="h-2 w-2 rounded-full bg-[#FFD23F]" />
-            <span className="h-2 w-2 rounded-full bg-[#14F195]" />
+            <span className="h-2 w-2 rounded-full bg-sol-pink" />
+            <span className="h-2 w-2 rounded-full bg-sol-yellow" />
+            <span className="h-2 w-2 rounded-full bg-sol-green" />
           </span>
         </div>
 
         <div className="ink-frame space-y-5 p-5 sm:p-6">
           {/* Step counter + close */}
           <div className="flex items-center justify-between">
-            <span className="ink-border-thin inline-block -rotate-1 bg-[#FFD23F] px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+            <span className="ink-border-thin inline-block -rotate-1 bg-sol-yellow px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-ink">
               Step {step} of 3 • Portfolio Strategy
             </span>
 
             {isModal && (
               <button
                 onClick={onClose}
-                className="ink-border-thin ink-press cursor-pointer p-1.5 text-[#111111]"
+                className="ink-border-thin ink-press cursor-pointer p-1.5 text-ink"
                 aria-label="Close strategy setup"
               >
                 <X className="h-4 w-4" strokeWidth={3} />
@@ -117,10 +117,10 @@ export function StrategyWizard({
                 key={s}
                 className={`ink-border-thin flex h-8 items-center justify-center gap-1.5 font-mono text-[11px] font-bold ${
                   s < step
-                    ? "bg-[#14F195] text-[#111111]"
+                    ? "bg-sol-green text-ink"
                     : s === step
-                      ? "bg-[#111111] text-[#F5F1E8]"
-                      : "bg-[#F5F1E8] text-[#111111]/40"
+                      ? "bg-ink text-paper"
+                      : "bg-paper text-ink/40"
                 }`}
               >
                 {s < step ? (
@@ -135,10 +135,10 @@ export function StrategyWizard({
           {step === 1 && (
             <div className="space-y-4 animate-in fade-in slide-in-from-right-2 duration-200">
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-[#111111]">
+                <h2 className="text-2xl font-bold tracking-tight text-ink">
                   Choose your Quote Currency
                 </h2>
-                <p className="mt-1 text-sm text-[#111111]/70">
+                <p className="mt-1 text-sm text-ink/70">
                   How would you like your swipe budget and order execution to be denominated?
                 </p>
               </div>
@@ -150,27 +150,27 @@ export function StrategyWizard({
                   onClick={() => handleCurrencySelect("SOL")}
                   className={`ink-border cursor-pointer p-4 text-left transition-transform hover:-translate-y-0.5 ${
                     selectedCurrency === "SOL"
-                      ? "ink-shadow bg-[#EAFBF2]"
-                      : "ink-shadow-sm bg-white"
+                      ? "ink-shadow bg-paper-mint"
+                      : "ink-shadow-sm bg-paper-white"
                   }`}
                 >
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center bg-[#9945FF] text-base font-bold text-white">
+                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center bg-sol-violet text-base font-bold text-white">
                       ◎
                     </span>
                     {selectedCurrency === "SOL" && (
-                      <span className="ink-border-thin flex h-6 w-6 items-center justify-center bg-[#14F195] text-[#111111]">
+                      <span className="ink-border-thin flex h-6 w-6 items-center justify-center bg-sol-green text-ink">
                         <Check className="h-4 w-4" strokeWidth={4} />
                       </span>
                     )}
                   </div>
-                  <h3 className="text-sm font-bold text-[#111111]">
+                  <h3 className="text-sm font-bold text-ink">
                     SOL (Native Gas)
                   </h3>
-                  <p className="mt-1 text-xs leading-relaxed text-[#111111]/70">
+                  <p className="mt-1 text-xs leading-relaxed text-ink/70">
                     Recommended for Devnet airdrops. Zero swap friction and native pairing with StonkFun.
                   </p>
-                  <span className="ink-border-thin mt-3 inline-block bg-[#FFD23F] px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-[#111111]">
+                  <span className="ink-border-thin mt-3 inline-block bg-sol-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-ink">
                     Devnet Recommended
                   </span>
                 </button>
@@ -181,27 +181,27 @@ export function StrategyWizard({
                   onClick={() => handleCurrencySelect("USDC")}
                   className={`ink-border cursor-pointer p-4 text-left transition-transform hover:-translate-y-0.5 ${
                     selectedCurrency === "USDC"
-                      ? "ink-shadow bg-[#EAFBF2]"
-                      : "ink-shadow-sm bg-white"
+                      ? "ink-shadow bg-paper-mint"
+                      : "ink-shadow-sm bg-paper-white"
                   }`}
                 >
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center bg-[#14F195] text-base font-black text-[#111111]">
+                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center bg-sol-green text-base font-black text-ink">
                       $
                     </span>
                     {selectedCurrency === "USDC" && (
-                      <span className="ink-border-thin flex h-6 w-6 items-center justify-center bg-[#14F195] text-[#111111]">
+                      <span className="ink-border-thin flex h-6 w-6 items-center justify-center bg-sol-green text-ink">
                         <Check className="h-4 w-4" strokeWidth={4} />
                       </span>
                     )}
                   </div>
-                  <h3 className="text-sm font-bold text-[#111111]">
+                  <h3 className="text-sm font-bold text-ink">
                     USDC (Stable Dollar)
                   </h3>
-                  <p className="mt-1 text-xs leading-relaxed text-[#111111]/70">
+                  <p className="mt-1 text-xs leading-relaxed text-ink/70">
                     Fixed $1.00 USD peg. Stable accounting with exact dollar budgets and prices.
                   </p>
-                  <span className="ink-border-thin mt-3 inline-block bg-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-[#111111]">
+                  <span className="ink-border-thin mt-3 inline-block bg-paper-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-ink">
                     Fixed Dollar Peg
                   </span>
                 </button>
@@ -213,10 +213,10 @@ export function StrategyWizard({
           {step === 2 && (
             <div className="space-y-4 animate-in fade-in slide-in-from-right-2 duration-200">
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-[#111111]">
+                <h2 className="text-2xl font-bold tracking-tight text-ink">
                   Select your Risk Appetite
                 </h2>
-                <p className="mt-1 text-sm text-[#111111]/70">
+                <p className="mt-1 text-sm text-ink/70">
                   Your chosen tier filters the swipe deck to the asset class matching your strategy.
                 </p>
               </div>
@@ -228,25 +228,25 @@ export function StrategyWizard({
                   onClick={() => setSelectedTier("conservative")}
                   className={`ink-border flex w-full cursor-pointer items-start gap-3.5 p-4 text-left transition-transform hover:-translate-y-0.5 ${
                     selectedTier === "conservative"
-                      ? "ink-shadow bg-[#EAFBF2]"
-                      : "ink-shadow-sm bg-white"
+                      ? "ink-shadow bg-paper-mint"
+                      : "ink-shadow-sm bg-paper-white"
                   }`}
                 >
-                  <span className="ink-border-thin flex h-10 w-10 shrink-0 items-center justify-center bg-[#14F195] text-[#111111]">
+                  <span className="ink-border-thin flex h-10 w-10 shrink-0 items-center justify-center bg-sol-green text-ink">
                     <Shield className="h-5 w-5" />
                   </span>
                   <span className="flex-1">
                     <span className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-[#111111]">
+                      <span className="text-sm font-bold text-ink">
                         Conservative • Public Blue Chips
                       </span>
                       {selectedTier === "conservative" && (
-                        <span className="ink-border-thin flex h-5 w-5 items-center justify-center bg-[#14F195] text-[#111111]">
+                        <span className="ink-border-thin flex h-5 w-5 items-center justify-center bg-sol-green text-ink">
                           <Check className="h-3.5 w-3.5" strokeWidth={4} />
                         </span>
                       )}
                     </span>
-                    <span className="mt-1 block text-xs leading-relaxed text-[#111111]/70">
+                    <span className="mt-1 block text-xs leading-relaxed text-ink/70">
                       Backed 1:1 tokenized equities (TSLAx, NVDAx, AAPLx, SPYx, COINx) with regulated custody and low volatility.
                     </span>
                   </span>
@@ -258,25 +258,25 @@ export function StrategyWizard({
                   onClick={() => setSelectedTier("balanced")}
                   className={`ink-border flex w-full cursor-pointer items-start gap-3.5 p-4 text-left transition-transform hover:-translate-y-0.5 ${
                     selectedTier === "balanced"
-                      ? "ink-shadow bg-[#F3EBFF]"
-                      : "ink-shadow-sm bg-white"
+                      ? "ink-shadow bg-paper-violet"
+                      : "ink-shadow-sm bg-paper-white"
                   }`}
                 >
-                  <span className="ink-border-thin flex h-10 w-10 shrink-0 items-center justify-center bg-[#9945FF] text-white">
+                  <span className="ink-border-thin flex h-10 w-10 shrink-0 items-center justify-center bg-sol-violet text-white">
                     <Sparkles className="h-5 w-5" />
                   </span>
                   <span className="flex-1">
                     <span className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-[#111111]">
+                      <span className="text-sm font-bold text-ink">
                         Balanced • Pre-IPO Unicorns
                       </span>
                       {selectedTier === "balanced" && (
-                        <span className="ink-border-thin flex h-5 w-5 items-center justify-center bg-[#9945FF] text-white">
+                        <span className="ink-border-thin flex h-5 w-5 items-center justify-center bg-sol-violet text-white">
                           <Check className="h-3.5 w-3.5" strokeWidth={4} />
                         </span>
                       )}
                     </span>
-                    <span className="mt-1 block text-xs leading-relaxed text-[#111111]/70">
+                    <span className="mt-1 block text-xs leading-relaxed text-ink/70">
                       PreStocks & Tessera T-Tokens (SpaceX, OpenAI, Anthropic, Kalshi, Stripe) backed by Cayman SPVs with Proof of Reserve.
                     </span>
                   </span>
@@ -288,25 +288,25 @@ export function StrategyWizard({
                   onClick={() => setSelectedTier("degen")}
                   className={`ink-border flex w-full cursor-pointer items-start gap-3.5 p-4 text-left transition-transform hover:-translate-y-0.5 ${
                     selectedTier === "degen"
-                      ? "ink-shadow bg-[#FFEDF3]"
-                      : "ink-shadow-sm bg-white"
+                      ? "ink-shadow bg-paper-rose"
+                      : "ink-shadow-sm bg-paper-white"
                   }`}
                 >
-                  <span className="ink-border-thin flex h-10 w-10 shrink-0 items-center justify-center bg-[#FF5C8A] text-white">
+                  <span className="ink-border-thin flex h-10 w-10 shrink-0 items-center justify-center bg-sol-pink text-white">
                     <Flame className="h-5 w-5" />
                   </span>
                   <span className="flex-1">
                     <span className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-[#111111]">
+                      <span className="text-sm font-bold text-ink">
                         Degen • Equity-Paired Memecoins
                       </span>
                       {selectedTier === "degen" && (
-                        <span className="ink-border-thin flex h-5 w-5 items-center justify-center bg-[#FF5C8A] text-white">
+                        <span className="ink-border-thin flex h-5 w-5 items-center justify-center bg-sol-pink text-white">
                           <Check className="h-3.5 w-3.5" strokeWidth={4} />
                         </span>
                       )}
                     </span>
-                    <span className="mt-1 block text-xs leading-relaxed text-[#111111]/70">
+                    <span className="mt-1 block text-xs leading-relaxed text-ink/70">
                       StonkFun LaunchLab bonding curves (TSLADOGE, NVDAAPE, ELONX, STONK) paired directly against tokenized equities.
                     </span>
                   </span>
@@ -319,17 +319,17 @@ export function StrategyWizard({
           {step === 3 && (
             <div className="space-y-5 animate-in fade-in slide-in-from-right-2 duration-200">
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-[#111111]">
+                <h2 className="text-2xl font-bold tracking-tight text-ink">
                   Set Session Budget & Swipe Size
                 </h2>
-                <p className="mt-1 text-sm text-[#111111]/70">
+                <p className="mt-1 text-sm text-ink/70">
                   Decide how much you want to allocate in this session and each time you swipe right.
                 </p>
               </div>
 
               {/* Total Budget */}
               <div className="space-y-2">
-                <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+                <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink">
                   Total Session Budget ({selectedCurrency})
                 </label>
                 <div className="flex gap-2">
@@ -340,16 +340,16 @@ export function StrategyWizard({
                       onClick={() => setBudgetInput(val.toString())}
                       className={`ink-border-thin flex-1 cursor-pointer py-2 font-mono text-xs font-bold transition-transform hover:-translate-y-0.5 ${
                         budgetInput === val.toString()
-                          ? "bg-[#14F195] text-[#111111]"
-                          : "bg-white text-[#111111]/60"
+                          ? "bg-sol-green text-ink"
+                          : "bg-paper-white text-ink/60"
                       }`}
                     >
                       {val} {selectedCurrency}
                     </button>
                   ))}
                 </div>
-                <div className="ink-border-thin flex items-center bg-[#F5F1E8]">
-                  <span className="border-r-[1.5px] border-[#111111]/20 px-3 font-mono text-xs font-bold text-[#111111]/50">
+                <div className="ink-border-thin flex items-center bg-paper">
+                  <span className="border-r-[1.5px] border-ink/20 px-3 font-mono text-xs font-bold text-ink/50">
                     {selectedCurrency}
                   </span>
                   <input
@@ -357,7 +357,7 @@ export function StrategyWizard({
                     step="any"
                     value={budgetInput}
                     onChange={(e) => setBudgetInput(e.target.value)}
-                    className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-[#111111] outline-none tabular-nums"
+                    className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-ink outline-none tabular-nums"
                     placeholder="Custom budget..."
                   />
                 </div>
@@ -365,7 +365,7 @@ export function StrategyWizard({
 
               {/* Swipe Allocation */}
               <div className="space-y-2">
-                <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+                <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink">
                   Allocation per Swipe ({selectedCurrency})
                 </label>
                 <div className="flex gap-2">
@@ -376,16 +376,16 @@ export function StrategyWizard({
                       onClick={() => setAllocInput(val.toString())}
                       className={`ink-border-thin flex-1 cursor-pointer py-2 font-mono text-xs font-bold transition-transform hover:-translate-y-0.5 ${
                         allocInput === val.toString()
-                          ? "bg-[#14F195] text-[#111111]"
-                          : "bg-white text-[#111111]/60"
+                          ? "bg-sol-green text-ink"
+                          : "bg-paper-white text-ink/60"
                       }`}
                     >
                       {val} {selectedCurrency}
                     </button>
                   ))}
                 </div>
-                <div className="ink-border-thin flex items-center bg-[#F5F1E8]">
-                  <span className="border-r-[1.5px] border-[#111111]/20 px-3 font-mono text-xs font-bold text-[#111111]/50">
+                <div className="ink-border-thin flex items-center bg-paper">
+                  <span className="border-r-[1.5px] border-ink/20 px-3 font-mono text-xs font-bold text-ink/50">
                     {selectedCurrency}
                   </span>
                   <input
@@ -393,19 +393,19 @@ export function StrategyWizard({
                     step="any"
                     value={allocInput}
                     onChange={(e) => setAllocInput(e.target.value)}
-                    className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-[#111111] outline-none tabular-nums"
+                    className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-ink outline-none tabular-nums"
                     placeholder="Custom swipe allocation..."
                   />
                 </div>
               </div>
 
               {/* Quick Strategy Summary — clean stat box */}
-              <div className="ink-border-thin grid grid-cols-2 divide-x-[1.5px] divide-[#111111]/20 bg-[#F5F1E8]">
+              <div className="ink-border-thin grid grid-cols-2 divide-x-[1.5px] divide-ink/20 bg-paper">
                 <div className="space-y-0.5 p-3.5">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#111111]/50">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-ink/50">
                     Estimated Swipes
                   </span>
-                  <p className="text-lg font-bold tabular-nums text-[#111111]">
+                  <p className="text-lg font-bold tabular-nums text-ink">
                     ~
                     {Math.max(
                       1,
@@ -418,10 +418,10 @@ export function StrategyWizard({
                   </p>
                 </div>
                 <div className="space-y-0.5 p-3.5 text-right">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#111111]/50">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-ink/50">
                     Target Universe
                   </span>
-                  <p className="text-lg font-bold capitalize text-[#111111]">
+                  <p className="text-lg font-bold capitalize text-ink">
                     {selectedTier} Tier
                   </p>
                 </div>
@@ -430,12 +430,12 @@ export function StrategyWizard({
           )}
 
           {/* Footer Navigation */}
-          <div className="flex items-center justify-between border-t-2 border-dashed border-[#111111]/50 pt-4">
+          <div className="flex items-center justify-between border-t-2 border-dashed border-ink/50 pt-4">
             {step > 1 ? (
               <button
                 type="button"
                 onClick={() => setStep((s) => s - 1)}
-                className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-white px-4 py-2.5 text-xs font-bold text-[#111111]"
+                className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-paper-white px-4 py-2.5 text-xs font-bold text-ink"
               >
                 <ArrowLeft className="h-3.5 w-3.5" strokeWidth={3} />
                 <span>Back</span>
@@ -448,7 +448,7 @@ export function StrategyWizard({
               <button
                 type="button"
                 onClick={() => setStep((s) => s + 1)}
-                className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-[#14F195] px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
+                className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-sol-green px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-ink"
               >
                 <span>Next</span>
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={3} />
@@ -457,7 +457,7 @@ export function StrategyWizard({
               <button
                 type="button"
                 onClick={handleFinish}
-                className="ink-border ink-shadow ink-press flex cursor-pointer items-center gap-2 bg-[#14F195] px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
+                className="ink-border ink-shadow ink-press flex cursor-pointer items-center gap-2 bg-sol-green px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-ink"
               >
                 <span>Start Swiping & Investing</span>
                 <ArrowRight className="h-4 w-4" strokeWidth={3} />

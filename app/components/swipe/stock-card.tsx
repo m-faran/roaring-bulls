@@ -30,31 +30,31 @@ export function StockCard({
   const renderSectorIcon = () => {
     switch (stock.sector) {
       case "Tech & AI":
-        return <Cpu className="h-5 w-5 text-[#14F195]" />;
+        return <Cpu className="h-5 w-5 text-sol-green" />;
       case "Defense & Aerospace":
-        return <Rocket className="h-5 w-5 text-[#9945FF]" />;
+        return <Rocket className="h-5 w-5 text-sol-violet" />;
       case "Fintech & Crypto":
-        return <Coins className="h-5 w-5 text-[#FFD23F]" />;
+        return <Coins className="h-5 w-5 text-sol-yellow" />;
       case "Pre-IPO Unicorn":
-        return <Sparkles className="h-5 w-5 text-[#FF5C8A]" />;
+        return <Sparkles className="h-5 w-5 text-sol-pink" />;
       case "Bonding Curve Meme":
-        return <Flame className="h-5 w-5 text-[#111111]" />;
+        return <Flame className="h-5 w-5 text-ink" />;
       default:
-        return <TrendingUp className="h-5 w-5 text-[#14F195]" />;
+        return <TrendingUp className="h-5 w-5 text-sol-green" />;
     }
   };
 
   return (
-    <div className="ink-border ink-shadow-lg relative flex h-[560px] w-full max-w-[460px] select-none flex-col overflow-hidden bg-white transition-transform duration-300">
+    <div className="ink-border ink-shadow-lg relative flex h-[560px] w-full max-w-[460px] select-none flex-col overflow-hidden bg-paper-white transition-transform duration-300">
       {/* Ticket stub header — receipt detailing */}
-      <div className="flex shrink-0 items-center justify-between border-b-[3px] border-[#111111] bg-[#111111] px-4 py-1.5">
-        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#F5F1E8]">
+      <div className="flex shrink-0 items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-1.5">
+        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
           Swpper • Equity Receipt
         </span>
         <span className="flex gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-[#FF5C8A]" />
-          <span className="h-2 w-2 rounded-full bg-[#FFD23F]" />
-          <span className="h-2 w-2 rounded-full bg-[#14F195]" />
+          <span className="h-2 w-2 rounded-full bg-sol-pink" />
+          <span className="h-2 w-2 rounded-full bg-sol-yellow" />
+          <span className="h-2 w-2 rounded-full bg-sol-green" />
         </span>
       </div>
 
@@ -62,7 +62,7 @@ export function StockCard({
       {isFront && isSwipingRight && (
         <div
           style={{ opacity: swipeOpacity }}
-          className="ink-border-thin pointer-events-none absolute right-6 top-10 z-30 rotate-12 bg-[#14F195] px-4 py-1.5 font-display text-xs font-black uppercase tracking-widest text-[#111111]"
+          className="ink-border-thin pointer-events-none absolute right-6 top-10 z-30 rotate-12 bg-sol-green px-4 py-1.5 font-display text-xs font-black uppercase tracking-widest text-ink"
         >
           ADD TO BASKET
         </div>
@@ -72,7 +72,7 @@ export function StockCard({
       {isFront && isSwipingLeft && (
         <div
           style={{ opacity: swipeOpacity }}
-          className="ink-border-thin pointer-events-none absolute left-6 top-10 z-30 -rotate-12 bg-[#FF5C8A] px-4 py-1.5 font-display text-xs font-black uppercase tracking-widest text-white"
+          className="ink-border-thin pointer-events-none absolute left-6 top-10 z-30 -rotate-12 bg-sol-pink px-4 py-1.5 font-display text-xs font-black uppercase tracking-widest text-white"
         >
           SKIP
         </div>
@@ -81,11 +81,11 @@ export function StockCard({
       {/* Receipt body with hairline inner keyline */}
       <div className="ink-frame flex flex-1 flex-col space-y-3 p-4">
         {/* Asset identity box — clean label/value rows */}
-        <div className="ink-border-thin divide-y-[1.5px] divide-[#111111]/15 bg-[#F5F1E8]">
+        <div className="ink-border-thin divide-y-[1.5px] divide-ink/15 bg-paper">
           <div className="flex items-center justify-between gap-3 p-3">
             <div className="flex min-w-0 items-center gap-2.5">
               {/* Logo badge with real image and graceful fallback */}
-              <div className="ink-border-thin flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden bg-white p-1.5">
+              <div className="ink-border-thin flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden bg-paper-white p-1.5">
                 {stock.logoURI && !imageError ? (
                   // eslint-disable-next-line @next/next/no-img-element -- remote token logos from catalog
                   <img
@@ -102,21 +102,21 @@ export function StockCard({
 
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="max-w-[150px] truncate text-sm font-bold tracking-tight text-[#111111] sm:max-w-[180px]">
+                  <h3 className="max-w-[150px] truncate text-sm font-bold tracking-tight text-ink sm:max-w-[180px]">
                     {stock.name}
                   </h3>
-                  <span className="ink-border-thin shrink-0 bg-white px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#111111]">
+                  <span className="ink-border-thin shrink-0 bg-paper-white px-1.5 py-0.5 font-mono text-[10px] font-bold text-ink">
                     {stock.ticker}
                   </span>
                 </div>
-                <p className="max-w-[210px] truncate font-mono text-[10px] uppercase tracking-wide text-[#111111]/60">
+                <p className="max-w-[210px] truncate font-mono text-[10px] uppercase tracking-wide text-ink/60">
                   {stock.subtitle}
                 </p>
               </div>
             </div>
 
             {/* Allocation sticker */}
-            <div className="ink-border-thin flex shrink-0 items-center gap-1.5 bg-[#14F195] px-2.5 py-1 font-mono text-xs font-bold text-[#111111]">
+            <div className="ink-border-thin flex shrink-0 items-center gap-1.5 bg-sol-green px-2.5 py-1 font-mono text-xs font-bold text-ink">
               <span className="tabular-nums">
                 {currency === "SOL"
                   ? `${allocationPerSwipe} SOL`
@@ -131,8 +131,8 @@ export function StockCard({
             <span
               className={`ink-border-thin px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums ${
                 isPositive
-                  ? "bg-[#14F195] text-[#111111]"
-                  : "bg-[#FF5C8A] text-white"
+                  ? "bg-sol-green text-ink"
+                  : "bg-sol-pink text-white"
               }`}
             >
               {isPositive ? "+" : ""}
@@ -140,21 +140,21 @@ export function StockCard({
             </span>
 
             {stock.marketCap && (
-              <span className="truncate font-mono text-[11px] text-[#111111]/60">
+              <span className="truncate font-mono text-[11px] text-ink/60">
                 Cap:{" "}
-                <span className="font-bold text-[#111111]">
+                <span className="font-bold text-ink">
                   {stock.marketCap}
                 </span>
               </span>
             )}
 
             {stock.isPreIPO && (
-              <span className="ink-border-thin shrink-0 bg-[#FFD23F] px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-[#111111]">
+              <span className="ink-border-thin shrink-0 bg-sol-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-ink">
                 Pre-IPO
               </span>
             )}
             {stock.isStonkFun && (
-              <span className="ink-border-thin shrink-0 bg-[#FF5C8A] px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-white">
+              <span className="ink-border-thin shrink-0 bg-sol-pink px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-white">
                 StonkFun
               </span>
             )}
@@ -171,14 +171,14 @@ export function StockCard({
         </div>
 
         {/* Exposure breakdown — fine-detail footer box */}
-        <div className="ink-border-thin shrink-0 space-y-2 bg-[#F5F1E8] p-3">
-          <p className="line-clamp-2 h-[34px] font-mono text-[11px] leading-snug text-[#111111]/80">
+        <div className="ink-border-thin shrink-0 space-y-2 bg-paper p-3">
+          <p className="line-clamp-2 h-[34px] font-mono text-[11px] leading-snug text-ink/80">
             {stock.description}
           </p>
 
-          <div className="border-t-2 border-dashed border-[#111111]/50 pt-2">
+          <div className="border-t-2 border-dashed border-ink/50 pt-2">
             {/* Multi-segment allocation bar (flat, no glow) */}
-            <div className="ink-border-thin flex h-2 w-full overflow-hidden bg-white">
+            <div className="ink-border-thin flex h-2 w-full overflow-hidden bg-paper-white">
               {stock.allocationSegments.map((seg, idx) => (
                 <div
                   key={idx}
@@ -193,14 +193,14 @@ export function StockCard({
             </div>
 
             {/* Single-row allocation legend */}
-            <div className="mt-1.5 flex h-4 items-center gap-x-3 overflow-hidden font-mono text-[10px] text-[#111111]/70">
+            <div className="mt-1.5 flex h-4 items-center gap-x-3 overflow-hidden font-mono text-[10px] text-ink/70">
               {stock.allocationSegments.slice(0, 3).map((seg, idx) => (
                 <div key={idx} className="flex shrink-0 items-center gap-1.5">
                   <span
                     className="h-1.5 w-1.5 shrink-0"
                     style={{ backgroundColor: seg.color }}
                   />
-                  <span className="max-w-[95px] truncate font-semibold text-[#111111]">
+                  <span className="max-w-[95px] truncate font-semibold text-ink">
                     {seg.label}
                   </span>
                   <span className="font-bold">{seg.weight}%</span>

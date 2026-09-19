@@ -128,7 +128,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
   return (
     <div className="flex w-full max-w-xl flex-col items-center px-4 pb-28 pt-1 mx-auto">
       {/* Risk Tier Selector Tabs — segmented ink control */}
-      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full items-center bg-white p-1.5">
+      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full items-center bg-paper-white p-1.5">
         {(
           [
             { id: "conservative", label: "Conservative", sub: "Blue Chips" },
@@ -143,8 +143,8 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
               onClick={() => setRiskTier(t.id)}
               className={`flex flex-1 cursor-pointer flex-col items-center px-3 py-2 transition-all duration-200 ${
                 isActive
-                  ? "ink-border-thin bg-[#14F195] text-[#111111]"
-                  : "text-[#111111]/50 hover:bg-[#F5F1E8] hover:text-[#111111]"
+                  ? "ink-border-thin bg-sol-green text-ink"
+                  : "text-ink/50 hover:bg-paper hover:text-ink"
               }`}
             >
               <span className="text-xs font-bold tracking-tight">
@@ -152,7 +152,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
               </span>
               <span
                 className={`font-mono text-[10px] uppercase tracking-wide ${
-                  isActive ? "text-[#111111]/70" : "text-[#111111]/40"
+                  isActive ? "text-ink/70" : "text-ink/40"
                 }`}
               >
                 {t.sub}
@@ -163,30 +163,30 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
       </div>
 
       {/* Budget Progress Meter — clean label/value strip */}
-      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full max-w-[460px] items-center justify-between bg-white px-3 py-2 text-xs">
+      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full max-w-[460px] items-center justify-between bg-paper-white px-3 py-2 text-xs">
         <div className="flex items-center gap-2 font-mono">
-          <span className="text-[11px] text-[#111111]/60">Allocated:</span>
-          <span className="font-bold tabular-nums text-[#111111]">
+          <span className="text-[11px] text-ink/60">Allocated:</span>
+          <span className="font-bold tabular-nums text-ink">
             {budgetUtilizationPct}%
           </span>
         </div>
 
         {/* Mini progress track */}
-        <div className="ink-border-thin mx-3 h-2 flex-1 overflow-hidden bg-[#F5F1E8]">
+        <div className="ink-border-thin mx-3 h-2 flex-1 overflow-hidden bg-paper">
           <div
-            className="h-full bg-[#14F195] transition-all duration-300"
+            className="h-full bg-sol-green transition-all duration-300"
             style={{ width: `${budgetUtilizationPct}%` }}
           />
         </div>
 
         <div className="flex items-center gap-2 font-mono">
-          <span className="text-[11px] text-[#111111]/60">Remaining:</span>
-          <span className="font-bold tabular-nums text-[#111111]">
+          <span className="text-[11px] text-ink/60">Remaining:</span>
+          <span className="font-bold tabular-nums text-ink">
             {remainingBudget} {currency}
           </span>
           <button
             onClick={() => setIsSessionSetupOpen(true)}
-            className="ink-border-thin ink-press cursor-pointer bg-[#FFD23F] p-1"
+            className="ink-border-thin ink-press cursor-pointer bg-sol-yellow p-1"
             title="Configure session budget & allocation"
           >
             <Settings2 className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -246,15 +246,15 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
           </>
         ) : (
           /* Empty Deck State — paper postcard */
-          <div className="ink-border ink-shadow-lg flex h-[560px] w-full max-w-[460px] flex-col items-center justify-center space-y-5 bg-white p-8 text-center">
-            <span className="ink-border ink-shadow-sm flex h-16 w-16 items-center justify-center bg-[#14F195] text-[#111111]">
+          <div className="ink-border ink-shadow-lg flex h-[560px] w-full max-w-[460px] flex-col items-center justify-center space-y-5 bg-paper-white p-8 text-center">
+            <span className="ink-border ink-shadow-sm flex h-16 w-16 items-center justify-center bg-sol-green text-ink">
               <Check className="h-8 w-8" strokeWidth={3} />
             </span>
             <div className="space-y-2">
-              <h3 className="text-2xl font-bold tracking-tight text-[#111111]">
+              <h3 className="text-2xl font-bold tracking-tight text-ink">
                 Deck Completed!
               </h3>
-              <p className="mx-auto mt-1 max-w-xs border-t-2 border-dashed border-[#111111]/40 pt-2 font-mono text-[11px] leading-relaxed text-[#111111]/60">
+              <p className="mx-auto mt-1 max-w-xs border-t-2 border-dashed border-ink/40 pt-2 font-mono text-[11px] leading-relaxed text-ink/60">
                 You have reviewed all assets in the {riskTier} tier. Review your
                 assembled basket or reset the deck to review again.
               </p>
@@ -262,14 +262,14 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             <div className="flex w-full max-w-xs justify-center gap-3 pt-3">
               <button
                 onClick={() => setCurrentIndex(0)}
-                className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-white px-4 py-2.5 text-xs font-bold text-[#111111]"
+                className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-paper-white px-4 py-2.5 text-xs font-bold text-ink"
               >
                 <RotateCcw className="h-3.5 w-3.5" strokeWidth={3} />
                 <span>Reset Deck</span>
               </button>
               <button
                 onClick={() => setIsBasketOpen(true)}
-                className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-[#14F195] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
+                className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-sol-green px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-ink"
               >
                 <span>Review Basket</span>
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={3} />
@@ -287,10 +287,10 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
               className="group absolute -left-16 top-1/2 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-1.5 md:flex"
               title="Skip (Left Arrow)"
             >
-              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-[#FF5C8A] text-white group-hover:rotate-6">
+              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-sol-pink text-white group-hover:rotate-6">
                 <ChevronLeft className="h-5 w-5" strokeWidth={3} />
               </span>
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#111111]">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-ink">
                 Skip
               </span>
             </button>
@@ -301,10 +301,10 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
               className="group absolute -right-16 top-1/2 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-1.5 md:flex"
               title="Add (Right Arrow)"
             >
-              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-[#14F195] text-[#111111] group-hover:-rotate-6">
+              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-sol-green text-ink group-hover:-rotate-6">
                 <ChevronRight className="h-5 w-5" strokeWidth={3} />
               </span>
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#111111]">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-ink">
                 Check
               </span>
             </button>

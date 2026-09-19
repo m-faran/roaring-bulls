@@ -119,7 +119,7 @@ export function StockChart({
       ? coords[hoveredIndex]
       : coords[coords.length - 1];
 
-  const strokeColor = isPositive ? "#14F195" : "#FF5C8A";
+  const strokeColor = isPositive ? "var(--sol-green)" : "var(--sol-pink)";
   const gradientId = `chart-grad-${isPositive ? "lime" : "rose"}-${timeframe}`;
 
   return (
@@ -127,16 +127,16 @@ export function StockChart({
       {/* Chart Header Meta */}
       <div className="flex items-center justify-between px-1 mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono font-bold tabular-nums text-[#111111]">
+          <span className="text-xs font-mono font-bold tabular-nums text-ink">
             ${activePoint?.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
           </span>
-          <span className="text-[10px] text-[#111111]/60 flex items-center gap-1 font-mono">
-            <span className="inline-block w-2.5 h-0.5 border-t border-dashed border-[#111111]/60"></span>
+          <span className="text-[10px] text-ink/60 flex items-center gap-1 font-mono">
+            <span className="inline-block w-2.5 h-0.5 border-t border-dashed border-ink/60"></span>
             vs {benchmarkTicker}
           </span>
         </div>
 
-        <div className="text-[10px] text-[#111111]/60 font-mono tabular-nums">
+        <div className="text-[10px] text-ink/60 font-mono tabular-nums">
           {timeframe === "1W"
             ? "Last 7 Days"
             : timeframe === "1M"
@@ -148,7 +148,7 @@ export function StockChart({
       </div>
 
       {/* SVG Canvas Container — fine-detail chart box */}
-      <div className="ink-border-thin relative w-full h-[180px] overflow-hidden bg-white p-2">
+      <div className="ink-border-thin relative w-full h-[180px] overflow-hidden bg-paper-white p-2">
 
         <svg
           viewBox={`0 0 ${width} ${height}`}
@@ -170,7 +170,7 @@ export function StockChart({
             y1="30"
             x2={chartW}
             y2="30"
-            stroke="rgba(17, 17, 17, 0.12)"
+            stroke="var(--ink-line)"
             strokeDasharray="3 3"
           />
           <line
@@ -178,7 +178,7 @@ export function StockChart({
             y1="85"
             x2={chartW}
             y2="85"
-            stroke="rgba(17, 17, 17, 0.12)"
+            stroke="var(--ink-line)"
             strokeDasharray="3 3"
           />
           <line
@@ -186,7 +186,7 @@ export function StockChart({
             y1="140"
             x2={chartW}
             y2="140"
-            stroke="rgba(17, 17, 17, 0.12)"
+            stroke="var(--ink-line)"
             strokeDasharray="3 3"
           />
 
@@ -198,7 +198,7 @@ export function StockChart({
             <path
               d={benchPathD}
               fill="none"
-              stroke="#111111"
+              stroke="var(--ink)"
               strokeWidth="1.2"
               strokeDasharray="4 4"
               opacity="0.45"
@@ -221,7 +221,7 @@ export function StockChart({
           <text
             x={chartW + 8}
             y="33"
-            fill="#111111"
+            fill="var(--ink)"
             fillOpacity="0.55"
             fontSize="9"
             className="font-mono tabular-nums font-medium"
@@ -231,7 +231,7 @@ export function StockChart({
           <text
             x={chartW + 8}
             y="88"
-            fill="#111111"
+            fill="var(--ink)"
             fillOpacity="0.55"
             fontSize="9"
             className="font-mono tabular-nums font-medium"
@@ -241,7 +241,7 @@ export function StockChart({
           <text
             x={chartW + 8}
             y="143"
-            fill="#111111"
+            fill="var(--ink)"
             fillOpacity="0.55"
             fontSize="9"
             className="font-mono tabular-nums font-medium"
@@ -257,7 +257,7 @@ export function StockChart({
                 y1="0"
                 x2={Math.round(activePoint.x * 10) / 10}
                 y2={height}
-                stroke="rgba(17, 17, 17, 0.3)"
+                stroke="var(--ink)"
                 strokeDasharray="2 2"
               />
               <circle
@@ -265,7 +265,7 @@ export function StockChart({
                 cy={Math.round(activePoint.y * 10) / 10}
                 r="5"
                 fill={strokeColor}
-                stroke="#FFFFFF"
+                stroke="var(--paper-white)"
                 strokeWidth="2.5"
               />
             </g>
@@ -289,7 +289,7 @@ export function StockChart({
 
       {/* Timeframe Control Tabs */}
       <div className="flex items-center justify-between mt-3 px-1">
-        <div className="ink-border-thin flex items-center gap-0 bg-white p-1">
+        <div className="ink-border-thin flex items-center gap-0 bg-paper-white p-1">
           {(["1W", "1M", "3M", "1Y", "All"] as Timeframe[]).map((tf, i) => {
             const isActive = timeframe === tf;
             return (
@@ -297,11 +297,11 @@ export function StockChart({
                 key={tf}
                 onClick={() => setTimeframe(tf)}
                 className={`cursor-pointer px-3 py-1 text-[11px] font-mono font-bold transition-all duration-200 ${
-                  i > 0 ? "border-l-[1.5px] border-[#111111]/15" : ""
+                  i > 0 ? "border-l-[1.5px] border-ink/15" : ""
                 } ${
                   isActive
-                    ? "bg-[#14F195] text-[#111111]"
-                    : "text-[#111111]/50 hover:bg-[#F5F1E8] hover:text-[#111111]"
+                    ? "bg-sol-green text-ink"
+                    : "text-ink/50 hover:bg-paper hover:text-ink"
                 }`}
               >
                 {tf}
@@ -311,7 +311,7 @@ export function StockChart({
         </div>
 
         {/* Info / Benchmark Indicator */}
-        <div className="ink-border-thin flex items-center gap-1.5 text-[11px] text-[#111111]/70 px-2.5 py-1.5 bg-[#F5F1E8] font-mono">
+        <div className="ink-border-thin flex items-center gap-1.5 text-[11px] text-ink/70 px-2.5 py-1.5 bg-paper font-mono">
           <Info className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Benchmark: {benchmarkTicker}</span>
         </div>

@@ -10,14 +10,14 @@ import { PortfolioProvider } from "../lib/store/portfolio-context";
 
 export function Providers({ children }: PropsWithChildren) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark">
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <ClusterProvider>
         <AppClientProvider>
           <PortfolioProvider>
             <BasketProvider>{children}</BasketProvider>
           </PortfolioProvider>
         </AppClientProvider>
-        <Toaster position="bottom-right" richColors />
+        <Toaster position="bottom-right" />
       </ClusterProvider>
     </ThemeProvider>
   );

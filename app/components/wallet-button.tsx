@@ -115,7 +115,7 @@ export function WalletButton() {
 
   if (!isHydrated || !isWalletReady) {
     return (
-      <span className="ink-border-thin bg-white px-3.5 py-1.5 font-mono text-xs text-[#111111]/60 opacity-60">
+      <span className="ink-border-thin bg-paper-white px-3.5 py-1.5 font-mono text-xs text-ink/60 opacity-60">
         Restoring wallet...
       </span>
     );
@@ -129,7 +129,7 @@ export function WalletButton() {
           onClick={() => (isOpen ? close() : open())}
           aria-expanded={isOpen}
           aria-controls={isOpen ? "wallet-options" : undefined}
-          className="ink-border ink-shadow-sm ink-press cursor-pointer bg-[#14F195] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
+          className="ink-border ink-shadow-sm ink-press cursor-pointer bg-sol-green px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide text-ink"
         >
           Connect Wallet
         </button>
@@ -137,13 +137,13 @@ export function WalletButton() {
         {isOpen && (
           <div
             id="wallet-options"
-            className="ink-border ink-shadow absolute right-0 top-full z-50 mt-2 w-64 bg-white p-3.5 animate-in fade-in zoom-in-95 duration-150"
+            className="ink-border ink-shadow absolute right-0 top-full z-50 mt-2 w-64 bg-paper-white p-3.5 animate-in fade-in zoom-in-95 duration-150"
           >
-            <p className="mb-2 border-b-[1.5px] border-dashed border-[#111111]/40 pb-2 font-mono text-[10px] font-bold uppercase tracking-widest text-[#111111]/70">
+            <p className="mb-2 border-b-[1.5px] border-dashed border-ink/40 pb-2 font-mono text-[10px] font-bold uppercase tracking-widest text-ink/70">
               Choose a wallet
             </p>
             {wallets.length === 0 ? (
-              <p className="font-mono text-xs text-[#111111]/60">
+              <p className="font-mono text-xs text-ink/60">
                 No wallets detected. Install a Solana wallet extension.
               </p>
             ) : (
@@ -160,7 +160,7 @@ export function WalletButton() {
                       }
                     }}
                     disabled={isConnecting}
-                    className="ink-border-thin flex w-full cursor-pointer items-center gap-3 bg-white px-3 py-2 text-left text-xs font-bold text-[#111111] transition-colors hover:bg-[#F5F1E8] disabled:opacity-50 disabled:pointer-events-none"
+                    className="ink-border-thin flex w-full cursor-pointer items-center gap-3 bg-paper-white px-3 py-2 text-left text-xs font-bold text-ink transition-colors hover:bg-paper disabled:opacity-50 disabled:pointer-events-none"
                   >
                     {wallet.icon && (
                       // eslint-disable-next-line @next/next/no-img-element -- wallet-standard icons are data URIs
@@ -176,13 +176,13 @@ export function WalletButton() {
               </div>
             )}
             {isConnecting && (
-              <p className="mt-2 font-mono text-xs text-[#111111]/60" role="status">
+              <p className="mt-2 font-mono text-xs text-ink/60" role="status">
                 Connecting...
               </p>
             )}
             {connectMenuError != null && (
               <p
-                className="mt-2 break-words font-mono text-xs text-[#FF5C8A] [overflow-wrap:anywhere]"
+                className="mt-2 break-words font-mono text-xs text-sol-pink [overflow-wrap:anywhere]"
                 role="alert"
               >
                 {connectMenuError instanceof Error
@@ -204,22 +204,22 @@ export function WalletButton() {
         aria-expanded={isOpen}
         aria-controls={isOpen ? "wallet-options" : undefined}
         aria-label={`Wallet ${walletAddress}`}
-        className="ink-border-thin flex cursor-pointer items-center gap-2 bg-white px-3 py-1.5 font-mono text-xs font-medium text-[#111111] transition-colors hover:bg-[#F5F1E8]"
+        className="ink-border-thin flex cursor-pointer items-center gap-2 bg-paper-white px-3 py-1.5 font-mono text-xs font-medium text-ink transition-colors hover:bg-paper"
       >
-        <span className="h-2 w-2 rounded-full bg-[#14F195]" />
+        <span className="h-2 w-2 rounded-full bg-sol-green" />
         <span>{ellipsify(walletAddress!, 4)}</span>
       </button>
 
       {isOpen && (
         <div
           id="wallet-options"
-          className="ink-border ink-shadow absolute right-0 top-full z-50 mt-2 w-72 bg-white p-4 animate-in fade-in zoom-in-95 duration-150 space-y-3"
+          className="ink-border ink-shadow absolute right-0 top-full z-50 mt-2 w-72 bg-paper-white p-4 animate-in fade-in zoom-in-95 duration-150 space-y-3"
         >
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-[#111111]/60">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-ink/60">
               Balance
             </p>
-            <p className="text-base font-bold tabular-nums text-[#111111]">
+            <p className="text-base font-bold tabular-nums text-ink">
               {balance.lamports != null
                 ? formatDecimalFixedPoint(
                     solFormatter,
@@ -233,14 +233,14 @@ export function WalletButton() {
               )}
             </p>
             {balance.error != null && (
-              <p className="mt-1 font-mono text-xs text-[#FF5C8A]" role="alert">
+              <p className="mt-1 font-mono text-xs text-sol-pink" role="alert">
                 Unable to load the wallet balance.
               </p>
             )}
           </div>
 
-          <div className="ink-border-thin bg-[#F5F1E8] px-3 py-2">
-            <p className="break-all font-mono text-[11px] text-[#111111]">
+          <div className="ink-border-thin bg-paper px-3 py-2">
+            <p className="break-all font-mono text-[11px] text-ink">
               {walletAddress}
             </p>
           </div>
@@ -249,7 +249,7 @@ export function WalletButton() {
             <button
               onClick={handleCopy}
               aria-label={copied ? "Address copied" : "Copy address"}
-              className="ink-border-thin ink-press flex-1 cursor-pointer bg-white px-3 py-2 font-mono text-xs font-medium text-[#111111]"
+              className="ink-border-thin ink-press flex-1 cursor-pointer bg-paper-white px-3 py-2 font-mono text-xs font-medium text-ink"
             >
               {copied ? "Copied!" : "Copy address"}
             </button>
@@ -257,7 +257,7 @@ export function WalletButton() {
               href={getExplorerUrl(`/address/${walletAddress}`)}
               target="_blank"
               rel="noopener noreferrer"
-              className="ink-border-thin ink-press flex-1 bg-white px-3 py-2 text-center font-mono text-xs font-medium text-[#111111]"
+              className="ink-border-thin ink-press flex-1 bg-paper-white px-3 py-2 text-center font-mono text-xs font-medium text-ink"
             >
               Explorer
             </a>
@@ -273,13 +273,13 @@ export function WalletButton() {
               }
             }}
             disabled={isDisconnecting}
-            className="ink-border-thin ink-press w-full cursor-pointer bg-[#FFEDF3] px-3 py-2 text-xs font-bold text-[#111111] transition-colors hover:bg-[#FF5C8A] hover:text-white disabled:pointer-events-none disabled:opacity-50"
+            className="ink-border-thin ink-press w-full cursor-pointer bg-paper-rose px-3 py-2 text-xs font-bold text-ink transition-colors hover:bg-sol-pink hover:text-white disabled:pointer-events-none disabled:opacity-50"
           >
             {isDisconnecting ? "Disconnecting..." : "Disconnect"}
           </button>
           {accountMenuError != null && (
             <p
-              className="mt-2 break-words font-mono text-xs text-[#FF5C8A] [overflow-wrap:anywhere]"
+              className="mt-2 break-words font-mono text-xs text-sol-pink [overflow-wrap:anywhere]"
               role="alert"
             >
               {accountMenuError instanceof Error

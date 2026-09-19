@@ -22,7 +22,7 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
   };
 
   return (
-    <div className="paper-texture fixed bottom-0 left-0 right-0 z-40 border-t-[3px] border-[#111111] px-4 py-3 sm:px-6">
+    <div className="paper-texture fixed bottom-0 left-0 right-0 z-40 border-t-[3px] border-ink px-4 py-3 sm:px-6">
       <div className="mx-auto w-full max-w-6xl">
         {/* Mobile View: Single Row (< lg) */}
         <div className="flex items-center justify-between gap-2.5 lg:hidden">
@@ -30,7 +30,7 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
           <button
             type="button"
             onClick={handleSkip}
-            className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-[#FF5C8A] px-3.5 py-2.5 text-xs font-bold uppercase tracking-wide text-white"
+            className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-sol-pink px-3.5 py-2.5 text-xs font-bold uppercase tracking-wide text-white"
           >
             <ChevronLeft className="h-3.5 w-3.5" strokeWidth={3} />
             <span>Skip</span>
@@ -40,11 +40,11 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
           <button
             type="button"
             onClick={() => setIsBasketOpen(true)}
-            className="ink-border-thin ink-shadow-sm ink-press flex flex-1 cursor-pointer items-center justify-center gap-2 bg-white px-3.5 py-2.5 text-xs font-bold text-[#111111]"
+            className="ink-border-thin ink-shadow-sm ink-press flex flex-1 cursor-pointer items-center justify-center gap-2 bg-paper-white px-3.5 py-2.5 text-xs font-bold text-ink"
           >
             <ShoppingCart className="h-4 w-4" strokeWidth={2.5} />
-            <span>Review basket</span>
-            <span className="ink-border-thin flex items-center justify-center bg-[#FFD23F] px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums">
+            <span className="hidden sm:inline">Review basket</span>
+            <span className="ink-border-thin flex items-center justify-center bg-sol-yellow px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums">
               {basket.length}
             </span>
             {basket.length > 0 && (
@@ -59,7 +59,7 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
             type="button"
             onClick={() => setIsBasketOpen(true)}
             disabled={basket.length === 0}
-            className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-[#14F195] px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111] sm:px-5 disabled:opacity-30 disabled:pointer-events-none"
+            className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-sol-green px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-ink sm:px-5 disabled:opacity-30 disabled:pointer-events-none"
           >
             <span>Routes</span>
             <ChevronRight className="h-3.5 w-3.5" strokeWidth={3} />
@@ -73,21 +73,21 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
             <button
               type="button"
               onClick={handleSkip}
-              className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 bg-[#FF5C8A] px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-white"
+              className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 bg-sol-pink px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-white"
               title="Skip asset (or press Left Arrow)"
             >
               <ChevronLeft className="h-4 w-4" strokeWidth={3} />
               <span>Skip Asset (Left)</span>
             </button>
 
-            <span className="font-mono text-[11px] tracking-tight text-[#111111]/60">
+            <span className="font-mono text-[11px] tracking-tight text-ink/60">
               or swipe card with touch / mouse
             </span>
 
             <button
               type="button"
               onClick={handleAdd}
-              className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 bg-[#14F195] px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
+              className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 bg-sol-green px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-ink"
               title="Add to basket (or press Right Arrow)"
             >
               <span>Add to Basket (Right)</span>
@@ -100,11 +100,11 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
             <button
               type="button"
               onClick={() => setIsBasketOpen(true)}
-              className="ink-border-thin ink-shadow-sm ink-press flex flex-1 cursor-pointer items-center justify-center gap-2 bg-white px-4 py-2.5 text-xs font-bold text-[#111111]"
+              className="ink-border-thin ink-shadow-sm ink-press flex flex-1 cursor-pointer items-center justify-center gap-2 bg-paper-white px-4 py-2.5 text-xs font-bold text-ink"
             >
               <ShoppingCart className="h-4 w-4" strokeWidth={2.5} />
               <span>Review Basket</span>
-              <span className="ink-border-thin flex items-center justify-center bg-[#FFD23F] px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums">
+              <span className="ink-border-thin flex items-center justify-center bg-sol-yellow px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums">
                 {basket.length}
               </span>
               {basket.length > 0 && (
@@ -118,7 +118,7 @@ export function BottomActionBar({ onSkip }: BottomActionBarProps) {
               type="button"
               onClick={() => setIsBasketOpen(true)}
               disabled={basket.length === 0}
-              className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-[#14F195] px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111] disabled:opacity-30 disabled:pointer-events-none"
+              className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-sol-green px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-ink disabled:opacity-30 disabled:pointer-events-none"
             >
               <span>Check routes</span>
               <ChevronRight className="h-3.5 w-3.5" strokeWidth={3} />
