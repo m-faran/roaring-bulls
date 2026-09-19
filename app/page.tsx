@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { STOCKS_CATALOG } from "./lib/data/stocks-catalog";
 import { filterCompliantStocks } from "./lib/data/compliance-guard";
 import { SwipeDeck } from "./components/swipe/swipe-deck";
@@ -21,7 +21,7 @@ import {
   ExecutionResult,
 } from "./lib/execution/execution-service";
 import { SOL_USD_PRICE } from "./lib/execution/mock-quotes";
-import { ShoppingCart, Trash2, ArrowRight } from "lucide-react";
+import { ShoppingCart, Trash2, ArrowRight, Settings2 } from "lucide-react";
 
 export default function Home() {
   const client = useAppClient();
@@ -35,6 +35,7 @@ export default function Home() {
     hasCompletedOnboarding,
     isStrategyWizardOpen,
     setIsStrategyWizardOpen,
+    setIsSessionSetupOpen,
     riskTier,
     sessionBudget,
     remainingBudget,
@@ -184,7 +185,7 @@ export default function Home() {
   // If user is on the Landing Page / Overview tab
   if (activeTab === "landing") {
     return (
-      <main className="min-h-screen bg-transparent text-slate-100 flex flex-col items-center">
+      <main className="flex min-h-screen flex-col items-center bg-transparent text-[#111111]">
         <LandingPage />
         <PortfolioDrawer />
       </main>
@@ -194,178 +195,194 @@ export default function Home() {
   // If user is on App tab but has not answered initial strategy questions, show Onboarding Questionnaire
   if (!hasCompletedOnboarding) {
     return (
-      <main className="min-h-[85vh] bg-transparent text-slate-100 flex flex-col items-center justify-center px-4">
+      <main className="flex min-h-[85vh] flex-col items-center justify-center bg-transparent px-4 text-[#111111]">
         <StrategyWizard />
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-transparent text-[#F0F6FC] flex flex-col items-center">
-      {/* Expansive Responsive Container */}
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-28">
+    <main className="flex min-h-screen flex-col items-center bg-transparent text-[#111111]">
+      <div className="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 sm:px-6">
         {/* Top Context & Strategy Banner */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-display font-black tracking-tight text-white">
+            <h1 className="text-2xl font-bold tracking-tight text-[#111111] sm:text-4xl">
               Investment ideas
             </h1>
-            <p className="mt-0.5 text-xs sm:text-sm text-slate-400 font-medium">
+            <p className="mt-0.5 font-mono text-xs text-[#111111]/60">
               Ready-made portfolios. Swipe right to add, left to skip.
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setIsStrategyWizardOpen(true)}
-              className="cursor-pointer flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-cyan-500/20 bg-[#0A111F] hover:bg-[#101A2E] hover:border-[#00FF88]/40 text-xs font-semibold text-slate-300 transition-all shadow-[0_0_10px_rgba(0,240,255,0.1)] group hover:shadow-[0_0_15px_rgba(0,255,136,0.2)]"
-              title="Click to reconfigure strategy"
-            >
-              <span className="w-2 h-2 rounded-full bg-[#00FF88] shadow-[0_0_8px_#00FF88] group-hover:scale-125 transition-transform"></span>
-              <span className="font-mono text-xs">
-                Strategy: <strong className="text-white capitalize font-display font-bold">{riskTier}</strong> ({currency})
-              </span>
-              <span className="text-cyan-500/40">•</span>
-              <span className="text-[#00FF88] font-display font-bold underline underline-offset-2 decoration-[#00FF88]/40">
-                Change
-              </span>
-            </button>
-          </div>
+          <button
+            onClick={() => setIsStrategyWizardOpen(true)}
+            className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 self-start bg-white px-3.5 py-1.5 text-xs font-semibold sm:self-auto"
+            title="Click to reconfigure strategy"
+          >
+            <span className="h-2 w-2 rounded-full bg-[#14F195]" />
+            <span className="font-mono text-xs">
+              Strategy:{" "}
+              <strong className="font-bold capitalize">{riskTier}</strong> (
+              {currency})
+            </span>
+            <span className="text-[#111111]/40">•</span>
+            <span className="font-bold underline decoration-[#14F195] decoration-2 underline-offset-2">
+              Change
+            </span>
+          </button>
         </div>
 
         {/* Main Responsive Grid: Swipe Deck (Left) + Desktop Companion Panel (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
           {/* Left / Center Area: Swipe Deck */}
-          <div className="lg:col-span-7 flex flex-col items-center">
+          <div className="flex flex-col items-center lg:col-span-7">
             <SwipeDeck stocks={compliantStocks} />
           </div>
 
           {/* Right Area: Desktop Companion Dashboard (Hidden on mobile) */}
-          <div className="hidden lg:flex lg:col-span-5 flex-col gap-5 pt-1">
-            {/* Basket Telemetry Card */}
-            <div className="rounded-3xl border border-cyan-500/25 bg-[#0A111F] p-6 shadow-[0_12px_40px_rgba(0,0,0,0.7)] space-y-4 relative overflow-hidden">
-              {/* Corner HUD accent */}
-              <span className="absolute top-2.5 right-2.5 text-[8px] font-mono text-cyan-500/30">
-                +
-              </span>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-xl bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] shadow-[0_0_10px_rgba(0,255,136,0.2)]">
-                    <ShoppingCart className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-bold text-sm text-white">Basket Allocation</h3>
-                    <p className="text-[11px] text-slate-400 font-mono">Live session portfolio preview</p>
-                  </div>
-                </div>
-                <span className="px-2.5 py-1 rounded-full bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] text-xs font-mono font-bold shadow-[0_0_8px_rgba(0,255,136,0.2)]">
+          <div className="hidden flex-col gap-5 pt-1 lg:flex lg:col-span-5">
+            {/* Basket Telemetry Card — receipt panel */}
+            <div className="ink-border ink-shadow bg-white">
+              {/* Stub header */}
+              <div className="flex items-center justify-between border-b-[3px] border-[#111111] bg-[#111111] px-4 py-2">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#F5F1E8]">
+                  Basket Allocation • Live Preview
+                </span>
+                <span className="ink-border-thin bg-[#FFD23F] px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-[#111111]">
                   {basket.length} {basket.length === 1 ? "asset" : "assets"}
                 </span>
               </div>
 
-              {/* Budget Progress Meter */}
-              <div className="p-4 rounded-2xl bg-[#05080E] border border-cyan-500/15 space-y-2.5 shadow-inner">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-slate-400">Session Budget Deployed</span>
-                  <span className="text-white font-bold">
-                    {totalAllocated} / {sessionBudget} {currency} ({budgetUtilizationPct}%)
-                  </span>
-                </div>
-                <div className="w-full h-2 rounded-full bg-[#101A2E] overflow-hidden border border-cyan-500/10">
-                  <div
-                    className="h-full bg-gradient-to-r from-[#00FF88] to-[#00F0FF] shadow-[0_0_10px_#00FF88] transition-all duration-300"
-                    style={{ width: `${budgetUtilizationPct}%` }}
-                  />
-                </div>
-                <div className="flex justify-between text-[11px] text-slate-400 font-mono">
-                  <span>
-                    Remaining: <strong className="text-[#00FF88] tabular-nums font-bold">{remainingBudget} {currency}</strong>
-                  </span>
-                  <span className="capitalize text-slate-300 font-medium">{riskTier} tier</span>
-                </div>
-              </div>
-
-              {/* Added Assets List */}
-              <div className="space-y-2 max-h-[260px] overflow-y-auto pr-1">
-                {basket.length === 0 ? (
-                  <div className="py-8 text-center text-slate-500 text-xs space-y-2">
-                    <div className="w-10 h-10 mx-auto rounded-xl bg-[#05080E] border border-cyan-500/15 flex items-center justify-center text-cyan-400/80 shadow-inner">
-                      <ShoppingCart className="w-5 h-5" />
-                    </div>
-                    <p className="font-display font-semibold text-slate-400">No assets in basket yet</p>
-                    <p className="text-[11px] text-slate-500">Swipe right on cards to allocate budget.</p>
+              <div className="ink-frame space-y-4 p-4">
+                {/* Budget Progress Meter — clean label/value box */}
+                <div className="ink-border-thin divide-y-[1.5px] divide-[#111111]/15 bg-[#F5F1E8]">
+                  <div className="flex items-center justify-between px-3 py-2 font-mono text-xs">
+                    <span className="text-[#111111]/60">
+                      Session Budget Deployed
+                    </span>
+                    <span className="font-bold tabular-nums text-[#111111]">
+                      {totalAllocated} / {sessionBudget} {currency} (
+                      {budgetUtilizationPct}%)
+                    </span>
                   </div>
-                ) : (
-                  basket.map((item) => (
-                    <div
-                      key={item.stock.id}
-                      className="flex items-center justify-between p-2.5 rounded-xl border border-cyan-500/15 bg-[#05080E] hover:border-cyan-500/30 text-xs transition-colors shadow-inner"
-                    >
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="h-8 w-8 rounded-lg bg-[#101A2E] p-1 flex items-center justify-center shrink-0 overflow-hidden border border-cyan-500/20">
-                          {item.stock.logoURI ? (
-                            <img
-                              src={item.stock.logoURI}
-                              alt={item.stock.name}
-                              className="h-full w-full object-contain rounded"
-                            />
-                          ) : (
-                            <span className="text-[10px] font-mono font-bold text-cyan-300">
-                              {item.stock.ticker.slice(0, 2)}
-                            </span>
-                          )}
-                        </div>
-                        <div className="min-w-0">
-                          <p className="font-display font-bold text-white truncate max-w-[140px]">
-                            {item.stock.name}
-                          </p>
-                          <p className="text-[10px] font-mono text-cyan-400/70">
-                            {item.stock.ticker}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-[#00FF88] font-bold tabular-nums">
-                          {item.allocation} {currency}
-                        </span>
-                        <button
-                          onClick={() => removeFromBasket(item.stock.id)}
-                          className="cursor-pointer text-slate-500 hover:text-[#FF1B6B] p-1 transition"
-                          title="Remove from basket"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
+                  <div className="px-3 py-2.5">
+                    <div className="ink-border-thin h-2.5 w-full overflow-hidden bg-white">
+                      <div
+                        className="h-full bg-[#14F195] transition-all duration-300"
+                        style={{ width: `${budgetUtilizationPct}%` }}
+                      />
                     </div>
-                  ))
-                )}
-              </div>
+                  </div>
+                  <div className="flex items-center justify-between px-3 py-2 font-mono text-[11px]">
+                    <span className="text-[#111111]/60">
+                      Remaining:{" "}
+                      <strong className="font-bold tabular-nums text-[#111111]">
+                        {remainingBudget} {currency}
+                      </strong>
+                    </span>
+                    <span className="font-bold capitalize text-[#111111]">
+                      {riskTier} tier
+                    </span>
+                  </div>
+                </div>
 
-              {/* Action Trigger */}
-              <div className="pt-2">
+                {/* Added Assets List */}
+                <div className="max-h-[260px] space-y-2 overflow-y-auto pr-1">
+                  {basket.length === 0 ? (
+                    <div className="ink-border-thin border-dashed bg-white/60 py-8 text-center">
+                      <div className="mx-auto flex h-10 w-10 items-center justify-center border-[1.5px] border-[#111111]/30 text-[#111111]/50">
+                        <ShoppingCart className="h-5 w-5" />
+                      </div>
+                      <p className="mt-2 text-xs font-bold text-[#111111]/70">
+                        No assets in basket yet
+                      </p>
+                      <p className="mt-0.5 font-mono text-[10px] uppercase tracking-wide text-[#111111]/50">
+                        Swipe right on cards to allocate budget.
+                      </p>
+                    </div>
+                  ) : (
+                    basket.map((item) => (
+                      <div
+                        key={item.stock.id}
+                        className="ink-border-thin flex items-center justify-between gap-2 bg-[#F5F1E8] p-2.5"
+                      >
+                        <div className="flex min-w-0 items-center gap-2.5">
+                          <span className="ink-border-thin flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden bg-white p-1">
+                            {item.stock.logoURI ? (
+                              // eslint-disable-next-line @next/next/no-img-element -- remote token logos from catalog
+                              <img
+                                src={item.stock.logoURI}
+                                alt={item.stock.name}
+                                className="h-full w-full object-contain"
+                              />
+                            ) : (
+                              <span className="font-mono text-[10px] font-bold">
+                                {item.stock.ticker.slice(0, 2)}
+                              </span>
+                            )}
+                          </span>
+                          <div className="min-w-0">
+                            <p className="max-w-[140px] truncate text-xs font-bold text-[#111111]">
+                              {item.stock.name}
+                            </p>
+                            <p className="font-mono text-[10px] text-[#111111]/50">
+                              {item.stock.ticker}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex shrink-0 items-center gap-2.5">
+                          <span className="font-mono text-xs font-bold tabular-nums">
+                            {item.allocation} {currency}
+                          </span>
+                          <button
+                            onClick={() => removeFromBasket(item.stock.id)}
+                            className="cursor-pointer p-1 text-[#111111]/40 transition-colors hover:text-[#FF5C8A]"
+                            title="Remove from basket"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Action Trigger */}
                 <button
                   onClick={() => setIsBasketOpen(true)}
                   disabled={basket.length === 0}
-                  className="cursor-pointer w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#00FF88] to-[#00F0FF] hover:opacity-95 disabled:opacity-30 disabled:pointer-events-none text-[#05080E] text-xs font-display font-black shadow-[0_0_20px_rgba(0,255,136,0.35)] transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01]"
+                  className="ink-border ink-shadow-sm ink-press flex w-full cursor-pointer items-center justify-center gap-2 bg-[#14F195] py-3.5 font-display text-xs font-black uppercase tracking-wide text-[#111111] disabled:opacity-30 disabled:pointer-events-none"
                 >
                   <span>Review & Execute Basket ({basket.length})</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="h-4 w-4" strokeWidth={3} />
                 </button>
               </div>
             </div>
 
-            {/* Devnet Safety & Strategy Guarantee */}
-            <div className="rounded-2xl border border-cyan-500/20 bg-[#0A111F] p-4 text-xs space-y-1.5 text-slate-400 shadow-inner">
-              <div className="flex items-center gap-2 text-white font-display font-semibold">
-                <span className="h-2 w-2 rounded-full bg-[#00F0FF] shadow-[0_0_8px_#00F0FF] animate-pulse"></span>
+            {/* Devnet Safety & Strategy Guarantee — fine-detail note card */}
+            <div className="ink-border-thin ink-shadow-sm bg-white">
+              <div className="flex items-center gap-2 border-b-[1.5px] border-dashed border-[#111111]/40 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-[#111111]/70">
+                <span className="h-2 w-2 rounded-full bg-[#14F195]" />
                 <span>Solana Devnet Locked</span>
               </div>
-              <p className="text-[11px] leading-relaxed font-mono text-slate-400">
-                All order routes simulate and execute against Solana Devnet with zero real asset risk. Quotes track live equity and Raydium LaunchLab feeds.
+              <p className="px-4 py-3 font-mono text-[11px] leading-relaxed text-[#111111]/70">
+                All order routes simulate and execute against Solana Devnet with
+                zero real asset risk. Quotes track live equity and Raydium
+                LaunchLab feeds.
               </p>
             </div>
+
+            {/* Session shortcut (was floating settings gear, now in panel flow) */}
+            <button
+              onClick={() => setIsSessionSetupOpen(true)}
+              className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center justify-center gap-2 bg-white px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]"
+              title="Configure session budget & allocation"
+            >
+              <Settings2 className="h-4 w-4" />
+              <span>Session Setup</span>
+            </button>
           </div>
         </div>
       </div>

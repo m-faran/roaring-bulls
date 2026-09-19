@@ -5,7 +5,7 @@ import { StockToken, RiskTier } from "@/app/lib/data/stocks-catalog";
 import { StockCard } from "./stock-card";
 import { useBasket } from "@/app/lib/store/basket-context";
 import { toast } from "sonner";
-import { Settings2, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Settings2, Check, ChevronLeft, ChevronRight, RotateCcw, ArrowRight } from "lucide-react";
 
 interface SwipeDeckProps {
   stocks: StockToken[];
@@ -126,9 +126,9 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
   const rotation = dragOffset.x / 14;
 
   return (
-    <div className="flex flex-col items-center w-full max-w-xl mx-auto px-4 pb-28 pt-1">
-      {/* Risk Tier Selector Tabs — Cyber Arcade Segmented Style */}
-      <div className="w-full flex items-center justify-center p-1.5 mb-4 rounded-2xl bg-[#0A111F] border border-cyan-500/20 backdrop-blur-md shadow-inner">
+    <div className="flex w-full max-w-xl flex-col items-center px-4 pb-28 pt-1 mx-auto">
+      {/* Risk Tier Selector Tabs — segmented ink control */}
+      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full items-center bg-white p-1.5">
         {(
           [
             { id: "conservative", label: "Conservative", sub: "Blue Chips" },
@@ -141,18 +141,18 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             <button
               key={t.id}
               onClick={() => setRiskTier(t.id)}
-              className={`flex-1 flex flex-col items-center py-2 px-3 rounded-xl cursor-pointer transition-all duration-200 ${
+              className={`flex flex-1 cursor-pointer flex-col items-center px-3 py-2 transition-all duration-200 ${
                 isActive
-                  ? "bg-[#101A2E] text-white shadow-[0_0_15px_rgba(0,240,255,0.25)] border border-cyan-500/40 font-display"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
+                  ? "ink-border-thin bg-[#14F195] text-[#111111]"
+                  : "text-[#111111]/50 hover:bg-[#F5F1E8] hover:text-[#111111]"
               }`}
             >
-              <span className="text-xs font-display font-bold tracking-tight">
+              <span className="text-xs font-bold tracking-tight">
                 {t.label}
               </span>
               <span
-                className={`text-[10px] font-mono transition-colors ${
-                  isActive ? "text-[#00F0FF]" : "text-slate-500"
+                className={`font-mono text-[10px] uppercase tracking-wide ${
+                  isActive ? "text-[#111111]/70" : "text-[#111111]/40"
                 }`}
               >
                 {t.sub}
@@ -162,45 +162,45 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
         })}
       </div>
 
-      {/* Budget Progress Meter */}
-      <div className="w-full max-w-[460px] flex items-center justify-between px-4 py-2.5 mb-4 rounded-2xl bg-[#0A111F] border border-cyan-500/20 text-xs shadow-inner">
+      {/* Budget Progress Meter — clean label/value strip */}
+      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full max-w-[460px] items-center justify-between bg-white px-3 py-2 text-xs">
         <div className="flex items-center gap-2 font-mono">
-          <span className="text-slate-400 text-[11px]">Allocated:</span>
-          <span className="font-bold text-white tabular-nums">
+          <span className="text-[11px] text-[#111111]/60">Allocated:</span>
+          <span className="font-bold tabular-nums text-[#111111]">
             {budgetUtilizationPct}%
           </span>
         </div>
 
         {/* Mini progress track */}
-        <div className="flex-1 mx-3 h-1.5 rounded-full bg-[#05080E] overflow-hidden border border-cyan-500/10">
+        <div className="ink-border-thin mx-3 h-2 flex-1 overflow-hidden bg-[#F5F1E8]">
           <div
-            className="h-full bg-gradient-to-r from-[#00FF88] to-[#00F0FF] shadow-[0_0_10px_#00FF88] transition-all duration-300"
+            className="h-full bg-[#14F195] transition-all duration-300"
             style={{ width: `${budgetUtilizationPct}%` }}
           />
         </div>
 
         <div className="flex items-center gap-2 font-mono">
-          <span className="text-slate-400 text-[11px]">Remaining:</span>
-          <span className="font-bold text-[#00FF88] tabular-nums">
+          <span className="text-[11px] text-[#111111]/60">Remaining:</span>
+          <span className="font-bold tabular-nums text-[#111111]">
             {remainingBudget} {currency}
           </span>
           <button
             onClick={() => setIsSessionSetupOpen(true)}
-            className="cursor-pointer text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition"
+            className="ink-border-thin ink-press cursor-pointer bg-[#FFD23F] p-1"
             title="Configure session budget & allocation"
           >
-            <Settings2 className="w-3.5 h-3.5 text-cyan-400" />
+            <Settings2 className="h-3.5 w-3.5" strokeWidth={2.5} />
           </button>
         </div>
       </div>
 
       {/* Swipe Deck Container */}
-      <div className="relative w-full max-w-[460px] h-[570px] flex items-center justify-center">
+      <div className="relative flex h-[570px] w-full max-w-[460px] items-center justify-center">
         {currentStock ? (
           <>
             {/* Card Underneath (Preview) */}
             {nextStock && (
-              <div className="absolute top-0 w-full max-w-[460px] h-[560px] scale-[0.96] translate-y-3 opacity-40 pointer-events-none transition-all duration-300">
+              <div className="pointer-events-none absolute top-0 h-[560px] w-full max-w-[460px] translate-y-3 scale-[0.96] opacity-50 transition-all duration-300">
                 <StockCard stock={nextStock} />
               </div>
             )}
@@ -235,7 +235,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
                   ? "none"
                   : "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
               }}
-              className="absolute top-0 w-full max-w-[460px] h-[560px] cursor-grab active:cursor-grabbing z-20"
+              className="absolute top-0 z-20 h-[560px] w-full max-w-[460px] cursor-grab active:cursor-grabbing"
             >
               <StockCard
                 stock={currentStock}
@@ -245,32 +245,34 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             </div>
           </>
         ) : (
-          /* Empty Deck State — Cyber Pod */
-          <div className="w-full max-w-[460px] h-[560px] rounded-3xl border border-cyan-500/30 bg-[#0A111F]/90 p-8 flex flex-col items-center justify-center text-center space-y-5 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,0,0,0.8)]">
-            <div className="relative w-16 h-16 rounded-2xl bg-[#00FF88]/15 border border-[#00FF88]/40 flex items-center justify-center text-[#00FF88] shadow-[0_0_20px_rgba(0,255,136,0.3)]">
-              <Check className="w-8 h-8" />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#00FF88] animate-ping" />
-            </div>
+          /* Empty Deck State — paper postcard */
+          <div className="ink-border ink-shadow-lg flex h-[560px] w-full max-w-[460px] flex-col items-center justify-center space-y-5 bg-white p-8 text-center">
+            <span className="ink-border ink-shadow-sm flex h-16 w-16 items-center justify-center bg-[#14F195] text-[#111111]">
+              <Check className="h-8 w-8" strokeWidth={3} />
+            </span>
             <div className="space-y-2">
-              <h3 className="text-xl font-display font-black text-white tracking-tight">
+              <h3 className="text-2xl font-bold tracking-tight text-[#111111]">
                 Deck Completed!
               </h3>
-              <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
-                You have reviewed all assets in the {riskTier} tier. Review your assembled basket or reset the deck to review again.
+              <p className="mx-auto mt-1 max-w-xs border-t-2 border-dashed border-[#111111]/40 pt-2 font-mono text-[11px] leading-relaxed text-[#111111]/60">
+                You have reviewed all assets in the {riskTier} tier. Review your
+                assembled basket or reset the deck to review again.
               </p>
             </div>
-            <div className="flex gap-3 pt-3 w-full max-w-xs justify-center">
+            <div className="flex w-full max-w-xs justify-center gap-3 pt-3">
               <button
                 onClick={() => setCurrentIndex(0)}
-                className="cursor-pointer px-4 py-2.5 text-xs font-display font-bold rounded-xl bg-[#101A2E] hover:bg-[#16223B] text-white border border-cyan-500/30 transition shadow-sm"
+                className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-white px-4 py-2.5 text-xs font-bold text-[#111111]"
               >
-                Reset Deck
+                <RotateCcw className="h-3.5 w-3.5" strokeWidth={3} />
+                <span>Reset Deck</span>
               </button>
               <button
                 onClick={() => setIsBasketOpen(true)}
-                className="cursor-pointer px-5 py-2.5 text-xs font-display font-black rounded-xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] shadow-[0_0_20px_rgba(0,255,136,0.4)] transition hover:scale-105"
+                className="ink-border ink-shadow-sm ink-press flex cursor-pointer items-center gap-1.5 bg-[#14F195] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
               >
-                Review Basket
+                <span>Review Basket</span>
+                <ArrowRight className="h-3.5 w-3.5" strokeWidth={3} />
               </button>
             </div>
           </div>
@@ -282,13 +284,13 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             {/* Left Skip Trigger */}
             <button
               onClick={() => handleSwipe("left")}
-              className="cursor-pointer absolute -left-16 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-1.5 group"
+              className="group absolute -left-16 top-1/2 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-1.5 md:flex"
               title="Skip (Left Arrow)"
             >
-              <div className="w-13 h-13 rounded-full border border-[#FF1B6B]/40 bg-[#0A111F] group-hover:bg-[#FF1B6B]/20 group-hover:scale-110 group-hover:border-[#FF1B6B] flex items-center justify-center text-[#FF1B6B] transition-all duration-200 shadow-[0_0_20px_rgba(255,27,107,0.25)]">
-                <ChevronLeft className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] text-[#FF1B6B] font-display font-bold tracking-wider uppercase">
+              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-[#FF5C8A] text-white group-hover:rotate-6">
+                <ChevronLeft className="h-5 w-5" strokeWidth={3} />
+              </span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#111111]">
                 Skip
               </span>
             </button>
@@ -296,13 +298,13 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
             {/* Right Add Trigger */}
             <button
               onClick={() => handleSwipe("right")}
-              className="cursor-pointer absolute -right-16 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-1.5 group"
+              className="group absolute -right-16 top-1/2 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-1.5 md:flex"
               title="Add (Right Arrow)"
             >
-              <div className="w-13 h-13 rounded-full border border-[#00FF88]/50 bg-[#00FF88] group-hover:bg-[#00FF88]/90 group-hover:scale-110 flex items-center justify-center text-[#05080E] transition-all duration-200 shadow-[0_0_25px_rgba(0,255,136,0.5)]">
-                <ChevronRight className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] text-[#00FF88] font-display font-bold tracking-wider uppercase">
+              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-[#14F195] text-[#111111] group-hover:-rotate-6">
+                <ChevronRight className="h-5 w-5" strokeWidth={3} />
+              </span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#111111]">
                 Check
               </span>
             </button>

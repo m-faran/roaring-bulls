@@ -17,42 +17,37 @@ export function PortfolioDrawer() {
   if (!isPortfolioOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-lg h-full bg-[#0A111F] border-l border-cyan-500/30 shadow-[0_0_60px_rgba(0,0,0,0.9)] flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300">
+    <div className="fixed inset-0 z-50 flex justify-end bg-[#111111]/60 animate-in fade-in duration-200">
+      <div className="paper-texture flex h-full w-full max-w-lg flex-col justify-between border-l-[3px] border-[#111111] shadow-[-8px_0_0_0_rgba(17,17,17,0.15)]">
         {/* Header */}
-        <div className="p-5 border-b border-cyan-500/20 flex items-center justify-between bg-[#05080E]/70">
-          <div className="flex items-center gap-2.5">
-            <h2 className="text-base font-display font-black text-white tracking-tight">
-              Your Portfolio
-            </h2>
-            <span className="px-2.5 py-0.5 rounded-full bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] text-xs font-mono font-bold shadow-[0_0_8px_rgba(0,255,136,0.2)]">
-              {positions.length + dcas.length + limitOrders.length} active
-            </span>
-          </div>
+        <div className="flex items-center justify-between border-b-[3px] border-[#111111] bg-[#111111] px-5 py-2.5">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#F5F1E8]">
+            Your Portfolio • {positions.length + dcas.length + limitOrders.length}{" "}
+            active
+          </span>
 
           <button
             onClick={() => setIsPortfolioOpen(false)}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition"
+            className="cursor-pointer text-[#F5F1E8] transition-opacity hover:opacity-70"
+            aria-label="Close portfolio"
           >
-            <X className="w-5 h-5" />
+            <X className="h-4 w-4" strokeWidth={3} />
           </button>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="px-5 pt-3 pb-1 border-b border-cyan-500/15 flex gap-3 bg-[#05080E]/40">
+        {/* Tab Navigation — file-folder tabs */}
+        <div className="flex gap-2 border-b-[3px] border-[#111111] bg-[#EDE7D8] px-5 pt-3">
           {[
             { id: "positions", label: `Holdings (${positions.length})` },
             {
               id: "dca",
-              label: `Active DCAs (${
+              label: `DCAs (${
                 dcas.filter((d) => d.status === "active").length
               })`,
             },
             {
               id: "limit",
-              label: `Limit Orders (${
-                limitOrders.filter((l) => l.status === "open").length
-              })`,
+              label: `Limit (${limitOrders.filter((l) => l.status === "open").length})`,
             },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
@@ -60,10 +55,10 @@ export function PortfolioDrawer() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`cursor-pointer pb-2.5 px-2 text-xs font-display font-semibold border-b-2 transition-all ${
+                className={`cursor-pointer border-t-[2px] border-x-[2px] px-3 pb-2 pt-1.5 font-mono text-[11px] font-bold uppercase tracking-wide transition-all ${
                   isActive
-                    ? "border-[#00FF88] text-[#00FF88] shadow-[0_2px_10px_rgba(0,255,136,0.3)]"
-                    : "border-transparent text-slate-400 hover:text-white"
+                    ? "-mb-[3px] border-[#111111] bg-white text-[#111111]"
+                    : "border-transparent bg-[#F5F1E8] text-[#111111]/50 hover:text-[#111111]"
                 }`}
               >
                 {tab.label}
@@ -73,30 +68,30 @@ export function PortfolioDrawer() {
         </div>
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4">
+        <div className="flex-1 space-y-4 overflow-y-auto p-5">
           {/* Holdings Tab */}
           {activeTab === "positions" && (
             <div className="space-y-3">
               {positions.length === 0 ? (
-                <div className="py-16 text-center text-slate-400 text-xs font-mono">
+                <div className="ink-border-thin border-dashed bg-white/60 py-12 text-center font-mono text-xs text-[#111111]/60">
                   No stock positions acquired yet. Execute a basket swap to start!
                 </div>
               ) : (
                 positions.map((pos) => (
                   <div
                     key={pos.id}
-                    className="p-4 rounded-2xl border border-cyan-500/20 bg-[#05080E]/90 flex items-center justify-between shadow-inner"
+                    className="ink-border-thin ink-shadow-sm flex items-center justify-between bg-white p-3.5"
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-display font-bold text-xs text-white">
+                        <span className="text-xs font-bold text-[#111111]">
                           {pos.stock.name}
                         </span>
-                        <span className="text-[10px] text-cyan-400 font-mono">
+                        <span className="font-mono text-[10px] text-[#111111]/50">
                           ({pos.stock.ticker})
                         </span>
                       </div>
-                      <p className="text-[11px] text-[#00FF88] font-mono mt-0.5 font-bold">
+                      <p className="mt-0.5 font-mono text-[11px] font-bold tabular-nums text-[#111111]">
                         {pos.amountTokens} tokens • {pos.totalInvestedSol} SOL
                       </p>
                     </div>
@@ -105,10 +100,10 @@ export function PortfolioDrawer() {
                       href={`https://explorer.solana.com/tx/${pos.txSignature}?cluster=devnet`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[11px] text-cyan-400 hover:text-[#00FF88] underline flex items-center gap-1 font-mono transition"
+                      className="ink-border-thin ink-press flex items-center gap-1 bg-[#F5F1E8] px-2 py-1 font-mono text-[10px] font-bold text-[#111111]"
                     >
                       <span>Tx</span>
-                      <ExternalLink className="w-3 h-3" />
+                      <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
                 ))
@@ -120,47 +115,49 @@ export function PortfolioDrawer() {
           {activeTab === "dca" && (
             <div className="space-y-3">
               {dcas.length === 0 ? (
-                <div className="py-16 text-center text-slate-400 text-xs font-mono">
+                <div className="ink-border-thin border-dashed bg-white/60 py-12 text-center font-mono text-xs text-[#111111]/60">
                   No active DCA schedules running.
                 </div>
               ) : (
                 dcas.map((d) => (
                   <div
                     key={d.id}
-                    className="p-4 rounded-2xl border border-cyan-500/20 bg-[#05080E]/90 space-y-2.5 shadow-inner"
+                    className="ink-border-thin ink-shadow-sm space-y-2.5 bg-white p-3.5"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="font-display font-bold text-xs text-white">
+                        <span className="text-xs font-bold text-[#111111]">
                           {d.stock.name}
                         </span>
-                        <span className="text-[10px] text-cyan-400 font-mono">
+                        <span className="font-mono text-[10px] text-[#111111]/50">
                           ({d.stock.ticker})
                         </span>
                       </div>
                       <span
-                        className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full ${
+                        className={`ink-border-thin px-2 py-0.5 font-mono text-[10px] font-bold uppercase ${
                           d.status === "active"
-                            ? "bg-[#00FF88]/15 text-[#00FF88] border border-[#00FF88]/30 shadow-[0_0_8px_rgba(0,255,136,0.2)]"
-                            : "bg-slate-800 text-slate-400"
+                            ? "bg-[#14F195] text-[#111111]"
+                            : "bg-[#F5F1E8] text-[#111111]/50"
                         }`}
                       >
                         {d.status}
                       </span>
                     </div>
 
-                    <div className="flex justify-between items-center text-[11px] text-slate-300 font-mono">
-                      <span>Schedule: {d.frequency} ({d.totalCycles} cycles)</span>
-                      <span className="font-mono text-[#00FF88] font-bold">
+                    <div className="flex items-center justify-between border-t-[1.5px] border-dashed border-[#111111]/40 pt-2 font-mono text-[11px]">
+                      <span className="text-[#111111]/60">
+                        Schedule: {d.frequency} ({d.totalCycles} cycles)
+                      </span>
+                      <span className="font-bold tabular-nums text-[#111111]">
                         {d.amountPerCycleSol} SOL/cycle
                       </span>
                     </div>
 
                     {d.status === "active" && (
-                      <div className="pt-2 flex justify-end">
+                      <div className="flex justify-end">
                         <button
                           onClick={() => cancelDCA(d.id)}
-                          className="cursor-pointer text-[11px] text-[#FF1B6B] hover:text-[#FF1B6B]/80 font-mono font-semibold px-2.5 py-1 rounded-lg bg-[#FF1B6B]/10 hover:bg-[#FF1B6B]/20 border border-[#FF1B6B]/20 transition"
+                          className="ink-border-thin cursor-pointer bg-[#FFEDF3] px-2.5 py-1 font-mono text-[11px] font-bold text-[#111111] transition-colors hover:bg-[#FF5C8A] hover:text-white"
                         >
                           Cancel Schedule
                         </button>
@@ -176,47 +173,47 @@ export function PortfolioDrawer() {
           {activeTab === "limit" && (
             <div className="space-y-3">
               {limitOrders.length === 0 ? (
-                <div className="py-16 text-center text-slate-400 text-xs font-mono">
+                <div className="ink-border-thin border-dashed bg-white/60 py-12 text-center font-mono text-xs text-[#111111]/60">
                   No open limit orders placed.
                 </div>
               ) : (
                 limitOrders.map((l) => (
                   <div
                     key={l.id}
-                    className="p-4 rounded-2xl border border-cyan-500/20 bg-[#05080E]/90 space-y-2.5 shadow-inner"
+                    className="ink-border-thin ink-shadow-sm space-y-2.5 bg-white p-3.5"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="font-display font-bold text-xs text-white">
+                        <span className="text-xs font-bold text-[#111111]">
                           {l.stock.name}
                         </span>
-                        <span className="text-[10px] text-cyan-400 font-mono">
+                        <span className="font-mono text-[10px] text-[#111111]/50">
                           ({l.stock.ticker})
                         </span>
                       </div>
                       <span
-                        className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full ${
+                        className={`ink-border-thin px-2 py-0.5 font-mono text-[10px] font-bold uppercase ${
                           l.status === "open"
-                            ? "bg-[#00F0FF]/15 text-[#00F0FF] border border-[#00F0FF]/30 shadow-[0_0_8px_rgba(0,240,255,0.2)]"
-                            : "bg-slate-800 text-slate-400"
+                            ? "bg-[#9945FF] text-white"
+                            : "bg-[#F5F1E8] text-[#111111]/50"
                         }`}
                       >
                         {l.status}
                       </span>
                     </div>
 
-                    <div className="flex justify-between items-center text-[11px] text-slate-300 font-mono">
-                      <span>Target Dip Price:</span>
-                      <span className="font-mono text-[#00F0FF] font-bold">
+                    <div className="flex items-center justify-between border-t-[1.5px] border-dashed border-[#111111]/40 pt-2 font-mono text-[11px]">
+                      <span className="text-[#111111]/60">Target Dip Price</span>
+                      <span className="font-bold tabular-nums text-[#111111]">
                         ${l.targetPriceUsd.toFixed(2)} USD
                       </span>
                     </div>
 
                     {l.status === "open" && (
-                      <div className="pt-2 flex justify-end">
+                      <div className="flex justify-end">
                         <button
                           onClick={() => cancelLimitOrder(l.id)}
-                          className="cursor-pointer text-[11px] text-[#FF1B6B] hover:text-[#FF1B6B]/80 font-mono font-semibold px-2.5 py-1 rounded-lg bg-[#FF1B6B]/10 hover:bg-[#FF1B6B]/20 border border-[#FF1B6B]/20 transition"
+                          className="ink-border-thin cursor-pointer bg-[#FFEDF3] px-2.5 py-1 font-mono text-[11px] font-bold text-[#111111] transition-colors hover:bg-[#FF5C8A] hover:text-white"
                         >
                           Cancel Order
                         </button>

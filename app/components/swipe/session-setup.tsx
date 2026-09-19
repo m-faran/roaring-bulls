@@ -53,149 +53,166 @@ export function SessionSetupModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-md rounded-3xl border border-cyan-500/30 bg-[#0A111F] p-6 sm:p-7 shadow-[0_0_50px_rgba(0,0,0,0.8)] space-y-6">
-        {/* Modal Header */}
-        <div className="flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#111111]/60 p-4 animate-in fade-in duration-200">
+      <div className="ink-border ink-shadow-lg w-full max-w-md bg-white">
+        {/* Stub header */}
+        <div className="flex items-center justify-between border-b-[3px] border-[#111111] bg-[#111111] px-4 py-2">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#F5F1E8]">
+            Swpper • Session Setup
+          </span>
+          <button
+            onClick={() => setIsSessionSetupOpen(false)}
+            className="cursor-pointer text-[#F5F1E8] transition-opacity hover:opacity-70"
+            aria-label="Close session setup"
+          >
+            <X className="h-4 w-4" strokeWidth={3} />
+          </button>
+        </div>
+
+        <div className="ink-frame space-y-5 p-5">
+          {/* Modal Header */}
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-[#05080E] border border-cyan-500/20 text-[#00FF88] shadow-inner">
-              <Sliders className="w-5 h-5" />
-            </div>
+            <span className="ink-border-thin flex h-10 w-10 items-center justify-center bg-[#FFD23F] text-[#111111]">
+              <Sliders className="h-5 w-5" />
+            </span>
             <div>
-              <h3 className="font-display font-bold text-base text-white">
+              <h3 className="text-base font-bold text-[#111111]">
                 Session Setup
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="font-mono text-[10px] uppercase tracking-wide text-[#111111]/60">
                 Configure your investment budget & swipe sizes
               </p>
             </div>
           </div>
 
-          <button
-            onClick={() => setIsSessionSetupOpen(false)}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Currency Selector */}
-        <div className="space-y-2">
-          <label className="text-xs font-semibold text-slate-300 font-display">
-            Quote Currency
-          </label>
-          <div className="grid grid-cols-2 gap-2.5">
-            <button
-              onClick={() => handleCurrencyChange("SOL")}
-              className={`cursor-pointer p-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
-                currency === "SOL"
-                  ? "border-[#00FF88] bg-[#00FF88]/15 text-[#00FF88] shadow-[0_0_12px_rgba(0,255,136,0.2)]"
-                  : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
-              }`}
-            >
-              <span>SOL (Native Gas & StonkFun)</span>
-            </button>
-            <button
-              onClick={() => handleCurrencyChange("USDC")}
-              className={`cursor-pointer p-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all ${
-                currency === "USDC"
-                  ? "border-[#00FF88] bg-[#00FF88]/15 text-[#00FF88] shadow-[0_0_12px_rgba(0,255,136,0.2)]"
-                  : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
-              }`}
-            >
-              <span>USDC (Fixed Dollar)</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Total Session Budget */}
-        <div className="space-y-2">
-          <div className="flex justify-between items-center text-xs">
-            <label className="font-semibold text-slate-300 font-display">
-              Total Session Budget
+          {/* Currency Selector */}
+          <div className="space-y-2">
+            <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+              Quote Currency
             </label>
-            <span className="text-slate-400 font-mono text-[11px]">
-              Current: {sessionBudget} {currency}
-            </span>
-          </div>
-
-          <div className="flex gap-2">
-            {budgetPresets.map((val) => (
+            <div className="grid grid-cols-2 gap-2.5">
               <button
-                key={val}
-                onClick={() => setBudgetInput(val.toString())}
-                className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer ${
-                  budgetInput === val.toString()
-                    ? "border-[#00FF88] bg-[#00FF88]/20 text-[#00FF88] shadow-[0_0_10px_rgba(0,255,136,0.25)]"
-                    : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
+                onClick={() => handleCurrencyChange("SOL")}
+                className={`ink-border-thin cursor-pointer p-3 text-xs font-bold transition-transform hover:-translate-y-0.5 ${
+                  currency === "SOL"
+                    ? "bg-[#EAFBF2] text-[#111111]"
+                    : "bg-white text-[#111111]/60"
                 }`}
               >
-                {val} {currency}
+                SOL (Native Gas)
               </button>
-            ))}
-          </div>
-
-          <input
-            type="number"
-            step="any"
-            value={budgetInput}
-            onChange={(e) => setBudgetInput(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-[#05080E] border border-cyan-500/20 text-sm font-mono text-white focus:border-[#00FF88] outline-none shadow-inner transition-colors"
-            placeholder="Custom budget..."
-          />
-        </div>
-
-        {/* Allocation per Swipe */}
-        <div className="space-y-2">
-          <div className="flex justify-between items-center text-xs">
-            <label className="font-semibold text-slate-300 font-display">
-              Allocation per Swipe
-            </label>
-            <span className="text-slate-400 font-mono text-[11px]">
-              Current: {allocationPerSwipe} {currency}
-            </span>
-          </div>
-
-          <div className="flex gap-2">
-            {allocPresets.map((val) => (
               <button
-                key={val}
-                onClick={() => setAllocInput(val.toString())}
-                className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer ${
-                  allocInput === val.toString()
-                    ? "border-[#00FF88] bg-[#00FF88]/20 text-[#00FF88] shadow-[0_0_10px_rgba(0,255,136,0.25)]"
-                    : "border-cyan-500/15 bg-[#05080E] text-slate-400 hover:text-white hover:border-cyan-500/30"
+                onClick={() => handleCurrencyChange("USDC")}
+                className={`ink-border-thin cursor-pointer p-3 text-xs font-bold transition-transform hover:-translate-y-0.5 ${
+                  currency === "USDC"
+                    ? "bg-[#EAFBF2] text-[#111111]"
+                    : "bg-white text-[#111111]/60"
                 }`}
               >
-                {val} {currency}
+                USDC (Fixed Dollar)
               </button>
-            ))}
+            </div>
           </div>
 
-          <input
-            type="number"
-            step="any"
-            value={allocInput}
-            onChange={(e) => setAllocInput(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-[#05080E] border border-cyan-500/20 text-sm font-mono text-white focus:border-[#00FF88] outline-none shadow-inner transition-colors"
-            placeholder="Custom allocation..."
-          />
-        </div>
+          {/* Total Session Budget */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+                Total Session Budget
+              </label>
+              <span className="font-mono text-[10px] tabular-nums text-[#111111]/60">
+                Current: {sessionBudget} {currency}
+              </span>
+            </div>
 
-        {/* Footer Actions */}
-        <div className="pt-2 flex gap-3">
-          <button
-            onClick={() => setIsSessionSetupOpen(false)}
-            className="flex-1 cursor-pointer py-2.5 rounded-xl border border-cyan-500/20 text-xs font-display font-semibold text-slate-300 hover:bg-white/5 transition"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSave}
-            className="flex-1 cursor-pointer py-2.5 rounded-xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-[#05080E] text-xs font-display font-black shadow-[0_0_20px_rgba(0,255,136,0.4)] transition hover:scale-105"
-          >
-            Save Preferences
-          </button>
+            <div className="flex gap-2">
+              {budgetPresets.map((val) => (
+                <button
+                  key={val}
+                  onClick={() => setBudgetInput(val.toString())}
+                  className={`ink-border-thin flex-1 cursor-pointer py-2 font-mono text-xs font-bold transition-transform hover:-translate-y-0.5 ${
+                    budgetInput === val.toString()
+                      ? "bg-[#14F195] text-[#111111]"
+                      : "bg-white text-[#111111]/60"
+                  }`}
+                >
+                  {val} {currency}
+                </button>
+              ))}
+            </div>
+
+            <div className="ink-border-thin flex items-center bg-[#F5F1E8]">
+              <span className="border-r-[1.5px] border-[#111111]/20 px-3 font-mono text-xs font-bold text-[#111111]/50">
+                {currency}
+              </span>
+              <input
+                type="number"
+                step="any"
+                value={budgetInput}
+                onChange={(e) => setBudgetInput(e.target.value)}
+                className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-[#111111] outline-none tabular-nums"
+                placeholder="Custom budget..."
+              />
+            </div>
+          </div>
+
+          {/* Allocation per Swipe */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="font-mono text-[11px] font-bold uppercase tracking-widest text-[#111111]">
+                Allocation per Swipe
+              </label>
+              <span className="font-mono text-[10px] tabular-nums text-[#111111]/60">
+                Current: {allocationPerSwipe} {currency}
+              </span>
+            </div>
+
+            <div className="flex gap-2">
+              {allocPresets.map((val) => (
+                <button
+                  key={val}
+                  onClick={() => setAllocInput(val.toString())}
+                  className={`ink-border-thin flex-1 cursor-pointer py-2 font-mono text-xs font-bold transition-transform hover:-translate-y-0.5 ${
+                    allocInput === val.toString()
+                      ? "bg-[#14F195] text-[#111111]"
+                      : "bg-white text-[#111111]/60"
+                  }`}
+                >
+                  {val} {currency}
+                </button>
+              ))}
+            </div>
+
+            <div className="ink-border-thin flex items-center bg-[#F5F1E8]">
+              <span className="border-r-[1.5px] border-[#111111]/20 px-3 font-mono text-xs font-bold text-[#111111]/50">
+                {currency}
+              </span>
+              <input
+                type="number"
+                step="any"
+                value={allocInput}
+                onChange={(e) => setAllocInput(e.target.value)}
+                className="w-full bg-transparent px-3 py-2.5 font-mono text-sm font-bold text-[#111111] outline-none tabular-nums"
+                placeholder="Custom allocation..."
+              />
+            </div>
+          </div>
+
+          {/* Footer Actions */}
+          <div className="flex gap-3 border-t-2 border-dashed border-[#111111]/50 pt-4">
+            <button
+              onClick={() => setIsSessionSetupOpen(false)}
+              className="ink-border-thin ink-shadow-sm ink-press flex-1 cursor-pointer py-2.5 text-xs font-bold text-[#111111]"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="ink-border ink-shadow-sm ink-press flex-1 cursor-pointer bg-[#14F195] py-2.5 text-xs font-bold uppercase tracking-wide text-[#111111]"
+            >
+              Save Preferences
+            </button>
+          </div>
         </div>
       </div>
     </div>
