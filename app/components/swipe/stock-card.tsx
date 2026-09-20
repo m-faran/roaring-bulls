@@ -45,7 +45,7 @@ export function StockCard({
   };
 
   return (
-    <div className="ink-border ink-shadow-lg relative flex h-[560px] w-full max-w-[460px] select-none flex-col overflow-hidden bg-paper-white transition-transform duration-300">
+    <div className="ink-border ink-shadow-lg relative flex h-[590px] w-full max-w-[560px] select-none flex-col overflow-hidden bg-paper-white transition-transform duration-300">
       {/* Ticket stub header — receipt detailing */}
       <div className="flex shrink-0 items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-1.5">
         <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
@@ -161,8 +161,8 @@ export function StockCard({
           </div>
         </div>
 
-        {/* Interactive chart */}
-        <div className="my-auto py-0.5">
+        {/* Interactive chart — flexes to fill the terminal's vertical slack */}
+        <div className="flex min-h-0 flex-1 flex-col justify-center py-0.5">
           <StockChart
             chartData={stock.chartData}
             benchmarkTicker={stock.benchmarkTicker}

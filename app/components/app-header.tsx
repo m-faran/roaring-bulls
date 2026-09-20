@@ -5,18 +5,10 @@ import { ClusterSelect } from "./cluster-select";
 import { WalletButton } from "./wallet-button";
 import { useBasket } from "../lib/store/basket-context";
 import { usePortfolio } from "../lib/store/portfolio-context";
-import { ChevronDown, Layers } from "lucide-react";
+import { Layers } from "lucide-react";
 
 export function AppHeader() {
-  const {
-    riskTier,
-    setIsPortfolioOpen,
-    remainingBudget,
-    currency,
-    setIsStrategyWizardOpen,
-    activeTab,
-    setActiveTab,
-  } = useBasket();
+  const { setIsPortfolioOpen, activeTab, setActiveTab } = useBasket();
   const { positions, dcas, limitOrders } = usePortfolio();
   const totalActive = positions.length + dcas.length + limitOrders.length;
 
@@ -76,37 +68,10 @@ export function AppHeader() {
           </button>
         </div>
 
-        {/* Strategy Reconfigure Pill (When in App) */}
-        {activeTab === "app" && (
-          <button
-            type="button"
-            onClick={() => setIsStrategyWizardOpen(true)}
-            className="ink-border-thin ink-shadow-sm ink-press hidden cursor-pointer items-center gap-2 bg-paper-white px-3 py-1.5 text-xs xl:flex"
-            title="Change Strategy (Currency, Risk Tier, Budget)"
-          >
-            <span className="h-2 w-2 rounded-full bg-sol-green" />
-            <span className="font-medium capitalize text-ink">
-              {riskTier} Tier
-            </span>
-            <span className="text-ink/40">•</span>
-            <span className="font-mono text-xs font-bold tabular-nums text-ink">
-              {remainingBudget} {currency}
-            </span>
-            <ChevronDown className="ml-0.5 h-3.5 w-3.5 text-ink/60" />
-          </button>
-        )}
       </div>
 
       {/* Right Controls */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Strategy Button on mobile */}
-        <button
-          onClick={() => setIsStrategyWizardOpen(true)}
-          className="ink-border-thin ink-shadow-sm ink-press cursor-pointer rounded-none px-2.5 py-1.5 text-xs font-semibold sm:hidden"
-        >
-          <span className="text-ink">Setup</span>
-        </button>
-
         {/* Portfolio Drawer Button */}
         <button
           onClick={() => setIsPortfolioOpen(true)}

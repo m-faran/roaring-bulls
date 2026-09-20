@@ -5,7 +5,7 @@ import { StockToken, RiskTier } from "@/app/lib/data/stocks-catalog";
 import { StockCard } from "./stock-card";
 import { useBasket } from "@/app/lib/store/basket-context";
 import { toast } from "sonner";
-import { Settings2, Check, ChevronLeft, ChevronRight, RotateCcw, ArrowRight } from "lucide-react";
+import { Settings2, Check, RotateCcw, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface SwipeDeckProps {
   stocks: StockToken[];
@@ -126,9 +126,9 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
   const rotation = dragOffset.x / 14;
 
   return (
-    <div className="flex w-full max-w-xl flex-col items-center px-4 pb-28 pt-1 mx-auto">
-      {/* Risk Tier Selector Tabs — segmented ink control */}
-      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full items-center bg-paper-white p-1.5">
+    <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 pb-4 pt-1">
+      {/* Risk Tier Selector Tabs — segmented ink control (dark-safe contrast) */}
+      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full max-w-[560px] items-center bg-paper-white p-1.5">
         {(
           [
             { id: "conservative", label: "Conservative", sub: "Blue Chips" },
@@ -144,7 +144,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
               className={`flex flex-1 cursor-pointer flex-col items-center px-3 py-2 transition-all duration-200 ${
                 isActive
                   ? "ink-border-thin bg-sol-green text-ink"
-                  : "text-ink/50 hover:bg-paper hover:text-ink"
+                  : "text-ink/80 hover:bg-paper hover:text-ink"
               }`}
             >
               <span className="text-xs font-bold tracking-tight">
@@ -152,7 +152,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
               </span>
               <span
                 className={`font-mono text-[10px] uppercase tracking-wide ${
-                  isActive ? "text-ink/70" : "text-ink/40"
+                  isActive ? "text-ink/80" : "text-ink/60"
                 }`}
               >
                 {t.sub}
@@ -165,7 +165,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
       {/* Budget Progress Meter — clean label/value strip */}
       <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full max-w-[460px] items-center justify-between bg-paper-white px-3 py-2 text-xs">
         <div className="flex items-center gap-2 font-mono">
-          <span className="text-[11px] text-ink/60">Allocated:</span>
+          <span className="text-[11px] text-ink/75">Allocated:</span>
           <span className="font-bold tabular-nums text-ink">
             {budgetUtilizationPct}%
           </span>
@@ -180,7 +180,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
         </div>
 
         <div className="flex items-center gap-2 font-mono">
-          <span className="text-[11px] text-ink/60">Remaining:</span>
+          <span className="text-[11px] text-ink/75">Remaining:</span>
           <span className="font-bold tabular-nums text-ink">
             {remainingBudget} {currency}
           </span>
@@ -194,13 +194,31 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
         </div>
       </div>
 
-      {/* Swipe Deck Container */}
-      <div className="relative flex h-[570px] w-full max-w-[460px] items-center justify-center">
+      {/* Terminal row — flanking action buttons (SKIP · CHECK) around the card, per reference */}
+      <div className="flex w-full items-center justify-center gap-3 sm:gap-5">
+
+        {/* Left flank — Skip */}
+        <div className="flex shrink-0 flex-col items-center gap-1.5">
+          <button
+            onClick={() => handleSwipe("left")}
+            disabled={!currentStock || !!isAnimatingOut}
+            className="ink-border ink-shadow-sm ink-press flex h-11 w-11 cursor-pointer items-center justify-center bg-sol-pink text-white disabled:pointer-events-none disabled:opacity-30 sm:h-12 sm:w-12"
+            title="Skip asset (or press Left Arrow)"
+          >
+            <ChevronLeft className="h-5 w-5" strokeWidth={3} />
+          </button>
+          <span className="hidden font-mono text-[10px] font-bold uppercase tracking-widest text-ink/70 sm:block">
+            Skip
+          </span>
+        </div>
+
+        {/* Swipe Deck Container */}
+        <div className="relative flex h-[600px] w-full max-w-[560px] items-center justify-center">
         {currentStock ? (
           <>
             {/* Card Underneath (Preview) */}
             {nextStock && (
-              <div className="pointer-events-none absolute top-0 h-[560px] w-full max-w-[460px] translate-y-3 scale-[0.96] opacity-50 transition-all duration-300">
+              <div className="pointer-events-none absolute top-0 h-[590px] w-full max-w-[560px] translate-y-3 scale-[0.96] opacity-50 transition-all duration-300">
                 <StockCard stock={nextStock} />
               </div>
             )}
@@ -235,7 +253,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
                   ? "none"
                   : "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
               }}
-              className="absolute top-0 z-20 h-[560px] w-full max-w-[460px] cursor-grab active:cursor-grabbing"
+              className="absolute top-0 z-20 h-[590px] w-full max-w-[560px] cursor-grab active:cursor-grabbing"
             >
               <StockCard
                 stock={currentStock}
@@ -246,7 +264,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
           </>
         ) : (
           /* Empty Deck State — paper postcard */
-          <div className="ink-border ink-shadow-lg flex h-[560px] w-full max-w-[460px] flex-col items-center justify-center space-y-5 bg-paper-white p-8 text-center">
+          <div className="ink-border ink-shadow-lg flex h-[590px] w-full max-w-[560px] flex-col items-center justify-center space-y-5 bg-paper-white p-8 text-center">
             <span className="ink-border ink-shadow-sm flex h-16 w-16 items-center justify-center bg-sol-green text-ink">
               <Check className="h-8 w-8" strokeWidth={3} />
             </span>
@@ -278,38 +296,22 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
           </div>
         )}
 
-        {/* Floating Side Action Triggers (Desktop / Quick Tap) */}
-        {currentStock && (
-          <>
-            {/* Left Skip Trigger */}
-            <button
-              onClick={() => handleSwipe("left")}
-              className="group absolute -left-16 top-1/2 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-1.5 md:flex"
-              title="Skip (Left Arrow)"
-            >
-              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-sol-pink text-white group-hover:rotate-6">
-                <ChevronLeft className="h-5 w-5" strokeWidth={3} />
-              </span>
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-ink">
-                Skip
-              </span>
-            </button>
+        </div>
 
-            {/* Right Add Trigger */}
-            <button
-              onClick={() => handleSwipe("right")}
-              className="group absolute -right-16 top-1/2 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-1.5 md:flex"
-              title="Add (Right Arrow)"
-            >
-              <span className="ink-border ink-shadow-sm ink-press flex h-12 w-12 items-center justify-center bg-sol-green text-ink group-hover:-rotate-6">
-                <ChevronRight className="h-5 w-5" strokeWidth={3} />
-              </span>
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-ink">
-                Check
-              </span>
-            </button>
-          </>
-        )}
+        {/* Right flank — Check (add to basket) */}
+        <div className="flex shrink-0 flex-col items-center gap-1.5">
+          <button
+            onClick={() => handleSwipe("right")}
+            disabled={!currentStock || !!isAnimatingOut}
+            className="ink-border ink-shadow-sm ink-press flex h-11 w-11 cursor-pointer items-center justify-center bg-sol-green text-ink disabled:pointer-events-none disabled:opacity-30 sm:h-12 sm:w-12"
+            title="Add to basket (or press Right Arrow)"
+          >
+            <ChevronRight className="h-5 w-5" strokeWidth={3} />
+          </button>
+          <span className="hidden font-mono text-[10px] font-bold uppercase tracking-widest text-ink/70 sm:block">
+            Check
+          </span>
+        </div>
       </div>
     </div>
   );

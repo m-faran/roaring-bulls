@@ -147,8 +147,8 @@ export function StockChart({
         </div>
       </div>
 
-      {/* SVG Canvas Container — fine-detail chart box */}
-      <div className="ink-border-thin relative w-full h-[180px] overflow-hidden bg-paper-white p-2">
+      {/* SVG Canvas Container — fine-detail chart box (flexes with card height) */}
+      <div className="ink-border-thin relative min-h-[180px] w-full flex-1 overflow-hidden bg-paper-white p-2">
 
         <svg
           viewBox={`0 0 ${width} ${height}`}

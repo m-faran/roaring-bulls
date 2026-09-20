@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { STOCKS_CATALOG } from "./lib/data/stocks-catalog";
 import { filterCompliantStocks } from "./lib/data/compliance-guard";
 import { SwipeDeck } from "./components/swipe/swipe-deck";
-import { BottomActionBar } from "./components/basket/bottom-action-bar";
 import { BasketDrawer } from "./components/basket/basket-drawer";
 import { SessionSetupModal } from "./components/swipe/session-setup";
 import { ExecutionModal } from "./components/basket/execution-modal";
@@ -21,7 +20,7 @@ import {
   ExecutionResult,
 } from "./lib/execution/execution-service";
 import { SOL_USD_PRICE } from "./lib/execution/mock-quotes";
-import { ShoppingCart, Trash2, ArrowRight, Settings2 } from "lucide-react";
+import { ShoppingCart, Trash2, ArrowRight } from "lucide-react";
 
 export default function Home() {
   const client = useAppClient();
@@ -35,7 +34,6 @@ export default function Home() {
     hasCompletedOnboarding,
     isStrategyWizardOpen,
     setIsStrategyWizardOpen,
-    setIsSessionSetupOpen,
     riskTier,
     sessionBudget,
     remainingBudget,
@@ -203,21 +201,14 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-transparent text-ink">
-      <div className="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 sm:px-6">
-        {/* Top Context & Strategy Banner */}
-        <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight text-ink sm:text-4xl">
-              Investment ideas
-            </h1>
-            <p className="mt-0.5 font-mono text-xs text-ink/60">
-              Ready-made portfolios. Swipe right to add, left to skip.
-            </p>
-          </div>
+      <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-5 sm:px-6">
+        {/* Strategy chip — page heading removed per design pass */}
+        <h1 className="sr-only">Investment ideas</h1>
+        <div className="mb-5 flex justify-end">
 
           <button
             onClick={() => setIsStrategyWizardOpen(true)}
-            className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 self-start bg-paper-white px-3.5 py-1.5 text-xs font-semibold sm:self-auto"
+            className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 bg-paper-white px-3.5 py-1.5 text-xs font-semibold"
             title="Click to reconfigure strategy"
           >
             <span className="h-2 w-2 rounded-full bg-sol-green" />
@@ -235,13 +226,13 @@ export default function Home() {
 
         {/* Main Responsive Grid: Swipe Deck (Left) + Desktop Companion Panel (Right) */}
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
-          {/* Left / Center Area: Swipe Deck */}
-          <div className="flex flex-col items-center lg:col-span-7">
+          {/* Left / Center Area: Swipe Deck Terminal — actions render inside the deck, above the card */}
+          <div className="flex flex-col items-stretch lg:col-span-8">
             <SwipeDeck stocks={compliantStocks} />
           </div>
 
           {/* Right Area: Desktop Companion Dashboard (Hidden on mobile) */}
-          <div className="hidden flex-col gap-5 pt-1 lg:flex lg:col-span-5">
+          <div className="flex flex-col gap-5 pt-1 lg:col-span-4">
             {/* Basket Telemetry Card — receipt panel */}
             <div className="ink-border ink-shadow bg-paper-white">
               {/* Stub header */}
@@ -361,34 +352,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Devnet Safety & Strategy Guarantee — fine-detail note card */}
-            <div className="ink-border-thin ink-shadow-sm bg-paper-white">
-              <div className="flex items-center gap-2 border-b-[1.5px] border-dashed border-ink/40 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-ink/70">
-                <span className="h-2 w-2 rounded-full bg-sol-green" />
-                <span>Solana Devnet Locked</span>
-              </div>
-              <p className="px-4 py-3 font-mono text-[11px] leading-relaxed text-ink/70">
-                All order routes simulate and execute against Solana Devnet with
-                zero real asset risk. Quotes track live equity and Raydium
-                LaunchLab feeds.
-              </p>
-            </div>
-
-            {/* Session shortcut (was floating settings gear, now in panel flow) */}
-            <button
-              onClick={() => setIsSessionSetupOpen(true)}
-              className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center justify-center gap-2 bg-paper-white px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-widest text-ink"
-              title="Configure session budget & allocation"
-            >
-              <Settings2 className="h-4 w-4" />
-              <span>Session Setup</span>
-            </button>
+            {/* Devnet note card + session shortcut removed — session setup lives in the budget strip gear */}
           </div>
         </div>
       </div>
 
-      {/* Persistent Bottom Bar (Visible on mobile/tablet) */}
-      <BottomActionBar onSkip={() => {}} />
+      {/* Basket access: live-preview panel (stacks below the deck on narrow screens) */}
 
       {/* Slide-out Basket Drawer */}
       <BasketDrawer onExecute={handleExecuteBasket} />
