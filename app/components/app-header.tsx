@@ -21,15 +21,27 @@ export function AppHeader() {
           onClick={() => setActiveTab("landing")}
           className="group flex cursor-pointer items-center gap-2.5 text-left"
         >
-          {/* Logo sticker badge */}
-          <div className="ink-border ink-shadow-sm flex h-9 w-9 items-center justify-center bg-sol-green text-base font-display font-black text-ink transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105">
-            S
+          {/* Logo sticker badge — theme-matched brand mark */}
+          <div className="ink-border ink-shadow-sm flex h-9 w-9 shrink-0 items-center justify-center bg-paper p-0.5 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static brand asset */}
+            <img
+              src="/logo-light.png"
+              alt="Roaring Bulls logo"
+              className="h-full w-full object-contain dark:hidden"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element -- static brand asset */}
+            <img
+              src="/logo-dark.png"
+              alt=""
+              aria-hidden="true"
+              className="hidden h-full w-full object-contain dark:block"
+            />
           </div>
 
           <div>
             <div className="flex items-center gap-2">
               <span className="text-lg font-display font-black tracking-tight text-ink">
-                Swpper
+                Roaring Bulls
               </span>
               <span className="ink-border-thin bg-sol-yellow px-2 py-0.5 text-[10px] font-display font-bold uppercase tracking-wider text-ink">
                 Stocks

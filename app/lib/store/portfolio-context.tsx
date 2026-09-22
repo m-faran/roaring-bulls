@@ -52,7 +52,7 @@ interface PortfolioContextType {
 
 const PortfolioContext = createContext<PortfolioContextType | null>(null);
 
-const STORAGE_KEY = "swpper_portfolio_v1";
+const STORAGE_KEY = "roaring_bulls_portfolio_v1";
 
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [positions, setPositions] = useState<ActivePosition[]>([]);

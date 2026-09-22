@@ -83,7 +83,7 @@ export function StrategyWizard({
         {/* Stub header */}
         <div className="flex items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-2">
           <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
-            Swpper • Strategy Form
+            Roaring Bulls • Strategy Form
           </span>
           <span className="flex gap-1.5">
             <span className="h-2 w-2 rounded-full bg-sol-pink" />

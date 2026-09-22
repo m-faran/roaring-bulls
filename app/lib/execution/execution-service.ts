@@ -57,13 +57,13 @@ export async function executeBasketOrder(
 
   let memoContent = "";
   if (orderType === "buy-now") {
-    memoContent = `[Swpper:BuyNow] ${stockSummary} | Total: ${totalAmountSol.toFixed(3)} SOL`;
+    memoContent = `[RoaringBulls:BuyNow] ${stockSummary} | Total: ${totalAmountSol.toFixed(3)} SOL`;
   } else if (orderType === "recurring-dca") {
-    memoContent = `[Swpper:DCA] ${stockSummary} | ${dcaConfig?.frequency || "daily"} x ${
+    memoContent = `[RoaringBulls:DCA] ${stockSummary} | ${dcaConfig?.frequency || "daily"} x ${
       dcaConfig?.cycles || 5
     }c`;
   } else {
-    memoContent = `[Swpper:Limit] ${stockSummary} | DipTarget: -${
+    memoContent = `[RoaringBulls:Limit] ${stockSummary} | DipTarget: -${
       limitConfig?.dipTargetPct || 3
     }%`;
   }

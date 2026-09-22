@@ -32,7 +32,7 @@ export function ExecutionModal({
         {/* Stub header */}
         <div className="flex items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-2">
           <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
-            Swpper • Order Confirmation
+            Roaring Bulls • Order Confirmation
           </span>
           <button
             onClick={onClose}

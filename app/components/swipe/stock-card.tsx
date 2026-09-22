@@ -49,7 +49,7 @@ export function StockCard({
       {/* Ticket stub header — receipt detailing */}
       <div className="flex shrink-0 items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-1.5">
         <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
-          Swpper • Equity Receipt
+          Roaring Bulls • Equity Receipt
         </span>
         <span className="flex gap-1.5">
           <span className="h-2 w-2 rounded-full bg-sol-pink" />

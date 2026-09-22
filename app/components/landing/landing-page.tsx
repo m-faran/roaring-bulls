@@ -126,7 +126,7 @@ export function LandingPage() {
               <p className="max-w-xl text-base leading-relaxed sm:text-lg">
                 In many developing markets, access to global stocks is fragmented,
                 expensive, or entirely unavailable. Traditional tools make investing
-                rigid and boring. <strong>Swpper</strong> offers a fixed-budget,
+                rigid and boring. <strong>Roaring Bulls</strong> offers a fixed-budget,
                 swipe-based DCA ritual across tokenized equities on Solana.
               </p>
 
@@ -135,7 +135,7 @@ export function LandingPage() {
                   onClick={handleLaunchApp}
                   className="ink-border ink-shadow ink-press inline-flex w-full cursor-pointer items-center justify-center gap-2.5 bg-sol-green px-8 py-4 text-sm font-bold uppercase tracking-wide sm:w-auto"
                 >
-                  <span>Launch Swpper App</span>
+                  <span>Launch Roaring Bulls App</span>
                   <ArrowRight className="h-4 w-4" strokeWidth={3} />
                 </button>
 
@@ -152,7 +152,21 @@ export function LandingPage() {
             {/* Stamp sticker column */}
             <div className="flex items-start justify-center lg:col-span-4 lg:justify-end">
               <div className="ink-border ink-shadow-lg rotate-6 bg-paper-white p-6 text-center">
-                <div className="halftone mx-auto mb-4 h-16 w-16 rounded-full bg-sol-violet opacity-90" />
+                <div className="mx-auto mb-4 h-16 w-16">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static brand asset */}
+                  <img
+                    src="/logo-light.png"
+                    alt="Roaring Bulls logo"
+                    className="h-full w-full object-contain dark:hidden"
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static brand asset */}
+                  <img
+                    src="/logo-dark.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="hidden h-full w-full object-contain dark:block"
+                  />
+                </div>
                 <p className="font-mono text-[10px] font-bold uppercase tracking-widest">
                   Solana • Devnet
                 </p>
@@ -272,7 +286,7 @@ export function LandingPage() {
                 {/* Ticket stub header */}
                 <div className="flex items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-2">
                   <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-paper">
-                    Swpper • Demo Ticket
+                    Roaring Bulls • Demo Ticket
                   </span>
                   <span className="flex gap-1.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-sol-pink" />
@@ -368,7 +382,7 @@ export function LandingPage() {
               The Flow
             </span>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              How the Swpper Ritual Works
+              How the Roaring Bulls Ritual Works
             </h2>
             <p>
               A frictionless investing ritual engineered from the ground up for modern
@@ -636,7 +650,7 @@ export function LandingPage() {
                 </span>
               </h3>
               <p className="mx-auto max-w-xl pt-2 font-mono text-xs leading-relaxed opacity-70 sm:text-sm">
-                We built Swpper to bridge developing markets and global equities without
+                We built Roaring Bulls to bridge developing markets and global equities without
                 the friction of legacy brokerages, wire fees, or intimidating trading
                 terminals.
               </p>
@@ -653,7 +667,7 @@ export function LandingPage() {
               Ready to assemble your equity basket?
             </h2>
             <p className="mx-auto max-w-lg text-sm opacity-90 sm:text-base">
-              Launch Swpper on Solana Devnet. Configure your strategy in 30 seconds and
+              Launch Roaring Bulls on Solana Devnet. Configure your strategy in 30 seconds and
               start swiping.
             </p>
           </div>
@@ -663,14 +677,14 @@ export function LandingPage() {
               onClick={handleLaunchApp}
               className="ink-border ink-shadow-lg ink-press inline-flex cursor-pointer items-center gap-2.5 bg-sol-green px-10 py-4 text-base font-bold uppercase tracking-wide text-ink"
             >
-              <span>Launch Swpper App & Start Swiping</span>
+              <span>Launch Roaring Bulls App & Start Swiping</span>
               <ArrowRight className="h-5 w-5" strokeWidth={3} />
             </button>
           </div>
 
           <div className="flex flex-col items-center justify-between gap-4 border-t-2 border-dashed border-white/40 pt-10 font-mono text-xs sm:flex-row">
             <div className="flex items-center gap-2">
-              <span className="font-bold">Swpper</span>
+              <span className="font-bold">Roaring Bulls</span>
               <span className="opacity-70">
                 • Swipe DCA for Tokenized Equities
               </span>

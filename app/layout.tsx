@@ -5,14 +5,9 @@ import { AppHeader } from "./components/app-header";
 import { GridBackground } from "./components/grid-background";
 
 export const metadata: Metadata = {
-  title: "Swpper — Swipe DCA for Tokenized Equities",
+  title: "Roaring Bulls — Swipe DCA for Tokenized Equities",
   description:
     "Mobile-first swipe DCA and limit order trading for Solana tokenized equities and pre-IPO assets.",
-  icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
-  },
 };
 
 export default function RootLayout({

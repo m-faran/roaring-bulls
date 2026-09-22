@@ -6,7 +6,7 @@ export interface ComplianceResult {
 }
 
 /**
- * Compliance Guardrail for Swpper Universal Wallet Compatibility
+ * Compliance Guardrail for Roaring Bulls Universal Wallet Compatibility
  *
  * Excludes institutional permissioned tokens utilizing Token-2022 Transfer Hooks
  * or identity registries (e.g., any token ending in '...ondo' or Securitize assets),
