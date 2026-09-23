@@ -7,6 +7,7 @@ import { ClusterProvider } from "./cluster-context";
 import { AppClientProvider } from "../lib/client-provider";
 import { BasketProvider } from "../lib/store/basket-context";
 import { PortfolioProvider } from "../lib/store/portfolio-context";
+import { DataProvider } from "../lib/store/data-context";
 
 export function Providers({ children }: PropsWithChildren) {
   return (
@@ -14,7 +15,9 @@ export function Providers({ children }: PropsWithChildren) {
       <ClusterProvider>
         <AppClientProvider>
           <PortfolioProvider>
-            <BasketProvider>{children}</BasketProvider>
+            <DataProvider>
+              <BasketProvider>{children}</BasketProvider>
+            </DataProvider>
           </PortfolioProvider>
         </AppClientProvider>
         <Toaster position="bottom-right" />

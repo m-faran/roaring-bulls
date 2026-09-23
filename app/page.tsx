@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { STOCKS_CATALOG } from "./lib/data/stocks-catalog";
-import { filterCompliantStocks } from "./lib/data/compliance-guard";
+import { useData } from "./lib/store/data-context";
 import { SwipeDeck } from "./components/swipe/swipe-deck";
 import { BasketDrawer } from "./components/basket/basket-drawer";
 import { SessionSetupModal } from "./components/swipe/session-setup";
@@ -44,10 +43,7 @@ export default function Home() {
   } = useBasket();
   const { addPosition, addDCA, addLimitOrder } = usePortfolio();
 
-  // Filter token catalog through the compliance guardrail
-  const compliantStocks = useMemo(() => {
-    return filterCompliantStocks(STOCKS_CATALOG);
-  }, []);
+  const { deckStocks, isLoading } = useData();
 
   // Execution modal state
   const [isExecutionModalOpen, setIsExecutionModalOpen] = useState(false);
@@ -228,7 +224,16 @@ export default function Home() {
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
           {/* Left / Center Area: Swipe Deck Terminal — actions render inside the deck, above the card */}
           <div className="flex flex-col items-stretch lg:col-span-8">
-            <SwipeDeck stocks={compliantStocks} />
+            {isLoading ? (
+              <div className="flex h-[600px] w-full max-w-[560px] items-center justify-center bg-paper-white ink-border ink-shadow-sm">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-ink/20 border-t-sol-green"></div>
+                  <p className="font-mono text-xs font-bold text-ink/60 uppercase tracking-widest">Loading Live Data</p>
+                </div>
+              </div>
+            ) : (
+              <SwipeDeck stocks={deckStocks} />
+            )}
           </div>
 
           {/* Right Area: Desktop Companion Dashboard (Hidden on mobile) */}
