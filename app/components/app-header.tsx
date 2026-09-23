@@ -5,12 +5,19 @@ import { ClusterSelect } from "./cluster-select";
 import { WalletButton } from "./wallet-button";
 import { useBasket } from "../lib/store/basket-context";
 import { usePortfolio } from "../lib/store/portfolio-context";
-import { Layers } from "lucide-react";
+import { Layers, Search } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
 export function AppHeader() {
   const { setIsPortfolioOpen, activeTab, setActiveTab } = useBasket();
   const { positions, dcas, limitOrders } = usePortfolio();
   const totalActive = positions.length + dcas.length + limitOrders.length;
+
+  // /search is a real route — the tab highlights from the pathname and
+  // navigates with the router; the other two tabs are state-driven.
+  const pathname = usePathname();
+  const router = useRouter();
+  const isSearchRoute = pathname === "/search";
 
   return (
     <header className="paper-texture sticky top-0 z-30 mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 border-b-[3px] border-ink px-4 py-3 sm:px-6">
@@ -18,7 +25,10 @@ export function AppHeader() {
       <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-6">
         <button
           type="button"
-          onClick={() => setActiveTab("landing")}
+          onClick={() => {
+            setActiveTab("landing");
+            router.push("/");
+          }}
           className="group flex cursor-pointer items-center gap-2.5 text-left"
         >
           {/* Logo sticker badge — theme-matched brand mark */}
@@ -57,9 +67,12 @@ export function AppHeader() {
         <div className="ink-border-thin flex items-center whitespace-nowrap bg-paper-white p-1 text-xs font-semibold text-ink">
           <button
             type="button"
-            onClick={() => setActiveTab("landing")}
+            onClick={() => {
+              setActiveTab("landing");
+              router.push("/");
+            }}
             className={`cursor-pointer px-2.5 py-1.5 font-display text-xs transition-all duration-200 sm:px-3.5 ${
-              activeTab === "landing"
+              activeTab === "landing" && !isSearchRoute
                 ? "ink-border-thin bg-sol-yellow font-bold"
                 : "opacity-60 hover:opacity-100"
             }`}
@@ -68,15 +81,30 @@ export function AppHeader() {
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab("app")}
+            onClick={() => {
+              setActiveTab("app");
+              router.push("/");
+            }}
             className={`flex cursor-pointer items-center gap-1.5 px-2.5 py-1.5 font-display text-xs transition-all duration-200 sm:gap-2 sm:px-3.5 ${
-              activeTab === "app"
+              activeTab === "app" && !isSearchRoute
                 ? "ink-border-thin bg-sol-green font-bold"
                 : "opacity-60 hover:opacity-100"
             }`}
           >
             <span>Swipe Deck</span>
             <span className="h-1.5 w-1.5 rounded-full bg-ink" />
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push("/search")}
+            className={`flex cursor-pointer items-center gap-1.5 px-2.5 py-1.5 font-display text-xs transition-all duration-200 sm:gap-2 sm:px-3.5 ${
+              isSearchRoute
+                ? "ink-border-thin bg-paper font-bold"
+                : "opacity-60 hover:opacity-100"
+            }`}
+          >
+            <Search className="h-3.5 w-3.5" strokeWidth={3} />
+            <span>Search</span>
           </button>
         </div>
 

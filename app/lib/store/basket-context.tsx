@@ -36,8 +36,8 @@ interface BasketContextType {
   setHasCompletedOnboarding: (completed: boolean) => void;
   isStrategyWizardOpen: boolean;
   setIsStrategyWizardOpen: (open: boolean) => void;
-  activeTab: "landing" | "app";
-  setActiveTab: (tab: "landing" | "app") => void;
+  activeTab: "landing" | "app" | "search";
+  setActiveTab: (tab: "landing" | "app" | "search") => void;
   triggerSwipe: (direction: "left" | "right") => void;
   registerSwipeHandler: (handler: (direction: "left" | "right") => void) => () => void;
   formatCurrency: (amount: number) => string;
@@ -60,7 +60,9 @@ export function BasketProvider({ children }: { children: React.ReactNode }) {
   const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
   const [isStrategyWizardOpen, setIsStrategyWizardOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"landing" | "app">("landing");
+  const [activeTab, setActiveTab] = useState<"landing" | "app" | "search">(
+    "landing"
+  );
 
   const swipeHandlerRef = useRef<((direction: "left" | "right") => void) | null>(null);
 

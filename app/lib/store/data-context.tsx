@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useMemo, useRef } from "react";
 import { StockToken, buildChartData } from "../data/stocks-catalog";
-import { fetchRetailStocks, fetchPreIpoStocks, fetchSearchStocks, fetchDegenStocks } from "../api/tokens-service";
+import { fetchRetailStocks, fetchPreIpoStocks, fetchSearchStocks, fetchAllDegenStocks } from "../api/tokens-service";
 import { fetchJupiterPrices } from "../api/jupiter-service";
 import { filterCompliantStocks } from "../data/compliance-guard";
 
@@ -36,14 +36,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           fetchRetailStocks(),
           fetchPreIpoStocks(),
           fetchSearchStocks(),
-          fetchDegenStocks(),
+          fetchAllDegenStocks(),
         ]);
 
         // Combine for Deck (60 items max)
-        const combinedDeck = filterCompliantStocks([...retail, ...preIpo, ...degen]);
+        const combinedDeck = filterCompliantStocks([...retail, ...preIpo, ...degen.deck]);
         
         // Combine for Search (140 items)
-        const combinedSearch = filterCompliantStocks([...search, ...preIpo, ...degen]);
+        const combinedSearch = filterCompliantStocks([...search, ...preIpo, ...degen.search]);
 
         setDeckStocks(combinedDeck);
         setSearchStocks(combinedSearch);

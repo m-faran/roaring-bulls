@@ -10,9 +10,8 @@ function mapStonkfunToStockToken(raw: any, isNewest: boolean): StockToken {
     tier: "degen",
     sector: "Bonding Curve Meme",
     subtitle: raw.quote?.symbol ? `Paired Against ${raw.quote.symbol}` : "Stonkfun Meme",
-    description: `Meme token launched on Stonkfun. ${
-      isNewest ? "Recently launched." : "Highest market cap."
-    }`,
+    description: `Meme token launched on Stonkfun. ${isNewest ? "Recently launched." : "Highest market cap."
+      }`,
     price: raw.market?.priceUsd || 0,
     change24h: 0, // Stonkfun doesn't provide 24h change directly here
     change3m: 0,
@@ -113,7 +112,7 @@ export async function fetchSearchStocks(): Promise<StockToken[]> {
   }
 }
 
-export async function fetchDegenStocks(): Promise<StockToken[]> {
+export async function fetchAllDegenStocks(): Promise<{ deck: StockToken[]; search: StockToken[] }> {
   try {
     const [mcRes, newRes] = await Promise.all([
       fetch("https://www.stonkfun.xyz/api/public/v1/tokens?sort=marketcap"),
@@ -123,15 +122,17 @@ export async function fetchDegenStocks(): Promise<StockToken[]> {
     const mcData = mcRes.ok ? await mcRes.json() : { data: { tokens: [] } };
     const newData = newRes.ok ? await newRes.json() : { data: { tokens: [] } };
 
-    const topMc = (mcData.data?.tokens || []).slice(0, 10).map((t: any) => mapStonkfunToStockToken(t, false));
-    const topNew = (newData.data?.tokens || []).slice(0, 10).map((t: any) => mapStonkfunToStockToken(t, true));
+    const allMc = (mcData.data?.tokens || []).map((t: any) => mapStonkfunToStockToken(t, false));
+    const allNew = (newData.data?.tokens || []).map((t: any) => mapStonkfunToStockToken(t, true));
 
-    // Combine and deduplicate
-    const combined = [...topMc, ...topNew];
-    const unique = Array.from(new Map(combined.map((item) => [item.mint, item])).values());
-    return unique;
+    const deckCombined = [...allMc.slice(0, 10), ...allNew.slice(0, 10)];
+    const deckUnique = Array.from(new Map(deckCombined.map((item) => [item.mint, item])).values());
+
+    const searchUnique = allMc.slice(0, 25);
+
+    return { deck: deckUnique, search: searchUnique };
   } catch (err) {
     console.error(err);
-    return [];
+    return { deck: [], search: [] };
   }
 }
