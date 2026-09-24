@@ -115,8 +115,8 @@ export async function fetchSearchStocks(): Promise<StockToken[]> {
 export async function fetchAllDegenStocks(): Promise<{ deck: StockToken[]; search: StockToken[] }> {
   try {
     const [mcRes, newRes] = await Promise.all([
-      fetch("https://www.stonkfun.xyz/api/public/v1/tokens?sort=marketcap"),
-      fetch("https://www.stonkfun.xyz/api/public/v1/tokens?sort=newest"),
+      fetch("/api/meta?list=stonkfun-mc"),
+      fetch("/api/meta?list=stonkfun-new"),
     ]);
 
     const mcData = mcRes.ok ? await mcRes.json() : { data: { tokens: [] } };
@@ -128,7 +128,9 @@ export async function fetchAllDegenStocks(): Promise<{ deck: StockToken[]; searc
     const deckCombined = [...allMc.slice(0, 10), ...allNew.slice(0, 10)];
     const deckUnique = Array.from(new Map(deckCombined.map((item) => [item.mint, item])).values());
 
-    const searchUnique = allMc.slice(0, 25);
+    // Search gets all 50 Stonkfun coins (25 top + 25 newest)
+    const searchCombined = [...allMc, ...allNew];
+    const searchUnique = Array.from(new Map(searchCombined.map((item) => [item.mint, item])).values());
 
     return { deck: deckUnique, search: searchUnique };
   } catch (err) {

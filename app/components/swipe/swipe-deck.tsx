@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { StockToken, RiskTier } from "@/app/lib/data/stocks-catalog";
 import { StockCard } from "./stock-card";
 import { useBasket } from "@/app/lib/store/basket-context";
+import { useData } from "@/app/lib/store/data-context";
 import { toast } from "sonner";
 import { Settings2, Check, RotateCcw, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -25,6 +26,13 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
     setIsBasketOpen,
     registerSwipeHandler,
   } = useBasket();
+  
+  const { setIsDeckActive } = useData();
+
+  useEffect(() => {
+    setIsDeckActive(true);
+    return () => setIsDeckActive(false);
+  }, [setIsDeckActive]);
 
   // Filter stocks by current risk tier
   const tierStocks = stocks.filter((s) => s.tier === riskTier);

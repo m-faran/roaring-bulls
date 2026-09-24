@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 
-export const revalidate = 86400; // Cache for 24 hours since metadata rarely changes
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const list = searchParams.get("list");
@@ -11,11 +9,22 @@ export async function GET(request: Request) {
   }
 
   try {
+    // 1-hour cache for Stonkfun dynamic lists
+    if (list === "stonkfun-mc") {
+      const res = await fetch("https://www.stonkfun.xyz/api/public/v1/tokens?sort=marketcap", { next: { revalidate: 3600 } });
+      return NextResponse.json(await res.json());
+    }
+    if (list === "stonkfun-new") {
+      const res = await fetch("https://www.stonkfun.xyz/api/public/v1/tokens?sort=newest", { next: { revalidate: 3600 } });
+      return NextResponse.json(await res.json());
+    }
+
     const apiKey = process.env.TOKENS_API_KEY || "";
     const response = await fetch(`https://api.tokens.xyz/api/v2/lists/${list}`, {
       headers: apiKey ? { 
         "x-api-key": apiKey 
-      } : {}
+      } : {},
+      next: { revalidate: 86400 } // 24-hour cache for static lists
     });
     
     if (!response.ok) {

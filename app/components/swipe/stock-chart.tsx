@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import { formatUsdPrice } from "../../lib/formatters";
 import { ChartPoint } from "@/app/lib/data/stocks-catalog";
 import { Info } from "lucide-react";
 
@@ -128,7 +129,7 @@ export function StockChart({
       <div className="flex items-center justify-between px-1 mb-2">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono font-bold tabular-nums text-ink">
-            ${activePoint?.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            {formatUsdPrice(activePoint?.price)}
           </span>
           <span className="text-[10px] text-ink/60 flex items-center gap-1 font-mono">
             <span className="inline-block w-2.5 h-0.5 border-t border-dashed border-ink/60"></span>

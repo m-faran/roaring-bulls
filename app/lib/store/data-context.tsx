@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useMemo, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { StockToken, buildChartData } from "../data/stocks-catalog";
 import { fetchRetailStocks, fetchPreIpoStocks, fetchSearchStocks, fetchAllDegenStocks } from "../api/tokens-service";
 import { fetchJupiterPrices } from "../api/jupiter-service";
@@ -16,6 +17,9 @@ interface DataContextType {
   
   // Loading state
   isLoading: boolean;
+  
+  // Registration
+  setIsDeckActive: (active: boolean) => void;
 }
 
 const DataContext = createContext<DataContextType | null>(null);
@@ -26,9 +30,26 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [prices, setPrices] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState(true);
   
+  const [isDeckActive, setIsDeckActive] = useState(false);
+  const isDeckActiveRef = useRef(isDeckActive);
+  
   const pollingRef = useRef<NodeJS.Timeout | null>(null);
 
+  const pathname = usePathname();
+  const pathnameRef = useRef(pathname);
+
+  // Keep refs synced without re-triggering the main initData useEffect
   useEffect(() => {
+    pathnameRef.current = pathname;
+  }, [pathname]);
+
+  useEffect(() => {
+    isDeckActiveRef.current = isDeckActive;
+  }, [isDeckActive]);
+
+  useEffect(() => {
+    let isActive = true;
+
     async function initData() {
       setIsLoading(true);
       try {
@@ -45,17 +66,27 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         // Combine for Search (140 items)
         const combinedSearch = filterCompliantStocks([...search, ...preIpo, ...degen.search]);
 
+        if (!isActive) return;
+
         setDeckStocks(combinedDeck);
         setSearchStocks(combinedSearch);
 
-        // Initial price fetch for Deck
-        const deckMints = combinedDeck.map(s => s.mint);
-        const initialPrices = await fetchJupiterPrices(deckMints);
+        // Initial price fetch for all tokens (Deck + Search)
+        // Since searchStocks contains the entire universe of 136 tokens, we use it to get all mints.
+        // Because of the Active Background Worker engine, fetching 136 tokens from our proxy is instant and has no rate limits.
+        const allMints = combinedSearch.map(s => s.mint);
+        const initialPrices = await fetchJupiterPrices(allMints);
         setPrices(prev => ({ ...prev, ...initialPrices }));
 
-        // Start polling for Deck prices every 10 seconds
+        // Start polling for all prices every 10 seconds
         pollingRef.current = setInterval(async () => {
-          const freshPrices = await fetchJupiterPrices(deckMints);
+          // Poll if the user is on the Swipe Deck or the Search Page
+          const activePaths = ["/", "/app", "/search"];
+          if (!activePaths.includes(pathnameRef.current)) {
+            return;
+          }
+
+          const freshPrices = await fetchJupiterPrices(allMints);
           setPrices(prev => ({ ...prev, ...freshPrices }));
         }, 10000);
 
@@ -69,6 +100,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     initData();
 
     return () => {
+      isActive = false;
       if (pollingRef.current) clearInterval(pollingRef.current);
     };
   }, []);
@@ -76,9 +108,15 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const deckStocksWithPrices = useMemo(() => {
     return deckStocks.map(stock => {
       const livePrice = prices[stock.mint];
-      const finalPrice = livePrice ?? stock.price;
-      // Default to 15% 3m change for synthetic chart generation
-      const chartData = buildChartData(finalPrice > 0 ? finalPrice : 1, 15);
+      let finalPrice = livePrice ?? stock.price;
+      
+      // If Jupiter didn't find the token, set to NaN so it's obvious and can be pruned
+      if (!finalPrice || finalPrice <= 0) {
+        finalPrice = NaN;
+      }
+      
+      // Pass NaN to chart builder (chart will be blank, price will show $NaN)
+      const chartData = buildChartData(finalPrice, 15);
       
       return {
         ...stock,
@@ -91,8 +129,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const searchStocksWithPrices = useMemo(() => {
     return searchStocks.map(stock => {
       const livePrice = prices[stock.mint];
-      const finalPrice = livePrice ?? stock.price;
-      const chartData = buildChartData(finalPrice > 0 ? finalPrice : 1, 15);
+      let finalPrice = livePrice ?? stock.price;
+      
+      // If Jupiter didn't find the token, set to NaN so it's obvious and can be pruned
+      if (!finalPrice || finalPrice <= 0) {
+        finalPrice = NaN;
+      }
+
+      const chartData = buildChartData(finalPrice, 15);
 
       return {
         ...stock,
@@ -103,7 +147,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   }, [searchStocks, prices]);
 
   return (
-    <DataContext.Provider value={{ deckStocks: deckStocksWithPrices, searchStocks: searchStocksWithPrices, prices, isLoading }}>
+    <DataContext.Provider value={{ deckStocks: deckStocksWithPrices, searchStocks: searchStocksWithPrices, prices, isLoading, setIsDeckActive }}>
       {children}
     </DataContext.Provider>
   );

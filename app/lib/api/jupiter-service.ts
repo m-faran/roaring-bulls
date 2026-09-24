@@ -11,37 +11,33 @@ export async function fetchJupiterPrices(mints: string[]): Promise<JupiterPriceM
   if (!mints || mints.length === 0) return {};
 
   try {
-    // Jupiter Price API v3 explicitly limits requests to a maximum of 50 token IDs per call
-    const chunkSize = 50;
+    // We can chunk at 100 to avoid URL length limits. 
+    // The backend handles the actual Jupiter limits (50) and rate limits (2s).
+    const chunkSize = 100;
     const priceMap: JupiterPriceMap = {};
-    const promises = [];
 
     for (let i = 0; i < mints.length; i += chunkSize) {
       const chunk = mints.slice(i, i + chunkSize);
       const ids = chunk.join(",");
       
-      const p = fetch(`/api/prices?ids=${ids}`)
-        .then(res => {
-          if (!res.ok) throw new Error(`Jupiter API error: ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          // Jupiter v3 returns a direct map of mints to objects, NOT wrapped in { data: ... }
-          const priceObjects = data.data ? data.data : data;
-          if (priceObjects && typeof priceObjects === 'object') {
-            for (const [mint, info] of Object.entries(priceObjects) as any) {
-              const priceVal = info?.usdPrice ?? info?.price;
-              if (priceVal !== undefined) {
-                priceMap[mint] = typeof priceVal === "string" ? parseFloat(priceVal) : priceVal;
-              }
+      try {
+        const res = await fetch(`/api/prices?ids=${ids}`);
+        if (!res.ok) throw new Error(`Jupiter API error: ${res.status}`);
+        
+        const data = await res.json();
+        const priceObjects = data.data ? data.data : data;
+        
+        if (priceObjects && typeof priceObjects === 'object') {
+          for (const [mint, priceVal] of Object.entries(priceObjects) as any) {
+            if (priceVal !== undefined && priceVal !== null) {
+              priceMap[mint] = typeof priceVal === "string" ? parseFloat(priceVal) : priceVal;
             }
           }
-        });
-      
-      promises.push(p);
+        }
+      } catch (err) {
+        console.error("Jupiter API proxy chunk error:", err);
+      }
     }
-
-    await Promise.all(promises);
 
     return priceMap;
   } catch (err) {

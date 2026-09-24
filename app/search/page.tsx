@@ -40,15 +40,13 @@ const OVERSCAN = 5; // rows rendered above/below the viewport
 const VIEWPORT_H = 560; // px — fixed-height scroll window
 const PRICE_POLL_MS = 8000; // live refresh cadence for the visible window
 
+import { formatUsdPrice } from "../lib/formatters";
+
 /* ============================================================
    FORMATTERS
    ============================================================ */
 function formatUsd(price: number): string {
-  if (!price || price <= 0) return "---";
-  return `$${price.toLocaleString("en-US", {
-    minimumFractionDigits: price >= 100 ? 2 : price >= 1 ? 2 : 4,
-    maximumFractionDigits: price >= 1 ? 2 : 4,
-  })}`;
+  return formatUsdPrice(price);
 }
 
 /* ============================================================
