@@ -57,9 +57,6 @@ export function AppHeader() {
                 Stocks
               </span>
             </div>
-            <p className="hidden font-mono text-[10px] tracking-tight text-ink/70 sm:block">
-              Swipe DCA for Tokenized Equities
-            </p>
           </div>
         </button>
 
