@@ -76,17 +76,46 @@ export async function executeBasketOrder(
   try {
     let signature = "";
 
-    // If connected wallet signer is available, build and send real on-chain transaction
-    if (rawSigner && client) {
-      const tx = await client.memo.instructions
+    // MOCK EXECUTION ON DEVNET:
+    // Generate an ephemeral signer to execute the transaction on devnet
+    // without prompting the user's mainnet-connected wallet.
+    const { generateKeyPairSigner, lamports, createClient } = await import("@solana/kit");
+    const { solanaRpc, rpcAirdrop } = await import("@solana/kit-plugin-rpc");
+    const { memoProgram } = await import("@solana-program/memo");
+    const { getClusterUrl } = await import("../solana-client");
+    
+    const ephemeralSigner = await generateKeyPairSigner();
+
+    // Create a raw client without the walletSigner plugin so the 
+    // connected wallet is NOT pinged or set as the fee payer.
+    const mockDevnetClient = createClient()
+      .use((client) => ({ ...client, payer: ephemeralSigner, identity: ephemeralSigner }))
+      .use(solanaRpc({ rpcUrl: getClusterUrl("devnet") }))
+      .use(rpcAirdrop())
+      .use(memoProgram());
+
+    try {
+      // Airdrop 0.005 SOL to pay for the memo instruction fee
+      await mockDevnetClient.rpc
+        .requestAirdrop(ephemeralSigner.address, lamports(5_000_000n))
+        .send();
+      // Wait a moment for the airdrop to be confirmed on devnet
+      await new Promise((r) => setTimeout(r, 2500));
+    } catch (airdropErr) {
+      console.warn("Devnet airdrop failed or timed out, attempting execution anyway:", airdropErr);
+    }
+
+    try {
+      const tx = await mockDevnetClient.memo.instructions
         .addMemo({
           memo: memoContent,
-          signers: [rawSigner],
+          signers: [ephemeralSigner],
         })
         .sendTransaction();
 
       signature = tx.context.signature;
-    } else {
+    } catch (txErr) {
+      console.warn("Devnet on-chain execution failed, falling back to offline simulation.", txErr);
       // Offline / unauthenticated demo fallback
       const randomBytes = Array.from({ length: 64 }, () =>
         Math.floor(Math.random() * 16).toString(16)
@@ -94,9 +123,8 @@ export async function executeBasketOrder(
       signature = `sim_${randomBytes.slice(0, 40)}`;
     }
 
-    const clusterSuffix =
-      cluster === "mainnet" ? "" : `?cluster=${cluster}`;
-    const explorerUrl = `https://explorer.solana.com/tx/${signature}${clusterSuffix}`;
+    // Always force explorer link to devnet since we executed there
+    const explorerUrl = `https://explorer.solana.com/tx/${signature}?cluster=devnet`;
 
     return {
       success: true,
