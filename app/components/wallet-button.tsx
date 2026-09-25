@@ -13,6 +13,7 @@ import { useBalance } from "../lib/hooks/use-balance";
 import { ellipsify } from "../lib/explorer";
 import { useCluster } from "./cluster-context";
 import { useAppClient } from "../lib/client-provider";
+import { usePrivy } from "@privy-io/react-auth";
 
 const solFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 9,
@@ -35,10 +36,12 @@ export function WalletButton() {
     isRunning: isConnecting,
   } = useConnect(client);
   const {
-    dispatchAsync: disconnect,
+    dispatchAsync: disconnectKit,
     error: disconnectError,
     isRunning: isDisconnecting,
   } = useDisconnect(client);
+
+  const { login, logout, user, authenticated } = usePrivy();
 
   const { getExplorerUrl } = useCluster();
   const [isOpen, setIsOpen] = useState(false);
@@ -51,9 +54,10 @@ export function WalletButton() {
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   const walletAddress = connected?.account.address;
-  const copied = copiedAddress === walletAddress;
+  const activeAddress = walletAddress || user?.wallet?.address;
+  const copied = copiedAddress === activeAddress;
   const balance = useBalance(
-    walletAddress ? address(walletAddress) : undefined
+    activeAddress ? address(activeAddress) : undefined
   );
   const connectMenuError = connectError;
   const accountMenuError =
@@ -93,21 +97,21 @@ export function WalletButton() {
   }, [isOpen]);
 
   const handleCopy = async () => {
-    if (!walletAddress) return;
+    if (!activeAddress) return;
     try {
-      await navigator.clipboard.writeText(walletAddress);
+      await navigator.clipboard.writeText(activeAddress);
       setClipboardError(null);
-      setCopiedAddress(walletAddress);
+      setCopiedAddress(activeAddress);
       setTimeout(
         () =>
           setCopiedAddress((current) =>
-            current === walletAddress ? null : current
+            current === activeAddress ? null : current
           ),
         2000
       );
     } catch {
       setClipboardError({
-        address: walletAddress,
+        address: activeAddress,
         message: "Unable to copy the address to the clipboard.",
       });
     }
@@ -121,77 +125,16 @@ export function WalletButton() {
     );
   }
 
-  if (!connected) {
+  if (!connected && !authenticated) {
     return (
       <div className="relative" ref={ref}>
         <button
           ref={triggerRef}
-          onClick={() => (isOpen ? close() : open())}
-          aria-expanded={isOpen}
-          aria-controls={isOpen ? "wallet-options" : undefined}
+          onClick={login}
           className="ink-border ink-shadow-sm ink-press cursor-pointer bg-sol-green px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide text-ink"
         >
           Connect Wallet
         </button>
-
-        {isOpen && (
-          <div
-            id="wallet-options"
-            className="ink-border ink-shadow absolute right-0 top-full z-50 mt-2 w-64 bg-paper-white p-3.5 animate-in fade-in zoom-in-95 duration-150"
-          >
-            <p className="mb-2 border-b-[1.5px] border-dashed border-ink/40 pb-2 font-mono text-[10px] font-bold uppercase tracking-widest text-ink/70">
-              Choose a wallet
-            </p>
-            {wallets.length === 0 ? (
-              <p className="font-mono text-xs text-ink/60">
-                No wallets detected. Install a Solana wallet extension.
-              </p>
-            ) : (
-              <div className="space-y-1">
-                {wallets.map((wallet) => (
-                  <button
-                    key={wallet.name}
-                    onClick={async () => {
-                      try {
-                        await connect(wallet);
-                        closeAndRestoreFocus();
-                      } catch {
-                        // The hook exposes the connection error below.
-                      }
-                    }}
-                    disabled={isConnecting}
-                    className="ink-border-thin flex w-full cursor-pointer items-center gap-3 bg-paper-white px-3 py-2 text-left text-xs font-bold text-ink transition-colors hover:bg-paper disabled:opacity-50 disabled:pointer-events-none"
-                  >
-                    {wallet.icon && (
-                      // eslint-disable-next-line @next/next/no-img-element -- wallet-standard icons are data URIs
-                      <img
-                        src={wallet.icon}
-                        alt=""
-                        className="h-5 w-5"
-                      />
-                    )}
-                    <span>{wallet.name}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-            {isConnecting && (
-              <p className="mt-2 font-mono text-xs text-ink/60" role="status">
-                Connecting...
-              </p>
-            )}
-            {connectMenuError != null && (
-              <p
-                className="mt-2 break-words font-mono text-xs text-sol-pink [overflow-wrap:anywhere]"
-                role="alert"
-              >
-                {connectMenuError instanceof Error
-                  ? connectMenuError.message
-                  : String(connectMenuError)}
-              </p>
-            )}
-          </div>
-        )}
       </div>
     );
   }
@@ -203,11 +146,11 @@ export function WalletButton() {
         onClick={() => (isOpen ? close() : open())}
         aria-expanded={isOpen}
         aria-controls={isOpen ? "wallet-options" : undefined}
-        aria-label={`Wallet ${walletAddress}`}
+        aria-label={`Wallet ${activeAddress}`}
         className="ink-border-thin flex cursor-pointer items-center gap-2 bg-paper-white px-3 py-1.5 font-mono text-xs font-medium text-ink transition-colors hover:bg-paper"
       >
         <span className="h-2 w-2 rounded-full bg-sol-green" />
-        <span>{ellipsify(walletAddress!, 4)}</span>
+        <span>{activeAddress ? ellipsify(activeAddress, 4) : user?.email?.address || "Connected"}</span>
       </button>
 
       {isOpen && (
@@ -240,8 +183,13 @@ export function WalletButton() {
           </div>
 
           <div className="ink-border-thin bg-paper px-3 py-2">
-            <p className="break-all font-mono text-[11px] text-ink">
-              {walletAddress}
+            {user?.email?.address && (
+              <p className="mb-1 font-mono text-[11px] font-bold text-ink">
+                {user.email.address}
+              </p>
+            )}
+            <p className="break-all font-mono text-[11px] text-ink/70">
+              {activeAddress}
             </p>
           </div>
 
@@ -253,20 +201,23 @@ export function WalletButton() {
             >
               {copied ? "Copied!" : "Copy address"}
             </button>
-            <a
-              href={getExplorerUrl(`/address/${walletAddress}`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ink-border-thin ink-press flex-1 bg-paper-white px-3 py-2 text-center font-mono text-xs font-medium text-ink"
-            >
-              Explorer
-            </a>
+            {activeAddress && (
+              <a
+                href={getExplorerUrl(`/address/${activeAddress}`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ink-border-thin ink-press flex-1 bg-paper-white px-3 py-2 text-center font-mono text-xs font-medium text-ink"
+              >
+                Explorer
+              </a>
+            )}
           </div>
 
           <button
             onClick={async () => {
               try {
-                await disconnect();
+                if (connected) await disconnectKit();
+                await logout();
                 closeAndRestoreFocus();
               } catch {
                 // The hook exposes the disconnection error below.
