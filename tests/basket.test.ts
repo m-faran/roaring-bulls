@@ -1,11 +1,19 @@
 import { describe, it, expect } from "vitest";
 import { generateBasketQuote, SOL_USD_PRICE } from "../app/lib/execution/mock-quotes";
-import { STOCKS_CATALOG } from "../app/lib/data/stocks-catalog";
+import { StockToken } from "../app/lib/data/stocks-catalog";
 
 describe("Basket Math & Quote Engine", () => {
   it("calculates basket totals, routes, and output quantities correctly", () => {
-    const tsla = STOCKS_CATALOG.find((s) => s.ticker === "TSLAx")!;
-    const openai = STOCKS_CATALOG.find((s) => s.ticker === "OPENAI")!;
+    const tsla = {
+      id: "tsla",
+      ticker: "TSLAx",
+      price: 245.5,
+    } as StockToken;
+    const openai = {
+      id: "openai",
+      ticker: "OPENAI",
+      price: 102.4,
+    } as StockToken;
 
     const basketItems = [
       { stock: tsla, allocationSol: 0.1 },

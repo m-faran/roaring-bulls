@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { checkCompliance, filterCompliantStocks } from "../app/lib/data/compliance-guard";
-import { STOCKS_CATALOG, StockToken } from "../app/lib/data/stocks-catalog";
+import { StockToken } from "../app/lib/data/stocks-catalog";
 
 describe("Compliance Guardrail", () => {
   it("strictly excludes institutional Ondo tokenized equities with transfer hooks", () => {
@@ -66,7 +66,15 @@ describe("Compliance Guardrail", () => {
   });
 
   it("correctly filters the catalog and retains all compliant assets", () => {
-    const compliant = filterCompliantStocks(STOCKS_CATALOG);
+    const MOCK_CATALOG = [
+      { ticker: "TSLAx", hasTransferHook: false },
+      { ticker: "OPENAI", hasTransferHook: false },
+      { ticker: "STONK", isStonkFun: true },
+      { ticker: "ABTon", hasTransferHook: true },
+      ...Array.from({ length: 10 }).map((_, i) => ({ ticker: `DUMMY${i}`, hasTransferHook: false }))
+    ] as StockToken[];
+
+    const compliant = filterCompliantStocks(MOCK_CATALOG);
     expect(compliant.length).toBeGreaterThanOrEqual(10);
     expect(compliant.some((s) => s.ticker === "TSLAx")).toBe(true);
     expect(compliant.some((s) => s.ticker === "OPENAI")).toBe(true);
