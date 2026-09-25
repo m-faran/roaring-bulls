@@ -134,9 +134,9 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
   const rotation = dragOffset.x / 14;
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 pb-4 pt-1">
+    <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 pb-4 pt-0">
       {/* Risk Tier Selector Tabs — segmented ink control (dark-safe contrast) */}
-      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full max-w-[560px] items-center bg-paper-white p-1.5">
+      <div className="ink-border-thin ink-shadow-sm mb-3 flex w-full max-w-[620px] items-center bg-paper-white p-1.5">
         {(
           [
             { id: "conservative", label: "Conservative", sub: "Blue Chips" },
@@ -171,7 +171,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
       </div>
 
       {/* Budget Progress Meter — clean label/value strip */}
-      <div className="ink-border-thin ink-shadow-sm mb-4 flex w-full max-w-[460px] items-center justify-between bg-paper-white px-3 py-2 text-xs">
+      <div className="ink-border-thin ink-shadow-sm mb-3 flex w-full max-w-[460px] items-center justify-between bg-paper-white px-3 py-2 text-xs">
         <div className="flex items-center gap-2 font-mono">
           <span className="text-[11px] text-ink/75">Allocated:</span>
           <span className="font-bold tabular-nums text-ink">
@@ -221,12 +221,12 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
         </div>
 
         {/* Swipe Deck Container */}
-        <div className="relative flex h-[600px] w-full max-w-[560px] items-center justify-center">
+        <div className="relative flex h-[600px] w-full max-w-[620px] items-center justify-center">
         {currentStock ? (
           <>
             {/* Card Underneath (Preview) */}
             {nextStock && (
-              <div className="pointer-events-none absolute top-0 h-[590px] w-full max-w-[560px] translate-y-3 scale-[0.96] opacity-50 transition-all duration-300">
+              <div className="pointer-events-none absolute top-0 h-[590px] w-full max-w-[620px] translate-y-3 scale-[0.96] opacity-50 transition-all duration-300">
                 <StockCard stock={nextStock} />
               </div>
             )}
@@ -261,7 +261,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
                   ? "none"
                   : "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
               }}
-              className="absolute top-0 z-20 h-[590px] w-full max-w-[560px] cursor-grab active:cursor-grabbing"
+              className="absolute top-0 z-20 h-[590px] w-full max-w-[620px] cursor-grab active:cursor-grabbing"
             >
               <StockCard
                 stock={currentStock}
@@ -272,7 +272,7 @@ export function SwipeDeck({ stocks }: SwipeDeckProps) {
           </>
         ) : (
           /* Empty Deck State — paper postcard */
-          <div className="ink-border ink-shadow-lg flex h-[590px] w-full max-w-[560px] flex-col items-center justify-center space-y-5 bg-paper-white p-8 text-center">
+          <div className="ink-border ink-shadow-lg flex h-[590px] w-full max-w-[620px] flex-col items-center justify-center space-y-5 bg-paper-white p-8 text-center">
             <span className="ink-border ink-shadow-sm flex h-16 w-16 items-center justify-center bg-sol-green text-ink">
               <Check className="h-8 w-8" strokeWidth={3} />
             </span>

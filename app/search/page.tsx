@@ -444,7 +444,7 @@ export default function SearchPage() {
               <BackButton label="Back to isolated" onClick={backToIsolated} />
 
               {/* Budget allocation meter — kept per the deck design */}
-              <div className="ink-border-thin ink-shadow-sm mt-3 flex w-full items-center justify-between bg-paper-white px-3 py-2 text-xs">
+              <div className="ink-border-thin ink-shadow-sm mx-auto mt-3 flex w-full max-w-[460px] items-center justify-between bg-paper-white px-3 py-2 text-xs">
                 <div className="flex items-center gap-2 font-mono">
                   <span className="text-[11px] text-ink/75">Allocated:</span>
                   <span className="font-bold tabular-nums text-ink">

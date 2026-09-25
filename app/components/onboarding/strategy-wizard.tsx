@@ -5,6 +5,31 @@ import { useBasket } from "@/app/lib/store/basket-context";
 import { RiskTier } from "@/app/lib/data/stocks-catalog";
 import { Check, ArrowLeft, ArrowRight, X, Shield, Sparkles, Flame } from "lucide-react";
 
+// Renders a user-provided brand logo if it exists in /public, else falls back
+// to the text glyph. Drop files at public/sol-logo.png and public/usdc-logo.png.
+function CurrencyLogo({
+  src,
+  alt,
+  fallback,
+}: {
+  src: string;
+  alt: string;
+  fallback: React.ReactNode;
+}) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) return <>{fallback}</>;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- user-provided brand asset
+    <img
+      src={src}
+      alt={alt}
+      className="h-full w-full object-contain"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 interface StrategyWizardProps {
   isModal?: boolean;
   onClose?: () => void;
@@ -155,8 +180,12 @@ export function StrategyWizard({
                   }`}
                 >
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center bg-sol-violet text-base font-bold text-white">
-                      ◎
+                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center overflow-hidden bg-sol-violet p-1 text-base font-bold text-white">
+                      <CurrencyLogo
+                        src="/sol-logo.png"
+                        alt="Solana logo"
+                        fallback={<span>◎</span>}
+                      />
                     </span>
                     {selectedCurrency === "SOL" && (
                       <span className="ink-border-thin flex h-6 w-6 items-center justify-center bg-sol-green text-ink">
@@ -186,8 +215,12 @@ export function StrategyWizard({
                   }`}
                 >
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center bg-sol-green text-base font-black text-ink">
-                      $
+                    <span className="ink-border-thin flex h-9 w-9 items-center justify-center overflow-hidden bg-sol-green p-1 text-base font-black text-ink">
+                      <CurrencyLogo
+                        src="/usdc-logo.png"
+                        alt="USDC logo"
+                        fallback={<span>$</span>}
+                      />
                     </span>
                     {selectedCurrency === "USDC" && (
                       <span className="ink-border-thin flex h-6 w-6 items-center justify-center bg-sol-green text-ink">

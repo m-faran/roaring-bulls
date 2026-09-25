@@ -107,7 +107,7 @@ export function LandingPage() {
         <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-14 sm:px-6 sm:pt-20">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
             {/* Headline block */}
-            <div className="space-y-8 lg:col-span-8">
+            <div className="space-y-8 lg:col-span-7">
               <span className="ink-border-thin ink-shadow-sm inline-block -rotate-2 bg-sol-yellow px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-widest">
                 Solana tokenized equities • swipe-based DCA ritual
               </span>
@@ -118,16 +118,15 @@ export function LandingPage() {
                 GLOBAL EQUITIES.
                 <br />
                 <span className="ink-border ink-shadow inline-block rotate-1 bg-sol-green px-3 pb-1">
-                  ONE SWIPE
+                  ONE BASKET
                 </span>{" "}
                 AT A TIME.
               </h1>
 
               <p className="max-w-xl text-base leading-relaxed sm:text-lg">
-                In many developing markets, access to global stocks is fragmented,
-                expensive, or entirely unavailable. Traditional tools make investing
-                rigid and boring. <strong>Roaring Bulls</strong> offers a fixed-budget,
-                swipe-based DCA ritual across tokenized equities on Solana.
+                Traditional trading makes investing rigid and boring.
+                <strong>Roaring Bulls makes trading fun</strong> by offering a fixed-budget,
+                swipe-based basket curation for onchain solana stocks.
               </p>
 
               <div className="flex flex-col items-start gap-4 sm:flex-row">
@@ -150,9 +149,9 @@ export function LandingPage() {
             </div>
 
             {/* Stamp sticker column */}
-            <div className="flex items-start justify-center lg:col-span-4 lg:justify-end">
-              <div className="ink-border ink-shadow-lg rotate-6 bg-paper-white p-6 text-center">
-                <div className="mx-auto mb-4 h-16 w-16">
+            <div className="flex items-center justify-center lg:col-span-5">
+              <div className="ink-border ink-shadow-lg w-full max-w-[440px] -rotate-2 bg-paper-white p-6 sm:p-8">
+                <div className="aspect-square w-full">
                   {/* eslint-disable-next-line @next/next/no-img-element -- static brand asset */}
                   <img
                     src="/logo-light.png"
@@ -167,13 +166,6 @@ export function LandingPage() {
                     className="hidden h-full w-full object-contain dark:block"
                   />
                 </div>
-                <p className="font-mono text-[10px] font-bold uppercase tracking-widest">
-                  Solana • Devnet
-                </p>
-                <p className="mt-1 text-3xl font-bold tracking-tight">DEMO MODE</p>
-                <p className="mt-2 border-t-2 border-dashed border-ink pt-2 font-mono text-[10px] uppercase">
-                  Zero custody • Jupiter routes
-                </p>
               </div>
             </div>
           </div>
@@ -539,96 +531,10 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* ============ 8 ARCHITECTURE PILLARS ============ */}
-      <section className="relative">
-        <div className="mx-auto max-w-6xl space-y-12 px-4 py-20 sm:px-6">
-          <div className="max-w-2xl space-y-3">
-            <span className="ink-border-thin ink-shadow-sm inline-block -rotate-1 bg-sol-yellow px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest">
-              Architecture
-            </span>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              What We Built
-            </h2>
-            <p>
-              A comprehensive, non-custodial Web3 equity wrapper designed for universal
-              wallet compatibility.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                num: "01",
-                dot: "bg-sol-green",
-                title: "Zero-Friction Onboarding",
-                body: "Email login via Privy embedded wallets ensures users never see a seed phrase or wallet popup.",
-              },
-              {
-                num: "02",
-                dot: "bg-sol-violet",
-                title: "Swipe-Based Discovery",
-                body: "Real-time tokenized stock decks powered by metadata from tokens.xyz, PreStocks, Tessera, and StonkFun.",
-              },
-              {
-                num: "03",
-                dot: "bg-sol-yellow",
-                title: "Risk-Tiered Asset Modes",
-                body: "Seamlessly switch between Conservative (blue chips), Balanced (pre-IPO), and Degen (equity memes).",
-              },
-              {
-                num: "04",
-                dot: "bg-sol-pink",
-                title: "User-Bounded DCA Plans",
-                body: "Configurable per-swipe investment amounts with real-time live session budget tracking.",
-              },
-              {
-                num: "05",
-                dot: "bg-sol-violet",
-                title: "Native Solana Composability",
-                body: "Buy-now swaps, recurring DCA schedules, and limit orders built on Jupiter’s Swap, Recurring, and Trigger APIs.",
-              },
-              {
-                num: "06",
-                dot: "bg-sol-green",
-                title: "1-Confirmation Atomic Execution",
-                body: "Immediate baskets bundle every swap into a single Solana signature—either all succeed, or all revert.",
-              },
-              {
-                num: "07",
-                dot: "bg-sol-yellow",
-                title: "Automated Compliance Filtering",
-                body: "Backend sanitization layer that strips institutional KYC-restricted transfer hooks to guarantee non-reverting trades.",
-              },
-              {
-                num: "08",
-                dot: "bg-sol-pink",
-                title: "Sustainable Wrapper Economics",
-                body: "Transparent non-custodial order flow monetization aligned natively with the Jupiter Referral Program.",
-              },
-            ].map((pillar) => (
-              <div
-                key={pillar.num}
-                className="ink-border-thin ink-shadow-sm space-y-2.5 bg-paper-white p-5 transition-transform duration-200 hover:-translate-y-1"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold">{pillar.num}</span>
-                  <span
-                    className={`ink-border-thin h-4 w-4 ${pillar.dot}`}
-                    aria-hidden="true"
-                  />
-                </div>
-                <h4 className="text-sm font-bold leading-snug">{pillar.title}</h4>
-                <p className="text-xs leading-relaxed opacity-70">{pillar.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ============ MANIFESTO: taped poster ============ */}
       <section className="border-t-[3px] border-ink bg-paper-deep">
         <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6">
-          <div className="ink-border ink-shadow-lg relative mx-auto max-w-2xl bg-paper-white px-6 py-12">
+          <div className="ink-border ink-shadow-lg relative mx-auto max-w-2xl bg-paper-white px-8 py-16 sm:px-12 sm:py-20">
             {/* tape strips */}
             <span
               aria-hidden="true"
@@ -641,19 +547,14 @@ export function LandingPage() {
             <div className="space-y-6">
               <div className="font-mono text-4xl font-bold text-sol-green">“</div>
               <h3 className="text-2xl font-bold leading-snug tracking-tight sm:text-4xl">
-                Investing should be accessible.
+                Investing should be frictionless.
                 <br />
-                Portfolio building should feel simple.
+                DCA n Limit Orders  should feel simple.
                 <br />
                 <span className="inline-block -rotate-1 bg-sol-yellow px-2">
-                  DCA should be fun.
+                  Portfolio building should be fun.
                 </span>
               </h3>
-              <p className="mx-auto max-w-xl pt-2 font-mono text-xs leading-relaxed opacity-70 sm:text-sm">
-                We built Roaring Bulls to bridge developing markets and global equities without
-                the friction of legacy brokerages, wire fees, or intimidating trading
-                terminals.
-              </p>
             </div>
           </div>
         </div>
@@ -686,13 +587,12 @@ export function LandingPage() {
             <div className="flex items-center gap-2">
               <span className="font-bold">Roaring Bulls</span>
               <span className="opacity-70">
-                • Swipe DCA for Tokenized Equities
+                • Basket curation based portfolio allocation for Tokenized Equities
               </span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] uppercase tracking-wide opacity-80">
               <span>Solana Devnet Locked</span>
               <span>Jupiter DEX Route Simulation</span>
-              <span>Zero Custody</span>
             </div>
           </div>
         </div>

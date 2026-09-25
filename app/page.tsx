@@ -197,35 +197,16 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-transparent text-ink">
-      <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-5 sm:px-6">
-        {/* Strategy chip — page heading removed per design pass */}
+      <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-2 sm:px-6">
+        {/* Strategy chip removed per design pass */}
         <h1 className="sr-only">Investment ideas</h1>
-        <div className="mb-5 flex justify-end">
-
-          <button
-            onClick={() => setIsStrategyWizardOpen(true)}
-            className="ink-border-thin ink-shadow-sm ink-press flex cursor-pointer items-center gap-2 bg-paper-white px-3.5 py-1.5 text-xs font-semibold"
-            title="Click to reconfigure strategy"
-          >
-            <span className="h-2 w-2 rounded-full bg-sol-green" />
-            <span className="font-mono text-xs">
-              Strategy:{" "}
-              <strong className="font-bold capitalize">{riskTier}</strong> (
-              {currency})
-            </span>
-            <span className="text-ink/40">•</span>
-            <span className="font-bold underline decoration-sol-green decoration-2 underline-offset-2">
-              Change
-            </span>
-          </button>
-        </div>
 
         {/* Main Responsive Grid: Swipe Deck (Left) + Desktop Companion Panel (Right) */}
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
           {/* Left / Center Area: Swipe Deck Terminal — actions render inside the deck, above the card */}
           <div className="flex flex-col items-stretch lg:col-span-8">
             {isLoading ? (
-              <div className="flex h-[600px] w-full max-w-[560px] items-center justify-center bg-paper-white ink-border ink-shadow-sm">
+              <div className="ink-border ink-shadow-sm flex h-[600px] w-full max-w-[620px] items-center justify-center bg-paper-white">
                 <div className="flex flex-col items-center gap-3">
                   <div className="h-8 w-8 animate-spin rounded-full border-4 border-ink/20 border-t-sol-green"></div>
                   <p className="font-mono text-xs font-bold text-ink/60 uppercase tracking-widest">Loading Live Data</p>
