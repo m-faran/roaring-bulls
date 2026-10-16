@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useBasket } from "@/app/lib/store/basket-context";
-import { Check, ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 
 const TICKER_ITEMS = [
   "TSLAx +14.85%",
@@ -87,7 +87,10 @@ export function LandingPage() {
           {[0, 1].map((copy) => (
             <span key={copy} className="flex shrink-0" aria-hidden={copy === 1}>
               {TICKER_ITEMS.map((item) => (
-                <span key={`${copy}-${item}`} className="mx-6 flex items-center gap-2">
+                <span
+                  key={`${copy}-${item}`}
+                  className="mx-6 flex items-center gap-2"
+                >
                   <span className="inline-block h-2 w-2 bg-sol-green" />
                   {item}
                 </span>
@@ -108,10 +111,6 @@ export function LandingPage() {
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
             {/* Headline block */}
             <div className="space-y-8 lg:col-span-7">
-              <span className="ink-border-thin ink-shadow-sm inline-block -rotate-2 bg-sol-yellow px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-widest">
-                Solana tokenized equities • swipe-based DCA ritual
-              </span>
-
               <h1 className="text-4xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
                 INVEST IN
                 <br />
@@ -125,8 +124,9 @@ export function LandingPage() {
 
               <p className="max-w-xl text-base leading-relaxed sm:text-lg">
                 Traditional trading makes investing rigid and boring.
-                <strong>Roaring Bulls makes trading fun</strong> by offering a fixed-budget,
-                swipe-based basket curation for onchain solana stocks.
+                <strong>Roaring Bulls makes trading fun</strong> by offering a
+                fixed-budget, swipe-based basket curation for onchain solana
+                stocks.
               </p>
 
               <div className="flex flex-col items-start gap-4 sm:flex-row">
@@ -218,57 +218,28 @@ export function LandingPage() {
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
             {/* Left: copy */}
             <div className="space-y-5 lg:col-span-6">
-              <span className="ink-border-thin ink-shadow-sm inline-block rotate-1 bg-sol-pink px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-white">
-                Interactive Experience
-              </span>
               <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
                 No complex order books. Just set a budget and swipe.
               </h2>
               <p className="max-w-lg leading-relaxed">
-                Define the boundaries of your investment session: your budget (e.g. 1
-                SOL or $50), your amount per swipe (e.g. 0.1 SOL or $5), and your risk
-                tier. Then start swiping.
+                Define the boundaries of your investment session: your budget
+                (e.g. 1 SOL or $50), your amount per swipe (e.g. 0.1 SOL or $5),
+                and your risk tier. Then start swiping.
               </p>
 
-              <div className="space-y-3 pt-1">
-                {[
-                  {
-                    bg: "bg-sol-green",
-                    label: "Swipe Right:",
-                    text: "Allocates a fixed amount and locks into basket",
-                  },
-                  {
-                    bg: "bg-sol-pink",
-                    label: "Swipe Left:",
-                    text: "Skips to the next token in the curated deck",
-                  },
-                  {
-                    bg: "bg-sol-violet",
-                    label: "Budget Lock:",
-                    text: "You can never exceed your pre-set session boundary",
-                  },
-                ].map((row) => (
-                  <div key={row.label} className="flex items-center gap-3 text-sm">
-                    <span
-                      className={`ink-border-thin flex h-6 w-6 shrink-0 items-center justify-center ${row.bg}`}
-                    >
-                      <Check className="h-3.5 w-3.5 text-white" strokeWidth={4} />
-                    </span>
-                    <span>
-                      <strong>{row.label}</strong> {row.text}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="pt-2">
-                <button
-                  onClick={handleLaunchApp}
-                  className="inline-flex cursor-pointer items-center gap-2 text-sm font-bold underline decoration-sol-green decoration-4 underline-offset-4 hover:decoration-ink"
-                >
-                  <span>Open Full Investing Terminal</span>
-                  <ArrowRight className="h-4 w-4" strokeWidth={3} />
-                </button>
+              <div className="space-y-2.5 pt-1 text-sm leading-relaxed">
+                <div>
+                  <strong>Swipe Right:</strong> Allocates a fixed amount and
+                  locks into basket
+                </div>
+                <div>
+                  <strong>Swipe Left:</strong> Skips to the next token in the
+                  curated deck
+                </div>
+                <div>
+                  <strong>Budget Lock:</strong> You can never exceed your
+                  pre-set session boundary
+                </div>
               </div>
             </div>
 
@@ -290,7 +261,9 @@ export function LandingPage() {
                 <div className="space-y-4 p-5">
                   {/* Budget row */}
                   <div className="flex items-center justify-between border-b-2 border-dashed border-ink pb-3 font-mono text-xs">
-                    <span className="uppercase tracking-wider">Session Budget:</span>
+                    <span className="uppercase tracking-wider">
+                      Session Budget:
+                    </span>
                     <span className="font-bold tabular-nums">
                       {demoBudget.toFixed(2)} SOL LEFT
                     </span>
@@ -310,7 +283,9 @@ export function LandingPage() {
                           />
                         </div>
                         <div>
-                          <h4 className="text-sm font-bold">{currentDemoAsset.name}</h4>
+                          <h4 className="text-sm font-bold">
+                            {currentDemoAsset.name}
+                          </h4>
                           <p className="font-mono text-[10px] font-bold uppercase opacity-60">
                             {currentDemoAsset.ticker}
                           </p>
@@ -325,7 +300,9 @@ export function LandingPage() {
                       <span className="uppercase opacity-70">
                         {currentDemoAsset.tier}
                       </span>
-                      <span className="font-bold">{currentDemoAsset.change} (3M)</span>
+                      <span className="font-bold">
+                        {currentDemoAsset.change} (3M)
+                      </span>
                     </div>
                   </div>
 
@@ -370,15 +347,12 @@ export function LandingPage() {
         <div className="halftone pointer-events-none absolute left-1/4 top-0 h-40 w-40 -rotate-6 opacity-15" />
         <div className="mx-auto max-w-6xl space-y-12 px-4 py-20 sm:px-6">
           <div className="max-w-2xl space-y-3">
-            <span className="ink-border-thin ink-shadow-sm inline-block -rotate-1 bg-paper-white px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest">
-              The Flow
-            </span>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               How the Roaring Bulls Ritual Works
             </h2>
             <p>
-              A frictionless investing ritual engineered from the ground up for modern
-              retail.
+              A frictionless investing ritual engineered from the ground up for
+              modern retail.
             </p>
           </div>
 
@@ -391,10 +365,10 @@ export function LandingPage() {
                 title: "Set Your Boundaries",
                 body: (
                   <>
-                    Start by choosing your quote currency (SOL or USDC), total session
-                    budget, allocation per swipe, and risk tier (Conservative, Balanced,
-                    or Degen). Your parameters define the guardrails and automatically
-                    curate the deck.
+                    Start by choosing your quote currency (SOL or USDC), total
+                    session budget, allocation per swipe, and risk tier
+                    (Conservative, Balanced, or Degen). Your parameters define
+                    the guardrails and automatically curate the deck.
                   </>
                 ),
               },
@@ -405,10 +379,10 @@ export function LandingPage() {
                 title: "The Swipe Discovery",
                 body: (
                   <>
-                    Swipe right to allocate your fixed slice to an asset. Swipe left to
-                    skip it. Every decision stays safely within your budget while
-                    remaining capital updates live. Zero math anxiety, zero spreadsheet
-                    friction.
+                    Swipe right to allocate your fixed slice to an asset. Swipe
+                    left to skip it. Every decision stays safely within your
+                    budget while remaining capital updates live. Zero math
+                    anxiety, zero spreadsheet friction.
                   </>
                 ),
               },
@@ -419,11 +393,11 @@ export function LandingPage() {
                 title: "1-Click Atomic Execution",
                 body: (
                   <>
-                    Select your execution method: <strong>Buy Now</strong> (instant
-                    basket execution), <strong>Recurring SIP</strong> (Jupiter DCA
-                    program), or <strong>Limit Order</strong> (dip trigger). All
-                    required swaps are packaged into a single atomic transaction routed
-                    through Jupiter.
+                    Select your execution method: <strong>Buy Now</strong>{" "}
+                    (instant basket execution), <strong>Recurring SIP</strong>{" "}
+                    (Jupiter DCA program), or <strong>Limit Order</strong> (dip
+                    trigger). All required swaps are packaged into a single
+                    atomic transaction routed through Jupiter.
                   </>
                 ),
               },
@@ -438,7 +412,9 @@ export function LandingPage() {
                   {step.num}
                 </div>
                 <h3 className="text-lg font-bold">{step.title}</h3>
-                <p className="text-sm leading-relaxed opacity-80">{step.body}</p>
+                <p className="text-sm leading-relaxed opacity-80">
+                  {step.body}
+                </p>
               </div>
             ))}
           </div>
@@ -449,9 +425,6 @@ export function LandingPage() {
       <section className="border-y-[3px] border-ink bg-paper-deep">
         <div className="mx-auto max-w-6xl space-y-12 px-4 py-20 sm:px-6">
           <div className="max-w-2xl space-y-3">
-            <span className="ink-border-thin ink-shadow-sm inline-block rotate-1 bg-sol-green px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest">
-              Curated Universes
-            </span>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Three Risk-Tiered Asset Modes
             </h2>
@@ -510,7 +483,9 @@ export function LandingPage() {
                     </span>
                   </div>
                   <h3 className="text-lg font-bold">{tier.title}</h3>
-                  <p className="text-sm leading-relaxed opacity-80">{tier.body}</p>
+                  <p className="text-sm leading-relaxed opacity-80">
+                    {tier.body}
+                  </p>
                   <div className="flex flex-wrap gap-2 pt-2 font-mono text-[11px] font-bold">
                     {tier.tickers.map((t) => (
                       <span
@@ -545,11 +520,13 @@ export function LandingPage() {
               className="absolute -top-3 right-10 h-7 w-24 rotate-6 bg-sol-green opacity-80"
             />
             <div className="space-y-6">
-              <div className="font-mono text-4xl font-bold text-sol-green">“</div>
+              <div className="font-mono text-4xl font-bold text-sol-green">
+                “
+              </div>
               <h3 className="text-2xl font-bold leading-snug tracking-tight sm:text-4xl">
                 Investing should be frictionless.
                 <br />
-                DCA n Limit Orders  should feel simple.
+                DCA n Limit Orders should feel simple.
                 <br />
                 <span className="inline-block -rotate-1 bg-sol-yellow px-2">
                   Portfolio building should be fun.
@@ -568,8 +545,8 @@ export function LandingPage() {
               Ready to assemble your equity basket?
             </h2>
             <p className="mx-auto max-w-lg text-sm opacity-90 sm:text-base">
-              Launch Roaring Bulls on Solana Devnet. Configure your strategy in 30 seconds and
-              start swiping.
+              Launch Roaring Bulls on Solana Devnet. Configure your strategy in
+              30 seconds and start swiping.
             </p>
           </div>
 
@@ -587,7 +564,8 @@ export function LandingPage() {
             <div className="flex items-center gap-2">
               <span className="font-bold">Roaring Bulls</span>
               <span className="opacity-70">
-                • Basket curation based portfolio allocation for Tokenized Equities
+                • Basket curation based portfolio allocation for Tokenized
+                Equities
               </span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] uppercase tracking-wide opacity-80">

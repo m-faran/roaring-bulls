@@ -49,14 +49,9 @@ export function AppHeader() {
           </div>
 
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-display font-black tracking-tight text-ink">
-                Roaring Bulls
-              </span>
-              <span className="ink-border-thin bg-sol-yellow px-2 py-0.5 text-[10px] font-display font-bold uppercase tracking-wider text-ink">
-                Stocks
-              </span>
-            </div>
+            <span className="text-lg font-display font-black tracking-tight text-ink">
+              Roaring Bulls
+            </span>
           </div>
         </button>
 
@@ -104,7 +99,6 @@ export function AppHeader() {
             <span>Search</span>
           </button>
         </div>
-
       </div>
 
       {/* Right Controls */}
@@ -115,7 +109,9 @@ export function AppHeader() {
           className="ink-border ink-shadow-sm ink-press relative flex cursor-pointer items-center gap-2 bg-sol-pink px-3.5 py-1.5 text-xs font-medium text-white"
         >
           <Layers className="h-4 w-4 text-white" />
-          <span className="hidden font-display text-xs sm:inline">Portfolio</span>
+          <span className="hidden font-display text-xs sm:inline">
+            Portfolio
+          </span>
           {totalActive > 0 && (
             <span className="ink-border-thin flex h-4 min-w-4 items-center justify-center bg-paper-white px-1 font-mono text-[10px] font-bold text-ink">
               {totalActive}
