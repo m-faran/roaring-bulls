@@ -4,18 +4,19 @@
 
 ## DESCRIPTION
 
-- Roaring bulls is a basket curation based trading application. Users have to do the following steps to start
-- 1. Connect an existing wallet or signin/signup with email/google via Privy. For non web3 users, privy provisions frictionless onboarding.
-- 2. Add funds.
-- 3. Swipe based portfolio allocation starts it has 3 substeps
-- *3.1* Users choose a currency to trade in $USDC vs $SOL.
-- *3.2* Select a risk tier between conservative (blue chip xstocks), balanced (pre-ipo stocks, t-stocks) and degen (stonkfun memes).
-- *3.3* Set a total session budget, and allocation per swipe.
-- 4. And boom swiping starts, skip or check stocks.
-- 5. If user wants stocks other than the swipe deck, user can use the search page where user can search from 100+ stocks (consisting of a mix of xstocks, pre-ipo stocks and stonkfun memes) and add them to the basket.
-- 6. Once the basket is finalized. User can review the basket and execute the whole basket.
+Roaring Bulls is a basket-curation trading application. To get started, users follow these steps:
 
-- The tokens are fetched from the api.tokens.xyz and stonkfun endpoints. The prices of the tokens are continously polled via jupiter price apis to make sure latest prices are reflected when trading and settlments are mocked for the demo in mainnet ready app settlement will happen via Jupiters quote and swap api.
+1. Connect an existing wallet or sign in/sign up with email or Google via Privy. For non-Web3 users, Privy provides frictionless onboarding.
+2. Add funds.
+3. Start the swipe-based portfolio allocation flow. This has three substeps:
+   1. Choose a currency to trade in: $USDC vs $SOL.
+   2. Select a risk tier: conservative (blue-chip xstocks), balanced (pre-IPO stocks, t-stocks), or degen (stonkfun memes).
+   3. Set a total session budget and allocation per swipe.
+4. Begin swiping: skip, check, or pass on stocks.
+5. If a user wants assets outside the swipe deck, they can use the search page to browse 100+ stocks (a mix of xstocks, pre-IPO stocks, and stonkfun memes) and add them to the basket.
+6. Once the basket is finalized, the user can review it and execute the entire basket.
+
+- The tokens are fetched from the api.tokens.xyz and stonkfun endpoints. Their prices are continuously polled via Jupiter price APIs to ensure the latest prices are reflected during trading, while settlements are mocked for the demo. In a mainnet-ready app, settlement would happen via Jupiter's quote and swap APIs.
 
 ### BUSINESS MODEL & PRODUCT MARKET FIT
 
